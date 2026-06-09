@@ -1,396 +1,368 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảo Việt Nhân thọ Sài Gòn | Doanh Thu Lũy Kế</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        *{box-sizing:border-box}
-        body{margin:0;background:#F8FAFC;color:#0F172A;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
-        .bg-blue-gradient{background:linear-gradient(135deg,#007AC2,#0096D6)}
-        .text-gradient-blue{background:linear-gradient(135deg,#007AC2,#0096D6);-webkit-background-clip:text;color:transparent}
-        .apple-card{background:#FFF;border:1px solid rgba(0,0,0,.04);border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-        .glass-nav{background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.05)}
-        .btn-blue{background:linear-gradient(135deg,#007AC2,#0096D6);color:#fff;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;padding:8px 16px;border:none;transition:all .2s}
-        .btn-blue:hover{box-shadow:0 4px 12px rgba(0,122,194,.3);transform:translateY(-1px)}
-        #auth-screen{position:fixed;inset:0;background:#F8FAFC;z-index:100;display:flex;align-items:center;justify-content:center;transition:opacity .6s}
-        #dashboard{display:none;opacity:0;transition:opacity .6s}
-        .input-f{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:8px;padding:8px 12px;font-size:13px;outline:none;transition:all .2s;width:100%;color:#0F172A}
-        .input-f:focus{border-color:#007AC2;box-shadow:0 0 0 3px rgba(0,122,194,.1);background:#fff}
-        .chip{display:inline-flex;align-items:center;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #E2E8F0;background:#F8FAFC;color:#64748B;transition:all .15s;white-space:nowrap}
-        .chip.active{background:#007AC2;color:#fff;border-color:#007AC2}
-        .chip:hover:not(.active){border-color:#007AC2;color:#007AC2}
-        .dropdown{position:relative}
-        .dropdown-menu{position:absolute;top:100%;left:0;right:0;max-height:240px;overflow-y:auto;background:#fff;border:1px solid #E2E8F0;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:30;display:none}
-        .dropdown-menu.open{display:block}
-        .dropdown-item{padding:8px 12px;font-size:13px;cursor:pointer;transition:background .1s}
-        .dropdown-item:hover{background:#F1F5F9}
-        .dropdown-item.selected{background:#007AC2;color:#fff}
-        table{border-collapse:collapse;width:100%}
-        th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#94A3B8;padding:10px 12px;border-bottom:1px solid #F1F5F9;white-space:nowrap}
-        td{padding:10px 12px;font-size:13px;border-bottom:1px solid #F8FAFC}
-        tr:hover td{background:#FAFBFD}
-        .sort-btn{cursor:pointer;user-select:none}
-        .sort-btn:hover{color:#007AC2}
-        .kpi-val{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#0F172A}
-        @media(max-width:768px){.kpi-val{font-size:22px}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BVNT Sài Gòn | Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F8FAFC;color:#0F172A;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.bg-grad{background:linear-gradient(135deg,#007AC2,#0096D6)}
+.text-grad{background:linear-gradient(135deg,#007AC2,#0096D6);-webkit-background-clip:text;color:transparent}
+.card{background:#FFF;border:1px solid rgba(0,0,0,.04);border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.glass{background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.05)}
+.inp{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:8px;padding:8px 12px;font-size:13px;outline:none;width:100%;color:#0F172A;transition:all .2s}
+.inp:focus{border-color:#007AC2;box-shadow:0 0 0 3px rgba(0,122,194,.1);background:#fff}
+.chip{display:inline-flex;align-items:center;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #E2E8F0;background:#F8FAFC;color:#64748B;transition:all .15s;white-space:nowrap}
+.chip.on{background:#007AC2;color:#fff;border-color:#007AC2}
+.chip:hover:not(.on){border-color:#007AC2;color:#007AC2}
+.tab-btn{padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#94A3B8;border-bottom:2px solid transparent;transition:all .2s}
+.tab-btn.on{color:#007AC2;border-bottom-color:#007AC2}
+.tab-btn:hover:not(.on){color:#64748B}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.02em}
+.badge-green{background:#DCFCE7;color:#16A34A}
+.badge-yellow{background:#FEF9C3;color:#A16207}
+.badge-orange{background:#FFEDD5;color:#EA580C}
+.badge-red{background:#FEE2E2;color:#DC2626}
+.pulse{width:8px;height:8px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.kv{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#0F172A}
+@media(max-width:768px){.kv{font-size:22px}}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#94A3B8;padding:10px 10px;border-bottom:1px solid #F1F5F9;white-space:nowrap}
+td{padding:10px 10px;font-size:12px;border-bottom:1px solid #F8FAFC}
+tr:hover td{background:#FAFBFD}
+#auth{position:fixed;inset:0;background:#F8FAFC;z-index:100;display:flex;align-items:center;justify-content:center;transition:opacity .5s}
+#app{display:none;opacity:0;transition:opacity .5s}
+</style>
 </head>
 <body>
 
-<!-- Auth -->
-<div id="auth-screen">
-    <div class="apple-card p-8 w-[90%] max-w-sm text-center">
-        <div class="w-14 h-14 mx-auto mb-5 bg-blue-gradient rounded-xl flex items-center justify-center">
-            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-        </div>
-        <h1 class="text-xl font-bold mb-1">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
-        <p class="text-[10px] font-semibold text-[#007AC2] mb-6 tracking-[.2em] uppercase">Enterprise Data Center</p>
-        <input type="password" id="pw" placeholder="Mã truy cập..." class="input-f text-center text-base tracking-widest mb-3" onkeypress="event.key==='Enter'&&auth()">
-        <p id="err" class="text-red-500 text-xs mb-3 hidden font-medium">Sai mã.</p>
-        <button onclick="auth()" class="btn-blue w-full py-3">Truy Cập</button>
-    </div>
+<!-- AUTH -->
+<div id="auth">
+<div class="card p-8 w-[90%] max-w-sm text-center">
+<div class="w-14 h-14 mx-auto mb-5 bg-grad rounded-xl flex items-center justify-center">
+<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+</div>
+<h1 class="text-xl font-bold mb-1">Bảo Việt <span style="color:#D4B271">Sài Gòn</span></h1>
+<p class="text-[10px] font-semibold text-[#007AC2] mb-6 tracking-[.2em] uppercase">Enterprise Data Center</p>
+<input type="password" id="pw" placeholder="Mã truy cập..." class="inp text-center text-base tracking-widest mb-3" onkeypress="event.key==='Enter'&&login()">
+<p id="err" class="text-red-500 text-xs mb-3 hidden font-medium">Sai mã truy cập.</p>
+<button onclick="login()" class="bg-grad text-white rounded-lg w-full py-3 font-semibold text-sm cursor-pointer border-none">Truy Cập</button>
+</div>
 </div>
 
-<!-- Dashboard -->
-<div id="dashboard">
-<nav class="glass-nav sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <div class="w-7 h-7 bg-blue-gradient rounded-lg flex items-center justify-center">
-                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            </div>
-            <span class="text-sm font-bold text-slate-900">BVNT Sài Gòn</span>
-        </div>
-        <div class="flex items-center gap-3">
-            <span class="hidden md:flex px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full items-center"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1 animate-pulse"></span><span id="rec-count">7,731</span> HĐ loaded</span>
-            <button onclick="location.reload()" class="text-xs font-medium text-slate-400 hover:text-slate-700">Đăng xuất</button>
-        </div>
-    </div>
+<!-- APP -->
+<div id="app">
+<!-- Nav -->
+<nav class="glass sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 bg-grad rounded-lg flex items-center justify-center">
+<svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+</div>
+<span class="text-sm font-bold text-slate-900">BVNT Sài Gòn</span>
+</div>
+<button onclick="location.reload()" class="text-xs font-medium text-slate-400 hover:text-slate-700 cursor-pointer bg-transparent border-none">Đăng xuất</button>
+</div>
 </nav>
 
-<div class="p-4 md:p-8 max-w-7xl mx-auto">
-    <header class="mb-6">
-        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Doanh Thu <span class="text-gradient-blue">Lũy Kế</span></h1>
-        <p class="text-slate-500 text-sm mt-1">Tra cứu theo Phòng KD · Ban · Nhóm · Đại lý — Lọc theo Tháng/Quý/Năm</p>
-    </header>
+<!-- Tabs -->
+<div class="max-w-7xl mx-auto px-4 md:px-6 border-b border-slate-100 flex gap-1">
+<button class="tab-btn on" id="tabLK" onclick="switchTab('lk')">📈 Doanh Thu Lũy Kế</button>
+<button class="tab-btn" id="tabHT" onclick="switchTab('ht')">📊 Tháng Hiện Tại</button>
+</div>
 
-    <!-- FILTERS -->
-    <div class="apple-card p-4 md:p-5 mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
-            <!-- Year -->
-            <div>
-                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Năm</label>
-                <div class="flex gap-1 flex-wrap" id="year-chips"></div>
-            </div>
-            <!-- Period -->
-            <div>
-                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Thời gian</label>
-                <select id="sel-period" class="input-f" onchange="render()">
-                    <option value="all">Tất cả (Lũy kế)</option>
-                    <option value="q1">Quý 1 (T1-T3)</option>
-                    <option value="q2">Quý 2 (T4-T6)</option>
-                    <option value="q3">Quý 3 (T7-T9)</option>
-                    <option value="q4">Quý 4 (T10-T12)</option>
-                    <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option>
-                    <option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option>
-                    <option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option>
-                    <option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
-                </select>
-            </div>
-            <!-- Level -->
-            <div>
-                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Cấp quản lý</label>
-                <select id="sel-level" class="input-f" onchange="onLevelChange()">
-                    <option value="company">Toàn Công Ty</option>
-                    <option value="phong">Phòng Kinh Doanh</option>
-                    <option value="ban">Ban</option>
-                    <option value="nhom">Nhóm</option>
-                    <option value="dl">Đại Lý (TVV)</option>
-                </select>
-            </div>
-            <!-- Search -->
-            <div>
-                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Tìm kiếm</label>
-                <input type="text" id="search" class="input-f" placeholder="Tên phòng, ban, nhóm, đại lý..." oninput="render()">
-            </div>
-        </div>
-        <!-- Specific filter -->
-        <div id="specific-filter" class="hidden">
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block" id="specific-label">Chọn:</label>
-            <select id="sel-specific" class="input-f" onchange="render()">
-                <option value="">-- Tất cả --</option>
-            </select>
-        </div>
-    </div>
+<!-- ==================== TAB LŨY KẾ ==================== -->
+<div id="panelLK" class="p-4 md:p-8 max-w-7xl mx-auto">
+<header class="mb-6">
+<h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">Doanh Thu <span class="text-grad">Lũy Kế</span></h1>
+<p class="text-slate-500 text-sm mt-1">Tra cứu theo Phòng KD · Ban · Nhóm · Đại lý — Lọc theo Tháng/Quý/Năm</p>
+</header>
+<!-- Filters -->
+<div class="card p-4 md:p-5 mb-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+<div>
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Năm</label>
+<div class="flex gap-1 flex-wrap" id="yrChips"></div>
+</div>
+<div>
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Thời gian</label>
+<select id="fPeriod" class="inp" onchange="renderLK()">
+<option value="all">Tất cả (Lũy kế)</option>
+<option value="q1">Quý 1 (T1-T3)</option><option value="q2">Quý 2 (T4-T6)</option>
+<option value="q3">Quý 3 (T7-T9)</option><option value="q4">Quý 4 (T10-T12)</option>
+<option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option>
+<option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+<option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option>
+<option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
+</select>
+</div>
+<div>
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Cấp quản lý</label>
+<select id="fLevel" class="inp" onchange="onLevelChange()">
+<option value="company">Toàn Công Ty</option><option value="phong">Phòng Kinh Doanh</option>
+<option value="ban">Ban</option><option value="nhom">Nhóm</option><option value="dl">Đại Lý (TVV)</option>
+</select>
+</div>
+<div>
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Tìm kiếm</label>
+<input type="text" id="fSearch" class="inp" placeholder="Tên phòng, ban, nhóm, đại lý..." oninput="renderLK()">
+</div>
+</div>
+<div id="fSpecWrap" class="hidden">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block" id="fSpecLabel">Chọn:</label>
+<select id="fSpec" class="inp" onchange="renderLK()"><option value="">-- Tất cả --</option></select>
+</div>
+</div>
+<!-- KPI -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div><div class="kv" id="lk-afyp">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Hợp Đồng</div><div class="kv" id="lk-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ phát hành</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">AFYP B/Q mỗi HĐ</div><div class="kv" id="lk-avg">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu/HĐ</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Đại Lý HĐ</div><div class="kv" id="lk-dl">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">TVV có phát sinh</div></div>
+</div>
+<!-- Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+<div class="card p-5 lg:col-span-2"><h2 class="text-sm font-bold text-slate-900 mb-4">AFYP Theo Tháng (Triệu VNĐ)</h2><div class="h-56 md:h-64"><canvas id="cMonth"></canvas></div></div>
+<div class="card p-5"><h2 class="text-sm font-bold text-slate-900 mb-4">So Sánh Năm</h2><div class="h-56 md:h-64"><canvas id="cYear"></canvas></div></div>
+</div>
+<!-- Table -->
+<div class="card p-5 mb-8">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-sm font-bold text-slate-900" id="lk-title">Bảng Chi Tiết</h2>
+<span class="text-[11px] text-slate-400 font-medium" id="lk-count"></span>
+</div>
+<div class="overflow-x-auto"><table><thead><tr id="lk-thead"></tr></thead><tbody id="lk-tbody"></tbody></table></div>
+</div>
+</div>
 
-    <!-- KPI -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div class="apple-card p-4 md:p-5">
-            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div>
-            <div class="kpi-val" id="k-afyp">0</div>
-            <div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div>
-        </div>
-        <div class="apple-card p-4 md:p-5">
-            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Hợp Đồng</div>
-            <div class="kpi-val" id="k-hd">0</div>
-            <div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ phát hành</div>
-        </div>
-        <div class="apple-card p-4 md:p-5">
-            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">AFYP B/Q mỗi HĐ</div>
-            <div class="kpi-val" id="k-avg">0</div>
-            <div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu/HĐ</div>
-        </div>
-        <div class="apple-card p-4 md:p-5">
-            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Đại Lý HĐ</div>
-            <div class="kpi-val" id="k-dl">0</div>
-            <div class="text-[11px] text-slate-400 font-semibold mt-1">TVV có phát sinh</div>
-        </div>
-    </div>
-
-    <!-- Charts + Table -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div class="apple-card p-5 lg:col-span-2">
-            <h2 class="text-sm font-bold text-slate-900 mb-4">AFYP Theo Tháng (Triệu VNĐ)</h2>
-            <div class="relative h-56 md:h-64"><canvas id="chart-monthly"></canvas></div>
-        </div>
-        <div class="apple-card p-5">
-            <h2 class="text-sm font-bold text-slate-900 mb-4">So Sánh Năm</h2>
-            <div class="relative h-56 md:h-64"><canvas id="chart-yearly"></canvas></div>
-        </div>
-    </div>
-
-    <!-- Results Table -->
-    <div class="apple-card p-5 mb-8">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-sm font-bold text-slate-900" id="table-title">Bảng Chi Tiết</h2>
-            <span class="text-[11px] text-slate-400 font-medium" id="table-count"></span>
-        </div>
-        <div class="overflow-x-auto">
-            <table>
-                <thead><tr id="table-head"></tr></thead>
-                <tbody id="table-body"></tbody>
-            </table>
-        </div>
-    </div>
+<!-- ==================== TAB THÁNG HIỆN TẠI ==================== -->
+<div id="panelHT" class="p-4 md:p-8 max-w-7xl mx-auto hidden">
+<header class="mb-6">
+<div class="flex items-center gap-3 mb-1">
+<h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900" id="ht-monthLabel">Tháng Hiện Tại</h1>
+<div class="flex items-center gap-1.5 bg-green-50 px-3 py-1 rounded-full"><div class="pulse"></div><span class="text-[10px] font-bold text-green-700 uppercase tracking-wider">Live</span></div>
+</div>
+<p class="text-slate-500 text-sm">Doanh thu ước tính — Cập nhật hằng ngày · <span class="font-semibold text-slate-600" id="ht-updated"></span></p>
+</header>
+<!-- Filters HT -->
+<div class="card p-4 md:p-5 mb-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<div>
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Cấp quản lý</label>
+<select id="htLevel" class="inp" onchange="onHTLevelChange()">
+<option value="all">Tất cả</option><option value="phong">Phòng KD</option><option value="ban">Ban</option><option value="nhom">Nhóm</option>
+</select>
+</div>
+<div id="htSpecWrap" class="hidden">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block" id="htSpecLabel">Chọn:</label>
+<select id="htSpec" class="inp" onchange="renderHT()"><option value="">-- Tất cả --</option></select>
+</div>
+<div>
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Tìm kiếm</label>
+<input type="text" id="htSearch" class="inp" placeholder="Tên TVV, ban, nhóm..." oninput="renderHT()">
+</div>
+</div>
+</div>
+<!-- KPI HT -->
+<div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div><div class="kv text-[#007AC2]" id="ht-afyp">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng Số HĐ</div><div class="kv" id="ht-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Hợp đồng</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Có Hiệu Lực</div><div class="kv text-green-600" id="ht-hl">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ đã duyệt</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Chờ Duyệt</div><div class="kv text-amber-500" id="ht-dgrr">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Chờ / Đang ĐGRR</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số TVV</div><div class="kv" id="ht-tvv">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Có phát sinh</div></div>
+</div>
+<!-- Charts HT -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+<div class="card p-5 lg:col-span-2"><h2 class="text-sm font-bold text-slate-900 mb-4">AFYP Theo Ban (Triệu VNĐ)</h2><div class="h-56 md:h-64"><canvas id="cBan"></canvas></div></div>
+<div class="card p-5"><h2 class="text-sm font-bold text-slate-900 mb-4">Tình Trạng Hồ Sơ</h2><div class="h-56 md:h-64"><canvas id="cStatus"></canvas></div></div>
+</div>
+<!-- Table HT -->
+<div class="card p-5 mb-8">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-sm font-bold text-slate-900">Chi Tiết Hợp Đồng</h2>
+<span class="text-[11px] text-slate-400 font-medium" id="ht-count"></span>
+</div>
+<div class="overflow-x-auto"><table><thead><tr>
+<th class="w-8">#</th><th>Đại Lý</th><th>Ban</th><th>Nhóm</th><th>Bên Mua BH</th><th>Tình Trạng</th><th>Ngày Thu</th><th class="text-right">AFYP (Tr)</th>
+</tr></thead><tbody id="ht-tbody"></tbody></table></div>
+</div>
 </div>
 </div>
 
 <script>
 // ========== AUTH ==========
-function auth(){
-    if(document.getElementById('pw').value==='103ty'){
-        document.getElementById('auth-screen').style.opacity='0';
-        setTimeout(()=>{
-            document.getElementById('auth-screen').style.display='none';
-            document.getElementById('dashboard').style.display='block';
-            setTimeout(()=>document.getElementById('dashboard').style.opacity='1',30);
-            init();
-        },400);
-    } else {
-        document.getElementById('err').classList.remove('hidden');
-        document.getElementById('pw').value='';
-    }
+function login(){if(document.getElementById('pw').value==='103ty'){document.getElementById('auth').style.opacity='0';setTimeout(()=>{document.getElementById('auth').style.display='none';document.getElementById('app').style.display='block';setTimeout(()=>{document.getElementById('app').style.opacity='1'},30);loadAll()},400)}else{document.getElementById('err').classList.remove('hidden');document.getElementById('pw').value=''}}
+
+// ========== TABS ==========
+let curTab='lk';
+function switchTab(t){
+curTab=t;
+document.getElementById('tabLK').classList.toggle('on',t==='lk');
+document.getElementById('tabHT').classList.toggle('on',t==='ht');
+document.getElementById('panelLK').classList.toggle('hidden',t!=='lk');
+document.getElementById('panelHT').classList.toggle('hidden',t!=='ht');
 }
 
 // ========== DATA ==========
-let RAW=[], FILTERS={}, selectedYear=2026;
-let chartM=null, chartY=null;
+let LK_RAW=[],LK_FILTERS={},selYear=2026;
+let HT_DATA=null,HT_RECS=[];
+let cm1=null,cm2=null,cm3=null,cm4=null;
 
-async function init(){
-    try{
-        const resp=await fetch('data/all_contracts.json');
-        const data=await resp.json();
-        RAW=data.records; FILTERS=data.filters;
-        document.getElementById('rec-count').textContent=RAW.length.toLocaleString('vi-VN');
-        buildYearChips();
-        render();
-    }catch(e){console.error(e);alert('Lỗi tải dữ liệu: '+e.message)}
+async function loadAll(){
+try{
+const [r1,r2]=await Promise.all([fetch('data/all_contracts.json'),fetch('data/bc02_current.json')]);
+const d1=await r1.json();LK_RAW=d1.records;LK_FILTERS=d1.filters;
+HT_DATA=await r2.json();HT_RECS=HT_DATA.records;
+buildYearChips();renderLK();renderHT();
+}catch(e){console.error(e);alert('Lỗi tải dữ liệu: '+e.message)}
 }
 
+// ========== LŨY KẾ ==========
 function buildYearChips(){
-    const c=document.getElementById('year-chips');
-    const yrs=[2026,2025,2024];
-    c.innerHTML=yrs.map(y=>`<div class="chip ${y===selectedYear?'active':''}" onclick="selectYear(${y})">${y}</div>`).join('');
+const c=document.getElementById('yrChips');
+c.innerHTML=[2026,2025,2024].map(y=>`<div class="chip ${y===selYear?'on':''}" onclick="pickYear(${y})">${y}</div>`).join('');
 }
+function pickYear(y){selYear=y;buildYearChips();renderLK()}
 
-function selectYear(y){selectedYear=y;buildYearChips();render()}
-
-function getFilteredRecords(){
-    const period=document.getElementById('sel-period').value;
-    const level=document.getElementById('sel-level').value;
-    const search=document.getElementById('search').value.toLowerCase().trim();
-    const specific=document.getElementById('sel-specific').value;
-    
-    let recs=RAW.filter(r=>r.y===selectedYear);
-    
-    // Period filter
-    if(period==='q1') recs=recs.filter(r=>r.m>=1&&r.m<=3);
-    else if(period==='q2') recs=recs.filter(r=>r.m>=4&&r.m<=6);
-    else if(period==='q3') recs=recs.filter(r=>r.m>=7&&r.m<=9);
-    else if(period==='q4') recs=recs.filter(r=>r.m>=10&&r.m<=12);
-    else if(period!=='all') recs=recs.filter(r=>r.m===parseInt(period));
-    
-    // Search
-    if(search){
-        recs=recs.filter(r=>
-            (r.p&&r.p.toLowerCase().includes(search))||
-            (r.b&&r.b.toLowerCase().includes(search))||
-            (r.n&&r.n.toLowerCase().includes(search))||
-            (r.d&&r.d.toLowerCase().includes(search))||
-            (r.a&&r.a.toLowerCase().includes(search))
-        );
-    }
-    
-    // Specific filter
-    if(specific){
-        if(level==='phong') recs=recs.filter(r=>r.p===specific);
-        else if(level==='ban') recs=recs.filter(r=>r.b===specific);
-        else if(level==='nhom') recs=recs.filter(r=>r.n===specific);
-    }
-    
-    return recs;
+function getLKFiltered(){
+const per=document.getElementById('fPeriod').value;
+const lvl=document.getElementById('fLevel').value;
+const q=document.getElementById('fSearch').value.toLowerCase().trim();
+const spec=document.getElementById('fSpec').value;
+let r=LK_RAW.filter(x=>x.y===selYear);
+if(per==='q1')r=r.filter(x=>x.m>=1&&x.m<=3);
+else if(per==='q2')r=r.filter(x=>x.m>=4&&x.m<=6);
+else if(per==='q3')r=r.filter(x=>x.m>=7&&x.m<=9);
+else if(per==='q4')r=r.filter(x=>x.m>=10&&x.m<=12);
+else if(per!=='all')r=r.filter(x=>x.m===parseInt(per));
+if(q)r=r.filter(x=>(x.p||'').toLowerCase().includes(q)||(x.b||'').toLowerCase().includes(q)||(x.n||'').toLowerCase().includes(q)||(x.d||'').toLowerCase().includes(q)||(x.a||'').toLowerCase().includes(q));
+if(spec){if(lvl==='phong')r=r.filter(x=>x.p===spec);else if(lvl==='ban')r=r.filter(x=>x.b===spec);else if(lvl==='nhom')r=r.filter(x=>x.n===spec)}
+return r;
 }
 
 function onLevelChange(){
-    const level=document.getElementById('sel-level').value;
-    const sf=document.getElementById('specific-filter');
-    const sel=document.getElementById('sel-specific');
-    const lbl=document.getElementById('specific-label');
-    
-    if(level==='company'||level==='dl'){
-        sf.classList.add('hidden');
-        sel.innerHTML='<option value="">-- Tất cả --</option>';
-    } else {
-        sf.classList.remove('hidden');
-        let items=[];
-        if(level==='phong'){lbl.textContent='Chọn Phòng KD:';items=FILTERS.phongs||[]}
-        else if(level==='ban'){lbl.textContent='Chọn Ban:';items=FILTERS.bans||[]}
-        else if(level==='nhom'){lbl.textContent='Chọn Nhóm:';items=FILTERS.nhoms||[]}
-        sel.innerHTML='<option value="">-- Tất cả --</option>'+items.map(i=>`<option value="${i}">${i}</option>`).join('');
-    }
-    render();
+const lvl=document.getElementById('fLevel').value;
+const w=document.getElementById('fSpecWrap');
+const sel=document.getElementById('fSpec');
+const lbl=document.getElementById('fSpecLabel');
+if(lvl==='company'||lvl==='dl'){w.classList.add('hidden');sel.innerHTML='<option value="">-- Tất cả --</option>'}
+else{w.classList.remove('hidden');let items=lvl==='phong'?LK_FILTERS.phongs:lvl==='ban'?LK_FILTERS.bans:LK_FILTERS.nhoms;
+lbl.textContent=lvl==='phong'?'Chọn Phòng KD:':lvl==='ban'?'Chọn Ban:':'Chọn Nhóm:';
+sel.innerHTML='<option value="">-- Tất cả --</option>'+(items||[]).map(i=>`<option value="${i}">${i}</option>`).join('')}
+renderLK();
 }
 
-function render(){
-    const recs=getFilteredRecords();
-    const level=document.getElementById('sel-level').value;
-    
-    // KPI
-    const totalAFYP=recs.reduce((s,r)=>s+r.v,0);
-    const totalHD=recs.length;
-    const uniqueDL=new Set(recs.map(r=>r.d).filter(Boolean)).size;
-    
-    document.getElementById('k-afyp').textContent=totalAFYP.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
-    document.getElementById('k-hd').textContent=totalHD.toLocaleString('vi-VN');
-    document.getElementById('k-avg').textContent=totalHD?( totalAFYP/totalHD).toFixed(1):'0';
-    document.getElementById('k-dl').textContent=uniqueDL.toLocaleString('vi-VN');
-    
-    // Monthly chart
-    renderMonthlyChart(recs);
-    renderYearlyChart();
-    renderTable(recs,level);
+function renderLK(){
+const recs=getLKFiltered();
+const lvl=document.getElementById('fLevel').value;
+const tot=recs.reduce((s,r)=>s+r.v,0);
+const hd=recs.length;
+const dl=new Set(recs.map(r=>r.d).filter(Boolean)).size;
+document.getElementById('lk-afyp').textContent=tot.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+document.getElementById('lk-hd').textContent=hd.toLocaleString('vi-VN');
+document.getElementById('lk-avg').textContent=hd?(tot/hd).toFixed(1):'0';
+document.getElementById('lk-dl').textContent=dl.toLocaleString('vi-VN');
+// Monthly chart
+const mo={};recs.forEach(r=>{if(r.m){mo[r.m]=(mo[r.m]||0)+r.v}});
+const ms=Object.keys(mo).map(Number).sort((a,b)=>a-b);
+const mn=['','T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+if(cm1)cm1.destroy();
+cm1=new Chart(document.getElementById('cMonth'),{type:'bar',data:{labels:ms.map(m=>mn[m]),datasets:[{label:'AFYP',data:ms.map(m=>Math.round(mo[m]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},x:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}});
+// Yearly chart
+const yt=[2024,2025,2026].map(y=>Math.round(LK_RAW.filter(x=>x.y===y).reduce((s,x)=>s+x.v,0)*10)/10);
+if(cm2)cm2.destroy();
+cm2=new Chart(document.getElementById('cYear'),{type:'bar',data:{labels:['2024','2025','2026'],datasets:[{label:'AFYP',data:yt,backgroundColor:['#CBD5E1','#64748B','#007AC2'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},y:{border:{display:false},grid:{display:false},ticks:{font:{size:11,weight:'bold'}}}}}});
+// Table
+const names={company:'Toàn Công Ty',phong:'Phòng KD',ban:'Ban',nhom:'Nhóm',dl:'Đại Lý'};
+let grp={};
+if(lvl==='company')grp={'Toàn Công Ty':recs};
+else recs.forEach(r=>{const k=lvl==='phong'?r.p:lvl==='ban'?r.b:lvl==='nhom'?r.n:r.d;const key=k||'(Không rõ)';(grp[key]=grp[key]||[]).push(r)});
+let rows=Object.entries(grp).map(([n,items])=>({n,a:Math.round(items.reduce((s,r)=>s+r.v,0)*10)/10,h:items.length,d:new Set(items.map(r=>r.d).filter(Boolean)).size})).sort((a,b)=>b.a-a.a);
+document.getElementById('lk-title').textContent=`Xếp hạng theo ${names[lvl]} — ${selYear}`;
+document.getElementById('lk-count').textContent=`${rows.length} kết quả`;
+document.getElementById('lk-thead').innerHTML=`<th class="w-10">#</th><th>${names[lvl]}</th><th class="text-right">AFYP (Triệu)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th>${lvl!=='dl'?'<th class="text-right">Số TVV</th>':''}`;
+const show=rows.slice(0,200);
+document.getElementById('lk-tbody').innerHTML=show.map((r,i)=>`<tr><td class="text-slate-400 text-xs font-bold">${i+1}</td><td class="font-semibold text-slate-800">${r.n}</td><td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.a.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td><td class="text-right text-slate-700">${r.h.toLocaleString('vi-VN')}</td><td class="text-right text-slate-500">${r.h?(r.a/r.h).toFixed(1):'—'}</td>${lvl!=='dl'?`<td class="text-right text-slate-500">${r.d}</td>`:''}</tr>`).join('')+(rows.length>200?`<tr><td colspan="6" class="text-center text-slate-400 text-xs py-4">Hiển thị 200/${rows.length} — Dùng bộ lọc để thu hẹp.</td></tr>`:'');
 }
 
-function renderMonthlyChart(recs){
-    const monthly={};
-    recs.forEach(r=>{if(r.m){monthly[r.m]=(monthly[r.m]||0)+r.v}});
-    const months=Object.keys(monthly).map(Number).sort((a,b)=>a-b);
-    const mNames=['','T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
-    
-    if(chartM)chartM.destroy();
-    chartM=new Chart(document.getElementById('chart-monthly'),{
-        type:'bar',
-        data:{labels:months.map(m=>mNames[m]),datasets:[{label:'AFYP',data:months.map(m=>Math.round(monthly[m]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},
-        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},x:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}
-    });
+// ========== THÁNG HIỆN TẠI ==========
+function getHTFiltered(){
+const lvl=document.getElementById('htLevel').value;
+const spec=document.getElementById('htSpec').value;
+const q=document.getElementById('htSearch').value.toLowerCase().trim();
+let r=[...HT_RECS];
+if(spec){if(lvl==='phong')r=r.filter(x=>x.p===spec);else if(lvl==='ban')r=r.filter(x=>x.b===spec);else if(lvl==='nhom')r=r.filter(x=>x.n===spec)}
+if(q)r=r.filter(x=>(x.d||'').toLowerCase().includes(q)||(x.b||'').toLowerCase().includes(q)||(x.n||'').toLowerCase().includes(q)||(x.bmbh||'').toLowerCase().includes(q)||(x.a||'').toLowerCase().includes(q)||(x.p||'').toLowerCase().includes(q));
+return r;
 }
 
-function renderYearlyChart(){
-    const yearTotals=[2024,2025,2026].map(y=>{
-        const r=RAW.filter(x=>x.y===y);
-        return Math.round(r.reduce((s,x)=>s+x.v,0)*10)/10;
-    });
-    if(chartY)chartY.destroy();
-    chartY=new Chart(document.getElementById('chart-yearly'),{
-        type:'bar',
-        data:{labels:['2024','2025','2026'],datasets:[{label:'AFYP',data:yearTotals,backgroundColor:['#CBD5E1','#64748B','#007AC2'],borderRadius:4}]},
-        options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},y:{border:{display:false},grid:{display:false},ticks:{font:{size:11,weight:'bold'}}}}}
-    });
+function onHTLevelChange(){
+const lvl=document.getElementById('htLevel').value;
+const w=document.getElementById('htSpecWrap');
+const sel=document.getElementById('htSpec');
+const lbl=document.getElementById('htSpecLabel');
+if(lvl==='all'){w.classList.add('hidden');sel.innerHTML='<option value="">-- Tất cả --</option>'}
+else{
+w.classList.remove('hidden');
+const vals=new Set();HT_RECS.forEach(r=>{const v=lvl==='phong'?r.p:lvl==='ban'?r.b:r.n;if(v)vals.add(v)});
+lbl.textContent=lvl==='phong'?'Chọn Phòng KD:':lvl==='ban'?'Chọn Ban:':'Chọn Nhóm:';
+sel.innerHTML='<option value="">-- Tất cả --</option>'+[...vals].sort().map(v=>`<option value="${v}">${v}</option>`).join('');
+}
+renderHT();
 }
 
-function renderTable(recs,level){
-    const thead=document.getElementById('table-head');
-    const tbody=document.getElementById('table-body');
-    const title=document.getElementById('table-title');
-    const countEl=document.getElementById('table-count');
-    
-    // Group by level
-    let groups={};
-    let groupKey='';
-    
-    if(level==='company'){
-        groupKey='Toàn Công Ty';
-        groups={'Toàn Công Ty':recs};
-    } else if(level==='phong'){
-        recs.forEach(r=>{const k=r.p||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
-    } else if(level==='ban'){
-        recs.forEach(r=>{const k=r.b||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
-    } else if(level==='nhom'){
-        recs.forEach(r=>{const k=r.n||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
-    } else if(level==='dl'){
-        recs.forEach(r=>{const k=r.d||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
-    }
-    
-    // Calculate totals per group
-    let rows=Object.entries(groups).map(([name,items])=>({
-        name,
-        afyp: Math.round(items.reduce((s,r)=>s+r.v,0)*10)/10,
-        hd: items.length,
-        dl: new Set(items.map(r=>r.d).filter(Boolean)).size
-    }));
-    
-    // Sort by AFYP descending
-    rows.sort((a,b)=>b.afyp-a.afyp);
-    
-    const levelNames={company:'Toàn Công Ty',phong:'Phòng KD',ban:'Ban',nhom:'Nhóm',dl:'Đại Lý'};
-    title.textContent=`Xếp hạng theo ${levelNames[level]} — ${selectedYear}`;
-    countEl.textContent=`${rows.length} kết quả`;
-    
-    thead.innerHTML=`
-        <th class="w-10">#</th>
-        <th>${levelNames[level]}</th>
-        <th class="text-right sort-btn" onclick="sortTable('afyp')">AFYP (Triệu) ↓</th>
-        <th class="text-right">Số HĐ</th>
-        <th class="text-right">B/Q (Triệu/HĐ)</th>
-        ${level!=='dl'?'<th class="text-right">Số TVV</th>':''}
-    `;
-    
-    // Limit to 200 rows for performance
-    const display=rows.slice(0,200);
-    tbody.innerHTML=display.map((r,i)=>`
-        <tr>
-            <td class="text-slate-400 text-xs font-bold">${i+1}</td>
-            <td class="font-semibold text-slate-800 text-xs">${r.name}</td>
-            <td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.afyp.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
-            <td class="text-right text-slate-700">${r.hd.toLocaleString('vi-VN')}</td>
-            <td class="text-right text-slate-500">${r.hd?(r.afyp/r.hd).toFixed(1):'—'}</td>
-            ${level!=='dl'?`<td class="text-right text-slate-500">${r.dl}</td>`:''}
-        </tr>
-    `).join('');
-    
-    if(rows.length>200){
-        tbody.innerHTML+=`<tr><td colspan="6" class="text-center text-slate-400 text-xs py-4">Hiển thị 200/${rows.length} kết quả. Dùng bộ lọc để thu hẹp.</td></tr>`;
-    }
+function statusBadge(tt){
+const t=(tt||'').toLowerCase();
+if(t.includes('hiệu lực'))return'<span class="badge badge-green">Có hiệu lực</span>';
+if(t.includes('chờ'))return'<span class="badge badge-yellow">Chờ ĐGRR</span>';
+if(t.includes('đang'))return'<span class="badge badge-orange">Đang ĐGRR</span>';
+return`<span class="badge" style="background:#F1F5F9;color:#64748B">${tt||'—'}</span>`;
 }
 
-let sortDir=-1;
-function sortTable(col){
-    sortDir*=-1;
-    render();
+function renderHT(){
+if(!HT_DATA)return;
+document.getElementById('ht-monthLabel').textContent=HT_DATA.month_label||'Tháng Hiện Tại';
+document.getElementById('ht-updated').textContent='Cập nhật: '+(HT_DATA.updated||'—');
+const recs=getHTFiltered();
+const tot=recs.reduce((s,r)=>s+r.v,0);
+const hd=recs.length;
+const hl=recs.filter(r=>(r.tt||'').toLowerCase().includes('hiệu lực')).length;
+const dg=recs.filter(r=>{const t=(r.tt||'').toLowerCase();return t.includes('chờ')||t.includes('đang')}).length;
+const tvv=new Set(recs.map(r=>r.d).filter(Boolean)).size;
+document.getElementById('ht-afyp').textContent=tot.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+document.getElementById('ht-hd').textContent=hd;
+document.getElementById('ht-hl').textContent=hl;
+document.getElementById('ht-dgrr').textContent=dg;
+document.getElementById('ht-tvv').textContent=tvv;
+document.getElementById('ht-count').textContent=`${hd} hợp đồng`;
+// Table
+const sorted=[...recs].sort((a,b)=>b.v-a.v);
+document.getElementById('ht-tbody').innerHTML=sorted.map((r,i)=>`<tr>
+<td class="text-slate-400 text-xs font-bold">${i+1}</td>
+<td class="font-semibold text-slate-800">${r.d||'—'}</td>
+<td class="text-slate-600">${r.b||'—'}</td>
+<td class="text-slate-600">${r.n||'—'}</td>
+<td class="text-slate-600 text-[11px]">${r.bmbh||'—'}</td>
+<td>${statusBadge(r.tt)}</td>
+<td class="text-slate-500 text-[11px]">${r.nt||'—'}</td>
+<td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.v.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
+</tr>`).join('');
+// Chart: AFYP by Ban
+const banMap={};recs.forEach(r=>{const k=r.b||'(Khác)';banMap[k]=(banMap[k]||0)+r.v});
+const banArr=Object.entries(banMap).sort((a,b)=>b[1]-a[1]);
+if(cm3)cm3.destroy();
+cm3=new Chart(document.getElementById('cBan'),{type:'bar',data:{labels:banArr.map(b=>b[0].length>16?b[0].slice(0,15)+'…':b[0]),datasets:[{label:'AFYP',data:banArr.map(b=>Math.round(b[1]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},y:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}});
+// Chart: Status donut
+const allRecs=HT_RECS;const totalHL=allRecs.filter(r=>(r.tt||'').toLowerCase().includes('hiệu lực')).length;
+const totalDG=allRecs.filter(r=>{const t=(r.tt||'').toLowerCase();return t.includes('chờ')||t.includes('đang')}).length;
+const totalOther=allRecs.length-totalHL-totalDG;
+if(cm4)cm4.destroy();
+cm4=new Chart(document.getElementById('cStatus'),{type:'doughnut',data:{labels:['Có hiệu lực','Chờ/Đang ĐGRR','Khác'],datasets:[{data:[totalHL,totalDG,totalOther],backgroundColor:['#22C55E','#F59E0B','#CBD5E1'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{font:{size:11},usePointStyle:true,padding:12}}}}});
 }
 </script>
 </body>
