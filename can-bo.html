@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông Tin Cán Bộ | Bảo Việt Nhân thọ Sài Gòn</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --p-blue: #007AC2;
+    --s-blue: #0096D6;
+    --gold: #D4B271;
+    --bg-light: #F8FAFC;
+    --text-main: #0F172A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background-color: var(--bg-light); color: var(--text-main); }
+.btn-primary {
+    background: linear-gradient(135deg, var(--p-blue), var(--s-blue));
+    color: #FFF;
+    font-weight: 700;
+}
+.glass-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
+}
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<!-- Navigation -->
+<nav class="bg-white border-b border-slate-200 fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <img src="logo.png" alt="Bảo Việt Nhân Thọ" class="h-10 md:h-12 object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(87%) saturate(1612%) hue-rotate(180deg) brightness(87%) contrast(102%);">
+            <span class="text-lg md:text-xl font-extrabold tracking-wide uppercase bg-gradient-to-r from-[#D4B271] via-[#007AC2] to-[#C8A046] bg-clip-text text-transparent border-l-2 border-[#D4B271] pl-4 leading-none" style="font-family: 'Georgia', 'Inter', sans-serif;">BẢO VIỆT NHÂN THỌ SÀI GÒN</span>
+        </div>
+        <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-[#007AC2] flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            Quay lại trang chủ
+        </a>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-20 flex items-center justify-center px-6">
+    <div class="max-w-xl w-full text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50 text-[#007AC2] mb-6 border border-blue-100">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </div>
+        <h1 class="text-3xl font-extrabold text-slate-900 mb-4">Trang Thông Tin Cán Bộ</h1>
+        <p class="text-slate-500 mb-8 leading-relaxed">Hệ thống đang tích hợp cổng thông tin nội bộ dành riêng cho Cán bộ Nhân viên Bảo Việt Nhân thọ Sài Gòn. Vui lòng quay lại sau.</p>
+        <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <div class="w-2.5 h-2.5 rounded-full bg-[#D4B271]"></div>
+                <span class="text-sm font-bold text-slate-700">Thông tin hỗ trợ cán bộ</span>
+            </div>
+            <div class="text-xs text-slate-600 space-y-2">
+                <p>📍 <strong>Trụ sở chính:</strong> 233 Đồng Khởi, Phường Sài Gòn, TP. HCM</p>
+                <p>⏰ <strong>Thời gian hỗ trợ:</strong> 8h00 - 17h00 (Thứ 2 - Thứ 6)</p>
+                <p>📧 <strong>Email hỗ trợ kỹ thuật:</strong> support.sg@baoviet.com.vn</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-slate-200 py-6 text-center">
+    <p class="text-xs text-slate-500">© 2026 Bảo Việt Nhân thọ Sài Gòn. Toàn quyền bảo lưu.</p>
+</footer>
+
+</body>
+</html>
