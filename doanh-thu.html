@@ -29,11 +29,11 @@ body{background:#F8FAFC;color:#0F172A;font-family:'Inter',sans-serif;-webkit-fon
 .badge-red{background:#FEE2E2;color:#DC2626}
 .pulse{width:8px;height:8px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
-.kv{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#0F172A}
+.kv{font-size:26px;font-weight:800;letter-spacing:-.02em;color:#0F172A;line-height:1.2}
 @media(max-width:768px){.kv{font-size:22px}}
 table{border-collapse:collapse;width:100%}
-th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#94A3B8;padding:10px 10px;border-bottom:1px solid #F1F5F9;white-space:nowrap}
-td{padding:10px 10px;font-size:12px;border-bottom:1px solid #F8FAFC}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#94A3B8;padding:10px;border-bottom:1px solid #F1F5F9;white-space:nowrap}
+td{padding:10px;font-size:12px;border-bottom:1px solid #F8FAFC}
 tr:hover td{background:#FAFBFD}
 #auth{position:fixed;inset:0;background:#F8FAFC;z-index:100;display:flex;align-items:center;justify-content:center;transition:opacity .5s}
 #app{display:none;opacity:0;transition:opacity .5s}
@@ -71,7 +71,7 @@ tr:hover td{background:#FAFBFD}
 </nav>
 
 <!-- Tabs -->
-<div class="max-w-7xl mx-auto px-4 md:px-6 border-b border-slate-100 flex gap-1">
+<div class="max-w-7xl mx-auto px-4 md:px-6 border-b border-slate-100 flex gap-1 mt-2">
 <button class="tab-btn on" id="tabLK" onclick="switchTab('lk')">📈 Doanh Thu Lũy Kế</button>
 <button class="tab-btn" id="tabHT" onclick="switchTab('ht')">📊 Tháng Hiện Tại</button>
 </div>
@@ -118,13 +118,17 @@ tr:hover td{background:#FAFBFD}
 <select id="fSpec" class="inp" onchange="renderLK()"><option value="">-- Tất cả --</option></select>
 </div>
 </div>
-<!-- KPI -->
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div><div class="kv" id="lk-afyp">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div></div>
+
+<!-- KPI LŨY KẾ -->
+<div class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-6">
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div><div class="kv text-[#007AC2]" id="lk-afyp">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div></div>
 <div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Hợp Đồng</div><div class="kv" id="lk-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ phát hành</div></div>
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">AFYP B/Q mỗi HĐ</div><div class="kv" id="lk-avg">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu/HĐ</div></div>
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Đại Lý HĐ</div><div class="kv" id="lk-dl">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">TVV có phát sinh</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Độ lớn HĐ</div><div class="kv" id="lk-avg-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu / HĐ</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Lượt HĐ</div><div class="kv" id="lk-lhd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Số lượt TVV/tháng</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Lượt HĐ Chuẩn</div><div class="kv text-green-600" id="lk-lhdc">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">IP ≥ 12 Tr/tháng</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Năng suất</div><div class="kv" id="lk-ns">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ / Lượt HĐ</div></div>
 </div>
+
 <!-- Charts -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 <div class="card p-5 lg:col-span-2"><h2 class="text-sm font-bold text-slate-900 mb-4">AFYP Theo Tháng (Triệu VNĐ)</h2><div class="h-56 md:h-64"><canvas id="cMonth"></canvas></div></div>
@@ -169,13 +173,15 @@ tr:hover td{background:#FAFBFD}
 </div>
 </div>
 <!-- KPI HT -->
-<div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+<div class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-6">
 <div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div><div class="kv text-[#007AC2]" id="ht-afyp">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div></div>
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng Số HĐ</div><div class="kv" id="ht-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Hợp đồng</div></div>
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Có Hiệu Lực</div><div class="kv text-green-600" id="ht-hl">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ đã duyệt</div></div>
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Chờ Duyệt</div><div class="kv text-amber-500" id="ht-dgrr">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Chờ / Đang ĐGRR</div></div>
-<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số TVV</div><div class="kv" id="ht-tvv">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Có phát sinh</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Hợp Đồng</div><div class="kv" id="ht-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Hợp đồng</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Độ lớn HĐ</div><div class="kv" id="ht-avg-hd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu / HĐ</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Lượt HĐ</div><div class="kv" id="ht-lhd">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">Số lượt TVV/tháng</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Lượt HĐ Chuẩn</div><div class="kv text-green-600" id="ht-lhdc">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">IP ≥ 12 Tr/tháng</div></div>
+<div class="card p-4"><div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Năng suất</div><div class="kv" id="ht-ns">0</div><div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ / Lượt HĐ</div></div>
 </div>
+
 <!-- Charts HT -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 <div class="card p-5 lg:col-span-2"><h2 class="text-sm font-bold text-slate-900 mb-4">AFYP Theo Ban (Triệu VNĐ)</h2><div class="h-56 md:h-64"><canvas id="cBan"></canvas></div></div>
@@ -206,6 +212,7 @@ document.getElementById('tabLK').classList.toggle('on',t==='lk');
 document.getElementById('tabHT').classList.toggle('on',t==='ht');
 document.getElementById('panelLK').classList.toggle('hidden',t!=='lk');
 document.getElementById('panelHT').classList.toggle('hidden',t!=='ht');
+if(t==='ht') renderHT();
 }
 
 // ========== DATA ==========
@@ -221,6 +228,55 @@ HT_DATA=await r2.json();HT_RECS=HT_DATA.records;
 buildYearChips();renderLK();renderHT();
 }catch(e){console.error(e);alert('Lỗi tải dữ liệu: '+e.message)}
 }
+
+// ========== CALCULATE KPI ==========
+// Tính các chỉ số: Lượt HĐ, Lượt HĐ Chuẩn, Độ Lớn HĐ, Năng suất
+// recs: danh sách hợp đồng đã lọc (chỉ các hợp đồng hợp lệ)
+function calcMetrics(recs) {
+    let tot_afyp = 0;
+    let hd = recs.length;
+    
+    // Gom IP theo Đại Lý (TVV) và Tháng để tính Lượt Hoạt Động (Lượt HĐ)
+    // dl_month_ip[tên_dl][tháng] = tổng_ip
+    let dl_month_ip = {}; 
+    
+    recs.forEach(r => {
+        tot_afyp += (r.v || 0);
+        let dl = r.d || '(Khác)';
+        // Lấy tháng từ r.m (dữ liệu JSON có sẵn m) hoặc cắt từ ngày thu r.nt
+        let m = r.m;
+        if (!m && r.nt) {
+            let parts = r.nt.split('/');
+            if(parts.length >= 2) m = parseInt(parts[1], 10);
+        }
+        if (!m) m = 99; // fallback nếu ko có tháng
+        
+        let ip = r.i || r.ip_tr || r.v || 0; // Ưu tiên IP, nếu ko có thì dùng AFYP
+        
+        if(!dl_month_ip[dl]) dl_month_ip[dl] = {};
+        dl_month_ip[dl][m] = (dl_month_ip[dl][m] || 0) + ip;
+    });
+
+    let lhd = 0;   // Lượt HĐ
+    let lhdc = 0;  // Lượt HĐ chuẩn (IP >= 12)
+    
+    for (let dl in dl_month_ip) {
+        for (let m in dl_month_ip[dl]) {
+            lhd++;
+            if (dl_month_ip[dl][m] >= 12.0) {
+                lhdc++;
+            }
+        }
+    }
+    
+    let do_lon = hd > 0 ? (tot_afyp / hd) : 0;
+    let nang_suat = lhd > 0 ? (hd / lhd) : 0;
+    
+    return {
+        tot_afyp, hd, lhd, lhdc, do_lon, nang_suat
+    };
+}
+
 
 // ========== LŨY KẾ ==========
 function buildYearChips(){
@@ -260,34 +316,64 @@ renderLK();
 function renderLK(){
 const recs=getLKFiltered();
 const lvl=document.getElementById('fLevel').value;
-const tot=recs.reduce((s,r)=>s+r.v,0);
-const hd=recs.length;
-const dl=new Set(recs.map(r=>r.d).filter(Boolean)).size;
-document.getElementById('lk-afyp').textContent=tot.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
-document.getElementById('lk-hd').textContent=hd.toLocaleString('vi-VN');
-document.getElementById('lk-avg').textContent=hd?(tot/hd).toFixed(1):'0';
-document.getElementById('lk-dl').textContent=dl.toLocaleString('vi-VN');
+
+// Calc global KPI for LK
+const m = calcMetrics(recs);
+
+document.getElementById('lk-afyp').textContent=m.tot_afyp.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+document.getElementById('lk-hd').textContent=m.hd.toLocaleString('vi-VN');
+document.getElementById('lk-avg-hd').textContent=m.do_lon.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+document.getElementById('lk-lhd').textContent=m.lhd.toLocaleString('vi-VN');
+document.getElementById('lk-lhdc').textContent=m.lhdc.toLocaleString('vi-VN');
+document.getElementById('lk-ns').textContent=m.nang_suat.toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2});
+
 // Monthly chart
 const mo={};recs.forEach(r=>{if(r.m){mo[r.m]=(mo[r.m]||0)+r.v}});
 const ms=Object.keys(mo).map(Number).sort((a,b)=>a-b);
 const mn=['','T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
 if(cm1)cm1.destroy();
-cm1=new Chart(document.getElementById('cMonth'),{type:'bar',data:{labels:ms.map(m=>mn[m]),datasets:[{label:'AFYP',data:ms.map(m=>Math.round(mo[m]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},x:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}});
+cm1=new Chart(document.getElementById('cMonth'),{type:'bar',data:{labels:ms.map(x=>mn[x]),datasets:[{label:'AFYP',data:ms.map(x=>Math.round(mo[x]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},x:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}});
+
 // Yearly chart
 const yt=[2024,2025,2026].map(y=>Math.round(LK_RAW.filter(x=>x.y===y).reduce((s,x)=>s+x.v,0)*10)/10);
 if(cm2)cm2.destroy();
 cm2=new Chart(document.getElementById('cYear'),{type:'bar',data:{labels:['2024','2025','2026'],datasets:[{label:'AFYP',data:yt,backgroundColor:['#CBD5E1','#64748B','#007AC2'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},y:{border:{display:false},grid:{display:false},ticks:{font:{size:11,weight:'bold'}}}}}});
+
 // Table
 const names={company:'Toàn Công Ty',phong:'Phòng KD',ban:'Ban',nhom:'Nhóm',dl:'Đại Lý'};
 let grp={};
 if(lvl==='company')grp={'Toàn Công Ty':recs};
 else recs.forEach(r=>{const k=lvl==='phong'?r.p:lvl==='ban'?r.b:lvl==='nhom'?r.n:r.d;const key=k||'(Không rõ)';(grp[key]=grp[key]||[]).push(r)});
-let rows=Object.entries(grp).map(([n,items])=>({n,a:Math.round(items.reduce((s,r)=>s+r.v,0)*10)/10,h:items.length,d:new Set(items.map(r=>r.d).filter(Boolean)).size})).sort((a,b)=>b.a-a.a);
+
+let rows=Object.entries(grp).map(([n,items])=>{
+    let x = calcMetrics(items);
+    return {n, a:x.tot_afyp, h:x.hd, lhd:x.lhd, lhdc:x.lhdc, dl:x.do_lon, ns:x.nang_suat};
+}).sort((a,b)=>b.a-a.a);
+
 document.getElementById('lk-title').textContent=`Xếp hạng theo ${names[lvl]} — ${selYear}`;
 document.getElementById('lk-count').textContent=`${rows.length} kết quả`;
-document.getElementById('lk-thead').innerHTML=`<th class="w-10">#</th><th>${names[lvl]}</th><th class="text-right">AFYP (Triệu)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th>${lvl!=='dl'?'<th class="text-right">Số TVV</th>':''}`;
+document.getElementById('lk-thead').innerHTML=`
+    <th class="w-10">#</th>
+    <th>${names[lvl]}</th>
+    <th class="text-right">AFYP (Tr)</th>
+    <th class="text-right">HĐ</th>
+    <th class="text-right">Độ Lớn (Tr/HĐ)</th>
+    <th class="text-right">Lượt HĐ</th>
+    <th class="text-right">Lượt HĐ Chuẩn</th>
+    <th class="text-right">Năng Suất</th>
+`;
+
 const show=rows.slice(0,200);
-document.getElementById('lk-tbody').innerHTML=show.map((r,i)=>`<tr><td class="text-slate-400 text-xs font-bold">${i+1}</td><td class="font-semibold text-slate-800">${r.n}</td><td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.a.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td><td class="text-right text-slate-700">${r.h.toLocaleString('vi-VN')}</td><td class="text-right text-slate-500">${r.h?(r.a/r.h).toFixed(1):'—'}</td>${lvl!=='dl'?`<td class="text-right text-slate-500">${r.d}</td>`:''}</tr>`).join('')+(rows.length>200?`<tr><td colspan="6" class="text-center text-slate-400 text-xs py-4">Hiển thị 200/${rows.length} — Dùng bộ lọc để thu hẹp.</td></tr>`:'');
+document.getElementById('lk-tbody').innerHTML=show.map((r,i)=>`<tr>
+    <td class="text-slate-400 text-xs font-bold">${i+1}</td>
+    <td class="font-semibold text-slate-800">${r.n}</td>
+    <td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.a.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
+    <td class="text-right text-slate-700">${r.h}</td>
+    <td class="text-right text-slate-500">${r.dl.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
+    <td class="text-right text-slate-700">${r.lhd}</td>
+    <td class="text-right text-green-600 font-semibold">${r.lhdc}</td>
+    <td class="text-right text-slate-500">${r.ns.toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+</tr>`).join('')+(rows.length>200?`<tr><td colspan="8" class="text-center text-slate-400 text-xs py-4">Hiển thị 200/${rows.length} — Dùng bộ lọc để thu hẹp.</td></tr>`:'');
 }
 
 // ========== THÁNG HIỆN TẠI ==========
@@ -329,17 +415,18 @@ if(!HT_DATA)return;
 document.getElementById('ht-monthLabel').textContent=HT_DATA.month_label||'Tháng Hiện Tại';
 document.getElementById('ht-updated').textContent='Cập nhật: '+(HT_DATA.updated||'—');
 const recs=getHTFiltered();
-const tot=recs.reduce((s,r)=>s+r.v,0);
-const hd=recs.length;
-const hl=recs.filter(r=>(r.tt||'').toLowerCase().includes('hiệu lực')).length;
-const dg=recs.filter(r=>{const t=(r.tt||'').toLowerCase();return t.includes('chờ')||t.includes('đang')}).length;
-const tvv=new Set(recs.map(r=>r.d).filter(Boolean)).size;
-document.getElementById('ht-afyp').textContent=tot.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
-document.getElementById('ht-hd').textContent=hd;
-document.getElementById('ht-hl').textContent=hl;
-document.getElementById('ht-dgrr').textContent=dg;
-document.getElementById('ht-tvv').textContent=tvv;
-document.getElementById('ht-count').textContent=`${hd} hợp đồng`;
+
+// Calc metrics for HT
+const m = calcMetrics(recs);
+
+document.getElementById('ht-afyp').textContent=m.tot_afyp.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+document.getElementById('ht-hd').textContent=m.hd.toLocaleString('vi-VN');
+document.getElementById('ht-avg-hd').textContent=m.do_lon.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+document.getElementById('ht-lhd').textContent=m.lhd.toLocaleString('vi-VN');
+document.getElementById('ht-lhdc').textContent=m.lhdc.toLocaleString('vi-VN');
+document.getElementById('ht-ns').textContent=m.nang_suat.toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2});
+document.getElementById('ht-count').textContent=`${m.hd} hợp đồng`;
+
 // Table
 const sorted=[...recs].sort((a,b)=>b.v-a.v);
 document.getElementById('ht-tbody').innerHTML=sorted.map((r,i)=>`<tr>
@@ -352,11 +439,13 @@ document.getElementById('ht-tbody').innerHTML=sorted.map((r,i)=>`<tr>
 <td class="text-slate-500 text-[11px]">${r.nt||'—'}</td>
 <td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.v.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
 </tr>`).join('');
+
 // Chart: AFYP by Ban
 const banMap={};recs.forEach(r=>{const k=r.b||'(Khác)';banMap[k]=(banMap[k]||0)+r.v});
 const banArr=Object.entries(banMap).sort((a,b)=>b[1]-a[1]);
 if(cm3)cm3.destroy();
 cm3=new Chart(document.getElementById('cBan'),{type:'bar',data:{labels:banArr.map(b=>b[0].length>16?b[0].slice(0,15)+'…':b[0]),datasets:[{label:'AFYP',data:banArr.map(b=>Math.round(b[1]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},y:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}});
+
 // Chart: Status donut
 const allRecs=HT_RECS;const totalHL=allRecs.filter(r=>(r.tt||'').toLowerCase().includes('hiệu lực')).length;
 const totalDG=allRecs.filter(r=>{const t=(r.tt||'').toLowerCase();return t.includes('chờ')||t.includes('đang')}).length;
