@@ -3,200 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảo Việt Nhân Thọ Sài Gòn | Vững Trọn Niềm Tin</title>
+    <title>Bảo Việt Sài Gòn | Trang chủ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            margin: 0; 
-            overflow-x: hidden; 
-            /* 60% Xanh chủ đạo */
-            background: linear-gradient(135deg, #007AC2 0%, #0096D6 100%); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-        }
-        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
-        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
-        
-        /* 30% Vàng Kim Loại */
-        .text-gold { color: #D4B271; }
-        .text-gold-gradient {
-            background: linear-gradient(to right, #D4B271, #C8A046);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .bg-gold { background: linear-gradient(to right, #D4B271, #C8A046); }
-        .text-blue-dark { color: #007AC2; }
-        
-        .btn-gold {
-            background: linear-gradient(to right, #D4B271, #C8A046);
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(212, 178, 113, 0.4);
-            transition: all 0.3s ease;
-        }
-        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 178, 113, 0.6); }
-        
-        /* 10% Trắng tinh khiết làm điểm nghỉ */
-        .btn-white { background: #ffffff; color: #007AC2; transition: all 0.3s ease; }
-        .btn-white:hover { background: #f8fbff; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); }
-        
-        .glass-header {
-            background: rgba(0, 122, 194, 0.3);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 178, 113, 0.3);
-        }
+        body { margin: 0; background-color: #F8FAFC; color: #0F172A; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+        .bg-blue-gradient { background: linear-gradient(135deg, #007AC2 0%, #0096D6 100%); }
+        .apple-card { background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.04); border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 20px 25px -5px rgba(0, 0, 0, 0.02); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .apple-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 122, 194, 0.05), 0 20px 25px -5px rgba(0, 122, 194, 0.05), 0 25px 50px -12px rgba(0, 122, 194, 0.05); }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .btn-premium { background: linear-gradient(135deg, #007AC2, #0096D6); color: white; border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(0, 122, 194, 0.25); }
+        .btn-premium:hover { box-shadow: 0 6px 20px rgba(0, 122, 194, 0.35); transform: translateY(-1px); }
     </style>
 </head>
 <body>
-    <!-- Lớp phủ 3D (Hạt vàng kim trên nền xanh) -->
-    <div id="canvas-container"></div>
-
-    <!-- Thanh Điều Hướng -->
-    <nav class="glass-header fixed w-full z-50 top-0 transition-all duration-300">
+    <nav class="glass-nav sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="text-2xl font-bold serif text-white tracking-wide leading-tight">
-                    BẢO VIỆT <span class="text-gold">NHÂN THỌ</span><br>
-                    <span class="text-[11px] font-sans text-white block tracking-[0.2em] uppercase">Sài Gòn</span>
+                <div class="w-8 h-8 bg-blue-gradient rounded-lg flex items-center justify-center shadow-md">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                 </div>
+                <span class="text-xl font-bold tracking-tight text-slate-900">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></span>
             </div>
-            <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider text-white font-medium">
-                <a href="#" class="hover:text-[#D4B271] transition-colors">Trang chủ</a>
-                <a href="#" class="hover:text-[#D4B271] transition-colors">Về chúng tôi</a>
-                <a href="#" class="hover:text-[#D4B271] transition-colors">Sản phẩm</a>
-                <a href="#" class="hover:text-[#D4B271] transition-colors">Tư vấn</a>
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="text-sm font-semibold text-[#007AC2]">Trang chủ</a>
+                <a href="#products" class="text-sm font-semibold text-slate-600 hover:text-[#007AC2] transition-colors hidden md:block">Sản phẩm</a>
+                <a href="doanh-thu.html" class="text-sm font-semibold text-slate-600 hover:text-[#007AC2] transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Dashboard TMIT
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Banner Chính -->
-    <main class="min-h-screen flex flex-col justify-center items-center relative px-6 text-center pt-20">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 serif tracking-tight drop-shadow-lg leading-tight">
-            Bảo Vệ Giá Trị <br>
-            <span class="text-gold mt-2 inline-block">Kiến Tạo Tương Lai</span>
-        </h1>
-        <p class="max-w-2xl text-white/90 text-lg md:text-xl font-light mb-10 leading-relaxed drop-shadow-md">
-            Đồng hành cùng hàng triệu gia đình Việt. Giải pháp tài chính vững chắc, an tâm trọn vẹn trước mọi thăng trầm của cuộc sống.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-6">
-            <button class="btn-gold px-10 py-4 rounded-full font-semibold uppercase tracking-widest text-sm">Khám phá sản phẩm</button>
-            <button class="btn-white px-10 py-4 rounded-full font-semibold uppercase tracking-widest text-sm shadow-lg">Liên hệ tư vấn</button>
-        </div>
-    </main>
-
-    <!-- 10% Khoảng trắng - Khối nội dung tạo điểm nghỉ -->
-    <section class="py-24 bg-white relative z-10 rounded-t-[3rem] shadow-[0_-15px_40px_rgba(0,0,0,0.1)] mt-[-50px]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl serif font-bold text-blue-dark mb-4">Giá Trị Cốt Lõi</h2>
-                <div class="h-1 w-20 bg-gold mx-auto rounded-full"></div>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="text-center p-8 rounded-2xl bg-[#f8fbff] border border-[#007AC2]/10 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
-                    <div class="w-16 h-16 mx-auto bg-gold rounded-full flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-md">🛡️</div>
-                    <h3 class="text-xl serif font-bold mb-4 text-[#007AC2]">An Tâm Tuyệt Đối</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Cam kết bảo vệ tài chính vững chắc, mang lại sự bình yên cho mọi gia đình Việt Nam.</p>
+    <div class="max-w-7xl mx-auto px-6 pt-10 pb-16">
+        <!-- Banner Hình ảnh Gia đình -->
+        <div class="mb-16 rounded-3xl overflow-hidden relative shadow-[0_20px_40px_-15px_rgba(0,122,194,0.3)] h-[550px] flex items-center group">
+            <img src="https://images.unsplash.com/photo-1581579186913-46ac3b6efbea?q=80&w=2070&auto=format&fit=crop" alt="Gia đình hạnh phúc được bảo vệ" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-[2s] group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-r from-[#002A42]/90 via-[#007AC2]/60 to-transparent z-10"></div>
+            <div class="relative z-20 p-10 md:p-16 max-w-3xl">
+                <div class="inline-flex items-center px-4 py-1.5 bg-[#D4B271] text-white text-xs font-bold uppercase tracking-widest rounded-full mb-6 shadow-md">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    Tự hào 27 năm bảo vệ
                 </div>
-                <div class="text-center p-8 rounded-2xl bg-[#f8fbff] border border-[#007AC2]/10 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
-                    <div class="w-16 h-16 mx-auto bg-gold rounded-full flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-md">📈</div>
-                    <h3 class="text-xl serif font-bold mb-4 text-[#007AC2]">Đầu Tư Sinh Lời</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Giải pháp tích lũy thông minh, gia tăng tài sản hiệu quả cho tương lai thịnh vượng.</p>
-                </div>
-                <div class="text-center p-8 rounded-2xl bg-[#f8fbff] border border-[#007AC2]/10 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
-                    <div class="w-16 h-16 mx-auto bg-gold rounded-full flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-md">🤝</div>
-                    <h3 class="text-xl serif font-bold mb-4 text-[#007AC2]">Tận Tâm Phục Vụ</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Đội ngũ chuyên viên chuyên nghiệp, sẵn sàng đồng hành và hỗ trợ khách hàng 24/7.</p>
-                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight drop-shadow-lg leading-tight">Bảo Vệ Trọn Vẹn,<br>Hạnh Phúc Đong Đầy</h1>
+                <p class="text-blue-50/90 font-medium text-lg leading-relaxed max-w-xl text-shadow mb-10">Bảo Việt Nhân Thọ cam kết mang lại sự an tâm tài chính tuyệt đối, là chỗ dựa vững chắc cho mọi thế hệ gia đình Việt Nam trước mọi biến cố của cuộc sống.</p>
+                <a href="#products" class="btn-premium px-8 py-4 font-bold text-sm tracking-wide inline-flex items-center gap-2">Khám phá Giải pháp <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></a>
             </div>
         </div>
-    </section>
 
-    <footer class="bg-[#007AC2] py-8 text-center text-sm text-white/70 font-light">
-        <p>&copy; 2026 Bảo Việt Nhân Thọ Sài Gòn. All rights reserved.</p>
-        <p class="mt-2 text-[#D4B271] font-medium">Designed with Vision by Boss Zayn Vo & Bankai.</p>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
+        <!-- Danh sách Sản phẩm -->
+        <div id="products" class="mb-10 flex flex-col items-center text-center pt-8">
+            <h2 class="text-4xl font-bold text-slate-900 tracking-tight">Hệ Sinh Thái Sản Phẩm</h2>
+            <p class="text-slate-500 font-medium mt-3 text-lg max-w-2xl">Các giải pháp tài chính và bảo vệ sinh mạng ưu việt nhất từ Bảo Việt Nhân Thọ Sài Gòn, thiết kế riêng cho từng giai đoạn cuộc đời bạn.</p>
+        </div>
         
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 20;
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <!-- Sản phẩm 1 -->
+            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#007AC2]/30">
+                <div class="h-64 relative overflow-hidden bg-slate-100">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Khang Hạnh Phúc y tế" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#007AC2] shadow-sm flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5 animate-pulse"></span> Bán chạy nhất
+                    </div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#007AC2] transition-colors">An Khang Hạnh Phúc</h3>
+                    <p class="text-slate-500 text-base mb-8 flex-grow leading-relaxed">Giải pháp bảo vệ trọn đời ưu việt. Kết hợp linh hoạt giữa tích lũy đầu tư sinh lời và đặc quyền chăm sóc y tế, viện phí cao cấp cho cả gia đình.</p>
+                    <button class="w-full py-4 bg-slate-50 text-[#007AC2] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-blue-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
+                </div>
+            </div>
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
+            <!-- Sản phẩm 2 -->
+            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#D4B271]/50">
+                <div class="h-64 relative overflow-hidden bg-slate-100">
+                    <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Phát Cát Tường bệnh hiểm nghèo" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#D4B271] shadow-sm flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg> Giải pháp Đột phá
+                    </div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#D4B271] transition-colors">An Phát Cát Tường</h3>
+                    <p class="text-slate-500 text-base mb-8 flex-grow leading-relaxed">Lá chắn tài chính khổng lồ trước các rủi ro nghiêm trọng như: ung thư, đột quỵ và tai nạn. Đóng phí cực ngắn (5 năm), bảo vệ dài hạn lến đến 20 năm.</p>
+                    <button class="w-full py-4 bg-slate-50 text-[#D4B271] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-gold-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
+                </div>
+            </div>
 
-        // Hạt bụi vàng kim trôi lơ lửng
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1500;
-        const posArray = new Float32Array(particlesCount * 3);
-
-        for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 60;
-        }
-
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            <!-- Sản phẩm 3 -->
+            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#0096D6]/30">
+                <div class="h-64 relative overflow-hidden bg-slate-100">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Tâm Học Vấn giáo dục" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#0096D6] shadow-sm flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path></svg> Ưu tiên Giáo dục
+                    </div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#0096D6] transition-colors">An Tâm Học Vấn</h3>
+                    <p class="text-slate-500 text-base mb-8 flex-grow leading-relaxed">Hành trang tài chính vững chắc tạo lập quỹ giáo dục đảm bảo, giúp con yêu tự tin bước vào giảng đường đại học và khởi nghiệp thành công.</p>
+                    <button class="w-full py-4 bg-slate-50 text-[#0096D6] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-blue-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
+                </div>
+            </div>
+        </div>
         
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.12,
-            color: 0xD4B271, // Vàng kim loại
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
-        });
-
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-        
-        // Khối đa diện mờ đại diện cho sự bảo vệ (Shield/Gem)
-        const shapeGeometry = new THREE.IcosahedronGeometry(8, 1);
-        const shapeMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.06
-        });
-        const shapeMesh = new THREE.Mesh(shapeGeometry, shapeMaterial);
-        scene.add(shapeMesh);
-
-        let mouseX = 0;
-        let mouseY = 0;
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-        });
-
-        const clock = new THREE.Clock();
-
-        const animate = () => {
-            requestAnimationFrame(animate);
-            const elapsedTime = clock.getElapsedTime();
-
-            // Hiệu ứng sóng 3D nhẹ nhàng
-            particlesMesh.rotation.y = elapsedTime * 0.05;
-            particlesMesh.rotation.x = elapsedTime * 0.02;
-            
-            shapeMesh.rotation.y += 0.002;
-            shapeMesh.rotation.x += 0.002;
-
-            // Camera di chuyển theo chuột
-            camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
-            camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-        };
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+        <footer class="mt-4 py-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 font-medium">
+            <p>&copy; 2026 Bảo Việt Nhân Thọ Sài Gòn. All rights reserved.</p>
+            <p>Designed with Vision by <span class="text-slate-800 font-bold">Boss Zayn Vo</span> & <span class="text-[#007AC2] font-bold">Bankai</span>.</p>
+        </footer>
+    </div>
 </body>
 </html>
