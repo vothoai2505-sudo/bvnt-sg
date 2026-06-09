@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BVNT Sài Gòn | Enterprise Dashboard</title>
+<title>Bảo Việt Nhân thọ Sài Gòn | Bảng Điều Khiển</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -68,8 +68,8 @@ tr:hover td{background:#F8FAFC}
 <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-[#007AC2] to-[#0096D6] rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
 </div>
-<h1 class="text-2xl font-extrabold mb-1">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
-<p class="text-[10px] font-bold text-[#007AC2] mb-8 tracking-[0.25em] uppercase">Intelligence Hub</p>
+<h1 class="text-2xl font-extrabold mb-1">Bảo Việt Nhân thọ <span class="text-[#D4B271]">Sài Gòn</span></h1>
+<p class="text-[10px] font-bold text-[#007AC2] mb-8 tracking-[0.25em] uppercase">Trung Tâm Phân Tích</p>
 <input type="password" id="pw" placeholder="Nhập mã truy cập..." class="b-input text-center text-lg tracking-widest mb-4 py-3" onkeypress="event.key==='Enter'&&doLogin()">
 <p id="auth-err" class="text-red-500 text-xs mb-4 hidden font-bold">Mã truy cập không hợp lệ.</p>
 <button onclick="doLogin()" class="w-full bg-slate-900 text-white rounded-xl py-3.5 font-bold text-sm hover:bg-slate-800 transition-colors shadow-lg">Truy Cập Hệ Thống</button>
@@ -85,12 +85,12 @@ tr:hover td{background:#F8FAFC}
 <div class="w-8 h-8 bg-gradient-to-br from-[#007AC2] to-[#0096D6] rounded-lg flex items-center justify-center shadow-sm">
 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
 </div>
-<span class="text-base font-extrabold text-slate-900 tracking-tight">BVNT <span class="text-[#007AC2]">Sài Gòn</span></span>
+<span class="text-base font-extrabold text-slate-900 tracking-tight">Bảo Việt Nhân thọ <span class="text-[#007AC2]">Sài Gòn</span></span>
 </div>
 <div class="flex items-center gap-4">
 <div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full">
 <div class="pulse-dot"></div>
-<span class="text-[11px] font-bold text-slate-600 uppercase tracking-wide">System Online</span>
+<span class="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Hệ Thống Trực Tuyến</span>
 </div>
 <button onclick="location.reload()" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">Đăng xuất</button>
 </div>
@@ -102,7 +102,7 @@ tr:hover td{background:#F8FAFC}
 <!-- Header & Tabs -->
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
 <div>
-<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">Performance <span class="grad-text">Overview</span></h1>
+<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">Tổng Quan <span class="grad-text">Hoạt Động</span></h1>
 <p class="text-slate-500 font-medium">Báo cáo đa chiều & Phân tích tăng trưởng (YoY)</p>
 </div>
 <div class="tabs-container">
@@ -250,7 +250,7 @@ tr:hover td{background:#F8FAFC}
 <div>
 <div class="flex items-center gap-3 mb-2">
 <div class="pulse-dot"></div>
-<h2 class="text-2xl font-extrabold tracking-tight" id="ht-title">Live Tracking</h2>
+<h2 class="text-2xl font-extrabold tracking-tight" id="ht-title">Dữ Liệu Trực Tiếp</h2>
 </div>
 <p class="text-slate-400 font-medium text-sm">Dữ liệu ước tính BC02 — Cập nhật lần cuối: <span id="ht-time" class="text-slate-300">--</span></p>
 </div>
@@ -479,7 +479,7 @@ charts.radar=new Chart(document.getElementById('chart-radar'),{
 // HT LOGIC
 function runHT(){
 if(!BC02.records)return;
-document.getElementById('ht-title').innerText=BC02.month_label||'Tracking';
+document.getElementById('ht-title').innerText=BC02.month_label||'Theo Dõi';
 document.getElementById('ht-time').innerText=BC02.updated||'';
 
 let q=document.getElementById('ht-search').value.toLowerCase();
