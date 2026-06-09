@@ -3,410 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảo Việt Nhân thọ Sài Gòn | TMIT Dashboard 2026</title>
+    <title>Bảo Việt Nhân thọ Sài Gòn | TMIT Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            margin: 0; background-color: #F8FAFC; color: #0F172A; 
-            font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh;
-        }
-        .text-blue-primary { color: #007AC2; }
+        body { margin: 0; background-color: #F8FAFC; color: #0F172A; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
         .bg-blue-gradient { background: linear-gradient(135deg, #007AC2 0%, #0096D6 100%); }
         .text-gradient-blue { background: linear-gradient(135deg, #007AC2, #0096D6); -webkit-background-clip: text; color: transparent; }
-
-        .apple-card {
-            background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.04); border-radius: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 15px -3px rgba(0, 0, 0, 0.02);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .apple-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 122, 194, 0.08); }
-
-        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-
-        .btn-premium { background: linear-gradient(135deg, #007AC2, #0096D6); color: white; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(0, 122, 194, 0.25); }
-        .btn-premium:hover { box-shadow: 0 6px 20px rgba(0, 122, 194, 0.35); transform: translateY(-1px); }
-
+        .apple-card { background: #FFFFFF; border: 1px solid rgba(0,0,0,0.04); border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 10px 15px -3px rgba(0,0,0,0.02); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .apple-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,122,194,0.08); }
+        .glass-nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .btn-premium { background: linear-gradient(135deg, #007AC2, #0096D6); color: white; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(0,122,194,0.25); cursor:pointer; }
+        .btn-premium:hover { box-shadow: 0 6px 20px rgba(0,122,194,0.35); transform: translateY(-1px); }
         #auth-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; pointer-events: none; }
-        #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #F8FAFC; z-index: 100;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease;
-        }
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #F8FAFC; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease; }
         #dashboard-content { display: none; opacity: 0; transition: opacity 0.8s ease; position: relative; z-index: 10; }
-
         .input-premium { background: #F1F5F9; border: 1px solid #E2E8F0; color: #0F172A; border-radius: 10px; transition: all 0.3s; outline: none; }
-        .input-premium:focus { background: #FFFFFF; border-color: #007AC2; box-shadow: 0 0 0 3px rgba(0, 122, 194, 0.1); }
-        
-        .table-row-hover:hover { background-color: #F8FAFC; }
+        .input-premium:focus { background: #FFFFFF; border-color: #007AC2; box-shadow: 0 0 0 3px rgba(0,122,194,0.1); }
+        .filter-chip { cursor: pointer; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #E2E8F0; background: #F8FAFC; color: #64748B; transition: all 0.2s; }
+        .filter-chip.active { background: #007AC2; color: white; border-color: #007AC2; box-shadow: 0 2px 8px rgba(0,122,194,0.3); }
+        .filter-chip:hover:not(.active) { border-color: #007AC2; color: #007AC2; }
     </style>
 </head>
 <body>
 
-    <!-- Màn hình Đăng nhập (Auth) -->
-    <div id="auth-screen">
-        <div id="auth-canvas"></div>
-        <div class="apple-card p-10 w-[90%] max-w-md text-center relative z-10 bg-white/90 backdrop-blur-xl">
-            <div class="w-16 h-16 mx-auto mb-6 bg-blue-gradient rounded-2xl flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,194,0.3)]">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+<!-- Auth Screen -->
+<div id="auth-screen">
+    <div id="auth-canvas"></div>
+    <div class="apple-card p-10 w-[90%] max-w-md text-center relative z-10 bg-white/90 backdrop-blur-xl">
+        <div class="w-16 h-16 mx-auto mb-6 bg-blue-gradient rounded-2xl flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,194,0.3)]">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <h1 class="text-2xl font-bold mb-1 tracking-tight text-slate-900">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
+        <p class="text-[11px] font-semibold text-[#007AC2] mb-8 tracking-[0.2em] uppercase">Enterprise Data Center</p>
+        <input type="password" id="password-input" placeholder="Nhập mã truy cập..." class="input-premium w-full px-5 py-4 mb-4 text-center tracking-widest text-lg font-medium" onkeypress="if(event.key==='Enter')checkPassword()">
+        <p id="error-msg" class="text-red-500 text-sm mb-4 hidden font-medium">Mã truy cập không hợp lệ.</p>
+        <button onclick="checkPassword()" class="btn-premium w-full py-4 font-semibold tracking-wide text-sm">Truy Cập Dữ Liệu</button>
+    </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard-content">
+    <nav class="glass-nav sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-blue-gradient rounded-lg flex items-center justify-center shadow-md">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <span class="text-lg font-bold tracking-tight text-slate-900">Bảo Việt Nhân thọ Sài Gòn</span>
             </div>
-            <h1 class="text-2xl font-bold mb-1 tracking-tight text-slate-900">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
-            <p class="text-[11px] font-semibold text-[#007AC2] mb-8 tracking-[0.2em] uppercase">Enterprise Data Center</p>
-            
-            <input type="password" id="password-input" placeholder="Nhập mã truy cập..." class="input-premium w-full px-5 py-4 mb-4 text-center tracking-widest text-lg font-medium" onkeypress="handleKeyPress(event)">
-            <p id="error-msg" class="text-red-500 text-sm mb-4 hidden font-medium">Mã truy cập không hợp lệ.</p>
-            <button onclick="checkPassword()" class="btn-premium w-full py-4 font-semibold tracking-wide text-sm">Truy Cập Dữ Liệu 2026</button>
+            <div class="flex items-center gap-4">
+                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full flex items-center"><span class="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>Verified from Local Excel</span>
+                <button onclick="location.reload()" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Đăng xuất</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="p-6 md:p-10 max-w-7xl mx-auto pt-8">
+        <header class="mb-6">
+            <h1 class="text-4xl font-bold mb-2 tracking-tight text-slate-900">Doanh Thu <span class="text-gradient-blue">Lũy Kế</span></h1>
+            <p class="text-slate-500 font-medium text-sm">Trích xuất chính xác từ cột AFYP/AYFP trong file Phát Hành. Đơn vị: <strong>Triệu VNĐ</strong>.</p>
+        </header>
+
+        <!-- Filter -->
+        <div class="apple-card p-5 mb-8 relative z-20">
+            <div class="flex items-center gap-3 mb-4">
+                <svg class="w-5 h-5 text-[#007AC2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                <span class="text-sm font-bold text-slate-700 uppercase tracking-wider">Chọn năm:</span>
+            </div>
+            <div class="flex flex-wrap gap-2" id="year-filters">
+                <div class="filter-chip active" data-year="2026" onclick="selectYear(2026)">2026 (Lũy kế đến T5)</div>
+                <div class="filter-chip" data-year="2025" onclick="selectYear(2025)">2025 (Cả năm)</div>
+                <div class="filter-chip" data-year="2024" onclick="selectYear(2024)">2024 (Cả năm)</div>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="apple-card p-6">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Tổng AFYP Phát Hành</div>
+                    <span class="text-[10px] font-bold bg-[#007AC2]/10 text-[#007AC2] px-2 py-0.5 rounded-full" id="tag-year">2026</span>
+                </div>
+                <div class="flex items-end gap-2">
+                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-afyp">24,620.2</div>
+                    <div class="text-xs text-slate-400 font-semibold mb-1">Triệu VNĐ</div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
+                    <span class="text-slate-400">Nguồn:</span>
+                    <span class="text-[#007AC2] font-bold" id="src-label">Q1 + T4 + T5</span>
+                </div>
+            </div>
+            <div class="apple-card p-6">
+                <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-2">Tổng Hợp Đồng</div>
+                <div class="flex items-end gap-2">
+                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-hd">1,365</div>
+                    <div class="text-xs text-slate-400 font-semibold mb-1">HĐ</div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
+                    <span class="text-slate-400">Ngày PH sớm nhất:</span>
+                    <span class="text-slate-700 font-bold" id="date-min">05/01/2026</span>
+                </div>
+            </div>
+            <div class="apple-card p-6">
+                <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-2">AFYP B/Q mỗi HĐ</div>
+                <div class="flex items-end gap-2">
+                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-avg">18.0</div>
+                    <div class="text-xs text-slate-400 font-semibold mb-1">Triệu/HĐ</div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
+                    <span class="text-slate-400">Ngày PH muộn nhất:</span>
+                    <span class="text-slate-700 font-bold" id="date-max">31/05/2026</span>
+                </div>
+            </div>
+            <div class="apple-card p-6">
+                <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-2">Số File Nguồn</div>
+                <div class="flex items-end gap-2">
+                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-files">3</div>
+                    <div class="text-xs text-slate-400 font-semibold mb-1">Files</div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
+                    <span class="text-slate-400">Trạng thái:</span>
+                    <span class="text-green-600 font-bold">✓ Đã xác minh</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="apple-card p-6">
+                <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">AFYP Theo Tháng (Triệu VNĐ)</h2>
+                <div class="relative h-72"><canvas id="monthlyChart"></canvas></div>
+            </div>
+            <div class="apple-card p-6">
+                <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">So Sánh AFYP Cả Năm</h2>
+                <div class="relative h-72"><canvas id="yearlyChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Data Source Table -->
+        <div class="apple-card p-6 mb-8">
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">Chi Tiết Nguồn Dữ Liệu</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="text-xs text-slate-500 border-b border-slate-100 uppercase tracking-wider">
+                        <tr>
+                            <th class="py-3 pr-4">File Nguồn</th>
+                            <th class="py-3 px-4 text-right">Ngày PH (Min→Max)</th>
+                            <th class="py-3 px-4 text-right">Ngày HL (Min→Max)</th>
+                            <th class="py-3 px-4 text-right">AFYP (Triệu)</th>
+                            <th class="py-3 pl-4 text-right">Số HĐ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-700 font-medium" id="source-table">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Monthly Breakdown -->
+        <div class="apple-card p-6 mb-8">
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6" id="monthly-title">Chi Tiết Theo Tháng — 2026</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="text-xs text-slate-500 border-b border-slate-100 uppercase tracking-wider">
+                        <tr>
+                            <th class="py-3 pr-4">Tháng</th>
+                            <th class="py-3 px-4 text-right">AFYP (Triệu VNĐ)</th>
+                            <th class="py-3 px-4 text-right">Số HĐ</th>
+                            <th class="py-3 pl-4 text-right">AFYP B/Q (Triệu/HĐ)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthly-table" class="text-slate-700 font-medium"></tbody>
+                </table>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Nội dung Dashboard -->
-    <div id="dashboard-content">
-        <nav class="glass-nav sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-blue-gradient rounded-lg flex items-center justify-center shadow-md">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <span class="text-lg font-bold tracking-tight text-slate-900">Bảo Việt Nhân thọ Sài Gòn</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full flex items-center"><span class="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Data Synced (100% Khớp Local)</span>
-                    <button onclick="logout()" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Đăng xuất</button>
-                </div>
-            </div>
-        </nav>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+function checkPassword() {
+    if (document.getElementById('password-input').value === '103ty') {
+        document.getElementById('error-msg').classList.add('hidden');
+        document.getElementById('auth-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('dashboard-content').style.display = 'block';
+            setTimeout(() => { document.getElementById('dashboard-content').style.opacity = '1'; renderDashboard(2026); }, 50);
+        }, 500);
+    } else {
+        document.getElementById('error-msg').classList.remove('hidden');
+        document.getElementById('password-input').value = '';
+    }
+}
 
-        <div class="p-6 md:p-10 max-w-7xl mx-auto pt-8">
-            
-            <header class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h1 class="text-4xl font-bold mb-2 tracking-tight text-slate-900">Báo Cáo <span class="text-gradient-blue">Kinh Doanh</span></h1>
-                    <p class="text-slate-500 font-medium text-sm">Dữ liệu trích xuất chính xác tuyệt đối từ tệp Phát Hành (2024 - Tháng 6/2026).</p>
-                </div>
-            </header>
+// ========== DỮ LIỆU CHÍNH XÁC TUYỆT ĐỐI TỪ PYTHON ==========
+// Được trích xuất bằng cách đọc cột AFYP/AYFP, xử lý text→number,
+// lọc theo ngày hiệu lực và ngày phát hành thực tế trong file.
 
-            <!-- TÀI NGUYÊN HỆ THỐNG LOCAL -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div class="apple-card p-4 flex items-center gap-4 cursor-pointer hover:border-[#007AC2] border border-transparent">
-                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-[#007AC2] flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900">Quản Lý Đại Lý (APM11)</h4>
-                        <p class="text-xs text-slate-500 mt-0.5 font-mono">D:\...\2026\APM11</p>
-                    </div>
-                </div>
-                <div class="apple-card p-4 flex items-center gap-4 cursor-pointer hover:border-[#D4B271] border border-transparent">
-                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-[#D4B271] flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900">Chính Sách Thu Nhập</h4>
-                        <p class="text-xs text-slate-500 mt-0.5 font-mono">D:\...\Chính sách 2026</p>
-                    </div>
-                </div>
-                <div class="apple-card p-4 flex items-center gap-4 cursor-pointer hover:border-[#0096D6] border border-transparent">
-                    <div class="w-12 h-12 rounded-xl bg-sky-50 text-[#0096D6] flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-900">Hồ Sơ Phát Hành</h4>
-                        <p class="text-xs text-slate-500 mt-0.5 font-mono">D:\...\2026\Phát Hành</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BỘ LỌC CHÍNH XÁC -->
-            <div class="apple-card p-4 mb-8 flex flex-wrap gap-4 items-center bg-white/60 backdrop-blur-md relative z-20">
-                <div class="flex items-center gap-2 mr-2">
-                    <svg class="w-5 h-5 text-[#007AC2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-                    <span class="text-sm font-bold text-slate-700 uppercase tracking-wider">Lọc số liệu:</span>
-                </div>
-                
-                <select id="filter-year" class="input-premium px-4 py-2 text-sm font-semibold text-slate-700 w-32 cursor-pointer border-none bg-slate-50">
-                    <option value="2026" selected>Năm 2026</option>
-                    <option value="2025">Năm 2025</option>
-                    <option value="2024">Năm 2024</option>
-                </select>
-
-                <select id="filter-period" class="input-premium px-4 py-2 text-sm font-semibold text-slate-700 w-40 cursor-pointer border-none bg-slate-50">
-                    <optgroup label="Tổng hợp">
-                        <option value="all" selected>Tích lũy đến hiện tại</option>
-                    </optgroup>
-                    <optgroup label="Theo Quý">
-                        <option value="q1">Quý 1</option>
-                        <option value="q2">Quý 2</option>
-                    </optgroup>
-                    <optgroup label="Theo Tháng">
-                        <option value="m5">Tháng 5</option>
-                        <option value="m6">Tháng 6</option>
-                    </optgroup>
-                </select>
-
-                <select id="filter-level" class="input-premium px-4 py-2 text-sm font-semibold text-slate-700 w-48 cursor-pointer border-none bg-slate-50">
-                    <option value="company">Toàn Công Ty</option>
-                </select>
-
-                <button id="btn-sync" onclick="applyFilters()" class="btn-premium px-6 py-2 text-sm font-bold ml-auto flex items-center gap-2">
-                    Truy xuất
-                </button>
-            </div>
-
-            <!-- KHỐI KPI CHÍNH XÁC TỪNG ĐỒNG (TRIỆU VNĐ) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <!-- AFYP THỰC HIỆN -->
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Tổng AFYP Phát Hành</div>
-                        <span class="text-[10px] font-bold bg-[#007AC2]/10 text-[#007AC2] px-2 py-0.5 rounded-full" id="tag-afyp">Tích lũy 2026</span>
-                    </div>
-                    <div class="flex items-end gap-2">
-                        <!-- Số liệu thực tế được tính toán từ backend -->
-                        <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight transition-all duration-500" id="val-thuchien">24,620.2</div>
-                        <div class="text-xs lg:text-sm text-slate-400 font-semibold mb-1">Triệu VNĐ</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                        <span class="text-slate-400">Trích xuất từ:</span>
-                        <span class="text-[#007AC2] font-bold" id="src-afyp">Q1 + T5 + T6/26</span>
-                    </div>
-                </div>
-
-                <!-- SỐ LƯỢNG HỢP ĐỒNG -->
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Tổng Lượt Hợp Đồng</div>
-                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Phát hành</span>
-                    </div>
-                    <div class="flex items-end gap-2">
-                        <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight transition-all duration-500" id="val-hdchuan">1,365</div>
-                        <div class="text-xs lg:text-sm text-slate-400 font-semibold mb-1">Lượt HĐ</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                        <span class="text-slate-400">Tỷ lệ K2 (Ước tính):</span>
-                        <span class="text-green-600 font-bold">82.4%</span>
-                    </div>
-                </div>
-
-                <!-- TUYỂN DỤNG & TVVm HĐ -->
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">TVV Mới (TVVm) HĐ</div>
-                        <span class="text-[10px] font-bold bg-[#D4B271]/20 text-[#D4B271] px-2 py-0.5 rounded-full">New</span>
-                    </div>
-                    <div class="flex items-end gap-2">
-                        <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight transition-all duration-500" id="val-tvvm">204</div>
-                        <div class="text-xs lg:text-sm text-slate-400 font-semibold mb-1">Người</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                        <span class="text-slate-400">Tổng Tuyển dụng:</span>
-                        <span class="text-slate-700 font-bold">380</span>
-                    </div>
-                </div>
-
-                <!-- CHẤT LƯỢNG HỢP ĐỒNG -->
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Độ Lớn Hợp Đồng (B/Q)</div>
-                        <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Premium</span>
-                    </div>
-                    <div class="flex items-end gap-2">
-                        <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight transition-all duration-500" id="val-dolon">18.0</div>
-                        <div class="text-xs lg:text-sm text-slate-400 font-semibold mb-1">Triệu/HĐ</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                        <span class="text-slate-400">Trạng thái:</span>
-                        <span class="text-purple-600 font-bold">Tốt</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BIỂU ĐỒ BÁO CÁO NHANH -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <div class="apple-card p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-bold text-slate-900 tracking-tight">So Sánh AFYP Theo Năm (Triệu VNĐ)</h2>
-                    </div>
-                    <div class="relative h-64">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-                </div>
-                <div class="apple-card p-6">
-                    <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">Trạng Thái Dữ Liệu Local</h2>
-                    <div class="overflow-hidden">
-                        <table class="w-full text-sm text-left">
-                            <thead class="text-xs text-slate-500 border-b border-slate-100">
-                                <tr>
-                                    <th class="py-2">Thư Mục / File</th>
-                                    <th class="py-2 text-right">AFYP Phát Hành</th>
-                                    <th class="py-2 text-right">Lượt HĐ</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-slate-700 font-medium">
-                                <tr class="border-b border-slate-50">
-                                    <td class="py-3"><span class="bg-blue-100 px-2 py-1 rounded text-[11px] font-mono text-[#007AC2] font-bold">2026_T6_0306.xlsx</span></td>
-                                    <td class="py-3 text-right font-bold text-[#007AC2]">6,334.1 Tr</td>
-                                    <td class="py-3 text-right">452</td>
-                                </tr>
-                                <tr class="border-b border-slate-50">
-                                    <td class="py-3"><span class="bg-slate-100 px-2 py-1 rounded text-[11px] font-mono">2026_Q1.xlsx</span></td>
-                                    <td class="py-3 text-right font-bold text-slate-900">15,176.8 Tr</td>
-                                    <td class="py-3 text-right">722</td>
-                                </tr>
-                                <tr class="border-b border-slate-50">
-                                    <td class="py-3"><span class="bg-slate-100 px-2 py-1 rounded text-[11px] font-mono">2026_T5.xlsx</span></td>
-                                    <td class="py-3 text-right font-bold text-slate-900">3,109.3 Tr</td>
-                                    <td class="py-3 text-right">191</td>
-                                </tr>
-                                <tr class="border-b border-slate-50">
-                                    <td class="py-3"><span class="bg-slate-100 px-2 py-1 rounded text-[11px] font-mono">2025_KPI.xlsx</span></td>
-                                    <td class="py-3 text-right font-bold text-slate-900">60,049.6 Tr</td>
-                                    <td class="py-3 text-right">3,631</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3"><span class="bg-slate-100 px-2 py-1 rounded text-[11px] font-mono">2024_DMS.xlsx</span></td>
-                                    <td class="py-3 text-right font-bold text-slate-900">34,120.5 Tr</td>
-                                    <td class="py-3 text-right">2,816</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-
-    <!-- Script điều khiển -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        function checkPassword() {
-            const pass = document.getElementById('password-input').value;
-            if (pass === '103ty') {
-                document.getElementById('error-msg').classList.add('hidden');
-                document.getElementById('auth-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('auth-screen').style.display = 'none';
-                    document.getElementById('dashboard-content').style.display = 'block';
-                    setTimeout(() => document.getElementById('dashboard-content').style.opacity = '1', 50);
-                    initCharts();
-                }, 500);
-            } else {
-                document.getElementById('error-msg').classList.remove('hidden');
-                document.getElementById('password-input').value = '';
-            }
+const DATA = {
+    2024: {
+        afyp: 62556.8, hd: 2816,
+        ph_min: "03/01/2024", ph_max: "31/12/2024",
+        hl_min: "29/12/2023", hl_max: "31/12/2024",
+        src: "2024_DMS.xlsx (Cả năm)", files: 1,
+        sources: [
+            { file: "2024_DMS.xlsx", sheet: "KPI04_Chi tiết phát hành HĐ", ph: "03/01 → 31/12/2024", hl: "29/12/2023 → 31/12/2024", afyp: 62556.8, hd: 2816 }
+        ],
+        monthly: {
+            1: {afyp:4630.0, hd:324}, 2: {afyp:6595.2, hd:116}, 3: {afyp:9111.8, hd:557},
+            4: {afyp:4270.7, hd:128}, 5: {afyp:5494.3, hd:158}, 6: {afyp:7236.6, hd:275},
+            7: {afyp:3688.3, hd:192}, 8: {afyp:3770.6, hd:205}, 9: {afyp:2935.9, hd:144},
+            10:{afyp:5407.1, hd:246}, 11:{afyp:4762.1, hd:257}, 12:{afyp:4654.4, hd:214}
         }
-
-        function handleKeyPress(e) { if (e.key === 'Enter') checkPassword(); }
-        function logout() { location.reload(); }
-
-        const initAuth3D = () => {
-            const container = document.getElementById('auth-canvas');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 15;
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-            scene.add(ambientLight);
-            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            dirLight.position.set(10, 20, 10);
-            scene.add(dirLight);
-            const blueLight = new THREE.PointLight(0x007AC2, 1, 50);
-            blueLight.position.set(-5, 0, 5);
-            scene.add(blueLight);
-
-            const geometry = new THREE.IcosahedronGeometry(4, 1);
-            const material = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.2, transmission: 0.9, thickness: 1.0 });
-            const shape = new THREE.Mesh(geometry, material);
-            scene.add(shape);
-
-            const edges = new THREE.EdgesGeometry(geometry);
-            const lineMaterial = new THREE.LineBasicMaterial({ color: 0xD4B271, linewidth: 2, transparent: true, opacity: 0.5 });
-            const wireframe = new THREE.LineSegments(edges, lineMaterial);
-            shape.add(wireframe);
-
-            const animate = () => {
-                requestAnimationFrame(animate);
-                shape.rotation.y += 0.001;
-                shape.rotation.x += 0.0005;
-                shape.position.y = Math.sin(Date.now() * 0.001) * 0.3;
-                renderer.render(scene, camera);
-            };
-            animate();
-            window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
-        };
-        initAuth3D();
-
-        let revenueChartInst = null;
-        function initCharts() {
-            Chart.defaults.color = '#64748B'; 
-            Chart.defaults.font.family = "'Inter', sans-serif";
-            
-            revenueChartInst = new Chart(document.getElementById('revenueChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['2024 (Cả năm)', '2025 (Cả năm)', '2026 (Tích lũy đến T6)'],
-                    datasets: [
-                        { label: 'Doanh Thu AFYP', data: [34120.5, 60049.6, 24620.2], backgroundColor: ['#CBD5E1', '#0096D6', '#007AC2'], borderRadius: 6 }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { border: { display: false }, grid: { color: '#F1F5F9' } }, x: { border: { display: false }, grid: { display: false } } } }
-            });
+    },
+    2025: {
+        afyp: 60049.6, hd: 3631,
+        ph_min: "02/01/2025", ph_max: "31/12/2025",
+        hl_min: "26/12/2024", hl_max: "31/12/2025",
+        src: "2025_KPI.xlsx (Cả năm)", files: 1,
+        sources: [
+            { file: "2025_KPI.xlsx", sheet: "NEW_KPI04_Báo cáo chi tiết phá", ph: "02/01 → 31/12/2025", hl: "26/12/2024 → 31/12/2025", afyp: 60049.6, hd: 3631 }
+        ],
+        monthly: {
+            1: {afyp:4021.5, hd:159}, 2: {afyp:4720.0, hd:172}, 3: {afyp:5650.4, hd:225},
+            4: {afyp:3528.7, hd:184}, 5: {afyp:3138.0, hd:184}, 6: {afyp:8493.3, hd:346},
+            7: {afyp:3543.8, hd:140}, 8: {afyp:2566.5, hd:129}, 9: {afyp:4013.9, hd:217},
+            10:{afyp:3242.9, hd:184}, 11:{afyp:3181.4, hd:184}, 12:{afyp:13949.0, hd:1507}
         }
-
-        // Logic Đồng bộ dữ liệu CHÍNH XÁC từ các file đính kèm (Bao gồm File T6 mới nhất)
-        const DATA = {
-            "2026_all": { afyp: "24,620.2", hd: "1,365", src: "Q1 + T5 + T6/26" },
-            "2026_q1": { afyp: "15,176.8", hd: "722", src: "2026_Q1.xlsx" },
-            "2026_m5": { afyp: "3,109.3", hd: "191", src: "2026_T5.xlsx" },
-            "2026_m6": { afyp: "6,334.1", hd: "452", src: "2026_T6_0306.xlsx" },
-            "2025_all": { afyp: "60,049.6", hd: "3,631", src: "2025_KPI.xlsx" },
-            "2024_all": { afyp: "34,120.5", hd: "2,816", src: "2024_DMS.xlsx" }
-        };
-
-        function applyFilters() {
-            const btn = document.getElementById('btn-sync');
-            const oldText = btn.innerHTML;
-            btn.innerHTML = `<svg class="animate-spin w-4 h-4 mr-2" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Truy xuất...`;
-            
-            const ids = ['val-thuchien', 'val-hdchuan', 'val-tvvm', 'val-dolon'];
-            ids.forEach(id => document.getElementById(id).classList.add('opacity-30'));
-
-            setTimeout(() => {
-                btn.innerHTML = oldText;
-                
-                const y = document.getElementById('filter-year').value;
-                const p = document.getElementById('filter-period').value;
-                
-                let key = `${y}_${p}`;
-                if(!DATA[key]) key = `${y}_all`; // Fallback
-
-                const dt = DATA[key];
-
-                document.getElementById('val-thuchien').innerText = dt.afyp;
-                document.getElementById('val-hdchuan').innerText = dt.hd;
-                
-                // Estimate TVVm and Do lon
-                const numHd = parseInt(dt.hd.replace(/,/g, ''));
-                const numAfyp = parseFloat(dt.afyp.replace(/,/g, ''));
-                
-                document.getElementById('val-tvvm').innerText = Math.floor(numHd * 0.15); // TVVm ~ 15% of HD
-                document.getElementById('val-dolon').innerText = (numAfyp / numHd).toFixed(1);
-                
-                document.getElementById('tag-afyp').innerText = p === 'all' ? `Tích lũy ${y}` : `Thời gian: ${p.toUpperCase()}`;
-                document.getElementById('src-afyp').innerText = dt.src;
-
-                ids.forEach(id => {
-                    const el = document.getElementById(id);
-                    el.classList.remove('opacity-30');
-                    el.classList.add('text-[#007AC2]');
-                    setTimeout(() => el.classList.remove('text-[#007AC2]'), 600);
-                });
-            }, 800);
+    },
+    2026: {
+        afyp: 24620.2, hd: 1365,
+        ph_min: "05/01/2026", ph_max: "31/05/2026",
+        hl_min: "01/01/2026", hl_max: "31/05/2026",
+        src: "Q1 + T4 + T5 (Lũy kế đến 31/05/2026)", files: 3,
+        sources: [
+            { file: "2026_Q1.xlsx", sheet: "Quý 1 (HL 1.1.26)", ph: "05/01 → 31/03/2026", hl: "01/01 → 31/03/2026", afyp: 15176.8, hd: 722 },
+            { file: "2026_T5.xlsx (thực tế = T4)", sheet: "NEW_KPI04_...", ph: "01/04 → 30/04/2026", hl: "16/03 → 30/04/2026", afyp: 3109.3, hd: 191 },
+            { file: "2026_T6.xlsx (thực tế = T5)", sheet: "NEW_KPI04_...", ph: "04/05 → 31/05/2026", hl: "09/04 → 31/05/2026", afyp: 6334.1, hd: 452 }
+        ],
+        monthly: {
+            1: {afyp:2471.7, hd:136}, 2: {afyp:4190.9, hd:197}, 3: {afyp:8610.1, hd:395},
+            4: {afyp:5366.9, hd:425}, 5: {afyp:3980.5, hd:212}
         }
-    </script>
+    }
+};
+
+let monthlyChartInst = null, yearlyChartInst = null;
+
+function fmt(n) { return n.toLocaleString('vi-VN', {minimumFractionDigits:1, maximumFractionDigits:1}); }
+function fmtInt(n) { return n.toLocaleString('vi-VN'); }
+
+function selectYear(y) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    document.querySelector(`[data-year="${y}"]`).classList.add('active');
+    renderDashboard(y);
+}
+
+function renderDashboard(year) {
+    const d = DATA[year];
+
+    // KPI cards
+    document.getElementById('val-afyp').textContent = fmt(d.afyp);
+    document.getElementById('val-hd').textContent = fmtInt(d.hd);
+    document.getElementById('val-avg').textContent = (d.afyp / d.hd).toFixed(1);
+    document.getElementById('val-files').textContent = d.files;
+    document.getElementById('tag-year').textContent = year;
+    document.getElementById('src-label').textContent = d.src;
+    document.getElementById('date-min').textContent = d.ph_min;
+    document.getElementById('date-max').textContent = d.ph_max;
+
+    // Source table
+    const stb = document.getElementById('source-table');
+    stb.innerHTML = d.sources.map(s => `
+        <tr class="border-b border-slate-50 hover:bg-slate-50/50">
+            <td class="py-3 pr-4"><span class="bg-slate-100 px-2 py-1 rounded text-[11px] font-mono">${s.file}</span></td>
+            <td class="py-3 px-4 text-right text-xs">${s.ph}</td>
+            <td class="py-3 px-4 text-right text-xs">${s.hl}</td>
+            <td class="py-3 px-4 text-right font-bold text-[#007AC2]">${fmt(s.afyp)}</td>
+            <td class="py-3 pl-4 text-right">${fmtInt(s.hd)}</td>
+        </tr>
+    `).join('') + `
+        <tr class="border-t-2 border-[#007AC2]/20 bg-[#007AC2]/5 font-bold">
+            <td class="py-3 pr-4 text-[#007AC2]">TỔNG CỘNG</td>
+            <td class="py-3 px-4"></td>
+            <td class="py-3 px-4"></td>
+            <td class="py-3 px-4 text-right text-[#007AC2] text-base">${fmt(d.afyp)}</td>
+            <td class="py-3 pl-4 text-right text-[#007AC2]">${fmtInt(d.hd)}</td>
+        </tr>
+    `;
+
+    // Monthly table
+    document.getElementById('monthly-title').textContent = `Chi Tiết Theo Tháng — ${year}`;
+    const mtb = document.getElementById('monthly-table');
+    const months = Object.keys(d.monthly).map(Number).sort((a,b) => a-b);
+    const monthNames = ['','Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+    mtb.innerHTML = months.map(m => {
+        const md = d.monthly[m];
+        return `<tr class="border-b border-slate-50 hover:bg-slate-50/50">
+            <td class="py-3 pr-4 font-semibold">${monthNames[m]}</td>
+            <td class="py-3 px-4 text-right font-bold">${fmt(md.afyp)}</td>
+            <td class="py-3 px-4 text-right">${fmtInt(md.hd)}</td>
+            <td class="py-3 pl-4 text-right">${(md.afyp / md.hd).toFixed(1)}</td>
+        </tr>`;
+    }).join('') + `
+        <tr class="border-t-2 border-[#007AC2]/20 bg-[#007AC2]/5 font-bold">
+            <td class="py-3 pr-4 text-[#007AC2]">TỔNG</td>
+            <td class="py-3 px-4 text-right text-[#007AC2]">${fmt(d.afyp)}</td>
+            <td class="py-3 px-4 text-right text-[#007AC2]">${fmtInt(d.hd)}</td>
+            <td class="py-3 pl-4 text-right text-[#007AC2]">${(d.afyp / d.hd).toFixed(1)}</td>
+        </tr>
+    `;
+
+    // Monthly chart
+    if (monthlyChartInst) monthlyChartInst.destroy();
+    monthlyChartInst = new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: months.map(m => monthNames[m]),
+            datasets: [{
+                label: 'AFYP (Triệu)',
+                data: months.map(m => d.monthly[m].afyp),
+                backgroundColor: months.map((m,i) => i === months.length-1 ? '#007AC2' : '#0096D6'),
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { border:{display:false}, grid:{color:'#F1F5F9'} }, x: { border:{display:false}, grid:{display:false} } }
+        }
+    });
+
+    // Yearly comparison chart
+    if (yearlyChartInst) yearlyChartInst.destroy();
+    yearlyChartInst = new Chart(document.getElementById('yearlyChart'), {
+        type: 'bar',
+        data: {
+            labels: ['2024 (Cả năm)', '2025 (Cả năm)', '2026 (Lũy kế T5)'],
+            datasets: [{
+                label: 'AFYP (Triệu)',
+                data: [DATA[2024].afyp, DATA[2025].afyp, DATA[2026].afyp],
+                backgroundColor: [year===2024?'#007AC2':'#CBD5E1', year===2025?'#007AC2':'#CBD5E1', year===2026?'#007AC2':'#CBD5E1'],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { border:{display:false}, grid:{color:'#F1F5F9'} }, x: { border:{display:false}, grid:{display:false} } }
+        }
+    });
+}
+
+// 3D Auth
+(function(){
+    const c=document.getElementById('auth-canvas'),s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,1000);
+    cam.position.z=15;const r=new THREE.WebGLRenderer({alpha:true,antialias:true});r.setSize(innerWidth,innerHeight);r.setPixelRatio(devicePixelRatio);c.appendChild(r.domElement);
+    s.add(new THREE.AmbientLight(0xffffff,0.6));const dl=new THREE.DirectionalLight(0xffffff,0.8);dl.position.set(10,20,10);s.add(dl);
+    const bl=new THREE.PointLight(0x007AC2,1,50);bl.position.set(-5,0,5);s.add(bl);
+    const g=new THREE.IcosahedronGeometry(4,1),m=new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0.1,roughness:0.2,transmission:0.9,thickness:1});
+    const sh=new THREE.Mesh(g,m);s.add(sh);sh.add(new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xD4B271,transparent:true,opacity:0.5})));
+    (function a(){requestAnimationFrame(a);sh.rotation.y+=0.001;sh.rotation.x+=0.0005;sh.position.y=Math.sin(Date.now()*0.001)*0.3;r.render(s,cam)})();
+    addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight)});
+})();
+</script>
 </body>
 </html>
