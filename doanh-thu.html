@@ -8,100 +8,51 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Apple / Stripe / Fintech Inspired Theme */
         body { 
-            margin: 0; 
-            background-color: #F8FAFC; 
-            color: #0F172A; 
-            font-family: 'Inter', sans-serif; 
-            -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
+            margin: 0; background-color: #F8FAFC; color: #0F172A; 
+            font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh;
         }
-
         .text-blue-primary { color: #007AC2; }
         .text-blue-deep { color: #0096D6; }
         .text-gold-primary { color: #D4B271; }
-        
         .bg-blue-gradient { background: linear-gradient(135deg, #007AC2 0%, #0096D6 100%); }
         .bg-gold-gradient { background: linear-gradient(135deg, #D4B271 0%, #C8A046 100%); }
-        
-        .text-gradient-blue {
-            background: linear-gradient(135deg, #007AC2, #0096D6);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+        .text-gradient-blue { background: linear-gradient(135deg, #007AC2, #0096D6); -webkit-background-clip: text; color: transparent; }
 
-        /* Apple/Stripe Soft Shadows & Glassmorphism */
         .apple-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            border-radius: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 
-                        0 10px 15px -3px rgba(0, 0, 0, 0.02), 
-                        0 20px 25px -5px rgba(0, 0, 0, 0.02);
+            background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.04); border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 20px 25px -5px rgba(0, 0, 0, 0.02);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .apple-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 122, 194, 0.05), 
-                        0 20px 25px -5px rgba(0, 122, 194, 0.05),
-                        0 25px 50px -12px rgba(0, 122, 194, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 122, 194, 0.05), 0 20px 25px -5px rgba(0, 122, 194, 0.05), 0 25px 50px -12px rgba(0, 122, 194, 0.05);
         }
 
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Buttons */
         .btn-premium {
-            background: linear-gradient(135deg, #007AC2, #0096D6);
-            color: white;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 14px 0 rgba(0, 122, 194, 0.25);
+            background: linear-gradient(135deg, #007AC2, #0096D6); color: white; border-radius: 12px;
+            transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(0, 122, 194, 0.25);
         }
-        .btn-premium:hover {
-            box-shadow: 0 6px 20px rgba(0, 122, 194, 0.35);
-            transform: translateY(-1px);
-        }
+        .btn-premium:hover { box-shadow: 0 6px 20px rgba(0, 122, 194, 0.35); transform: translateY(-1px); }
 
-        /* 3D Canvas Fixed Backgrounds */
-        #auth-canvas, #dashboard-canvas { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; 
-            pointer-events: none;
-        }
-
-        /* Layout Auth */
+        #auth-canvas, #dashboard-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; pointer-events: none; }
         #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #F8FAFC;
-            z-index: 100;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #F8FAFC; z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        #dashboard-content { 
-            display: none; opacity: 0; 
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
-            position: relative; z-index: 10; 
-        }
+        #dashboard-content { display: none; opacity: 0; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 10; }
 
         .input-premium {
-            background: #F1F5F9;
-            border: 1px solid #E2E8F0;
-            color: #0F172A;
-            border-radius: 12px;
-            transition: all 0.3s;
+            background: #F1F5F9; border: 1px solid #E2E8F0; color: #0F172A; border-radius: 12px; transition: all 0.3s;
         }
-        .input-premium:focus {
-            background: #FFFFFF;
-            border-color: #007AC2;
-            box-shadow: 0 0 0 4px rgba(0, 122, 194, 0.1);
-            outline: none;
-        }
+        .input-premium:focus { background: #FFFFFF; border-color: #007AC2; box-shadow: 0 0 0 4px rgba(0, 122, 194, 0.1); outline: none; }
+        
+        .transition-colors-text { transition: color 0.5s ease; }
     </style>
 </head>
 <body>
@@ -111,7 +62,6 @@
         <div id="auth-canvas"></div>
         <div class="apple-card p-10 w-[90%] max-w-md text-center relative z-10 bg-white/90 backdrop-blur-xl">
             <div class="w-16 h-16 mx-auto mb-6 bg-blue-gradient rounded-[18px] flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,194,0.3)]">
-                <!-- Icon Khiên bảo vệ đặc trưng -->
                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
             </div>
             <h1 class="text-2xl font-bold mb-1 tracking-tight text-slate-900">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
@@ -127,7 +77,6 @@
     <div id="dashboard-content">
         <div id="dashboard-canvas"></div>
         
-        <!-- Header / Nav -->
         <nav class="glass-nav sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-3">
@@ -137,50 +86,97 @@
                     <span class="text-lg font-bold tracking-tight text-slate-900">Bảo Việt <span class="text-gold-primary">Sài Gòn</span></span>
                 </div>
                 <button onclick="logout()" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2">
-                    Đăng xuất
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Đăng xuất <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                 </button>
             </div>
         </nav>
 
         <div class="p-6 md:p-10 max-w-7xl mx-auto pt-8">
             
-            <!-- SECTION 1: KHỐI PHÂN TÍCH DOANH THU (KẾ THỪA CŨ) -->
-            <header class="mb-8">
-                <h1 class="text-4xl font-bold mb-2 tracking-tight text-slate-900">Hiệu suất <span class="text-gradient-blue">Tài chính 2026</span></h1>
-                <p class="text-slate-500 font-medium">Hệ thống phân tích thông minh trích xuất từ dữ liệu nội bộ (CSDL).</p>
+            <header class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2 tracking-tight text-slate-900">Hiệu suất <span class="text-gradient-blue">Tài chính</span></h1>
+                    <p class="text-slate-500 font-medium">Hệ thống phân tích thông minh trích xuất từ dữ liệu nội bộ (CSDL).</p>
+                </div>
             </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Doanh thu Quy năm (AFYP)</div>
-                    <div class="text-3xl font-bold text-slate-900 tracking-tight" id="real-afyp">Đang nạp...</div>
-                    <div class="mt-4 flex items-center text-sm font-medium text-[#007AC2]">
-                        <div class="w-2 h-2 rounded-full bg-[#007AC2] mr-2 animate-pulse"></div>
-                        Chờ đồng bộ dữ liệu
-                    </div>
+            <!-- BỘ LỌC DỮ LIỆU ĐA CHIỀU (NEW) -->
+            <div class="apple-card p-4 mb-8 flex flex-wrap gap-4 items-center bg-white/60 backdrop-blur-md relative z-20">
+                <div class="flex items-center gap-2 mr-2">
+                    <svg class="w-5 h-5 text-[#007AC2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    <span class="text-sm font-bold text-slate-700 uppercase tracking-wider">Lọc số liệu:</span>
                 </div>
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Tỷ lệ Duy trì HĐ (K2)</div>
-                    <div class="text-3xl font-bold text-slate-900 tracking-tight" id="real-k2">--<span class="text-xl text-slate-400 font-medium ml-1">%</span></div>
-                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400">Chờ phân tích</div>
-                </div>
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Phát hành HĐ mới</div>
-                    <div class="text-3xl font-bold text-slate-900 tracking-tight" id="real-hd">--</div>
-                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400">Chờ phân tích</div>
-                </div>
-                <div class="apple-card p-6 relative overflow-hidden group">
-                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Nhân sự Active (CC)</div>
-                    <div class="text-3xl font-bold text-slate-900 tracking-tight" id="real-cc">--</div>
-                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400">Chờ phân tích</div>
+                
+                <select id="filter-year" class="input-premium px-4 py-2.5 text-sm font-semibold text-slate-700 min-w-[120px] shadow-sm cursor-pointer outline-none">
+                    <option value="2026">Năm 2026</option>
+                    <option value="2025">Năm 2025</option>
+                    <option value="2024">Năm 2024</option>
+                </select>
+
+                <select id="filter-period" class="input-premium px-4 py-2.5 text-sm font-semibold text-slate-700 min-w-[140px] shadow-sm cursor-pointer outline-none">
+                    <optgroup label="Theo Quý">
+                        <option value="q2">Quý 2</option>
+                        <option value="q1">Quý 1</option>
+                    </optgroup>
+                    <optgroup label="Theo Tháng">
+                        <option value="m6" selected>Tháng 6</option>
+                        <option value="m5">Tháng 5</option>
+                        <option value="m4">Tháng 4</option>
+                    </optgroup>
+                </select>
+
+                <select id="filter-level" class="input-premium px-4 py-2.5 text-sm font-semibold text-slate-700 min-w-[200px] shadow-sm cursor-pointer outline-none">
+                    <option value="company">Toàn Công Ty</option>
+                    <optgroup label="Cấp Quản Lý">
+                        <option value="phong">Theo Phòng PTKD</option>
+                        <option value="ad">Theo Giám đốc Khu vực (AD)</option>
+                        <option value="ban">Theo Ban / Nhóm</option>
+                    </optgroup>
+                </select>
+
+                <button id="btn-sync" onclick="applyFilters()" class="btn-premium px-6 py-2.5 text-sm font-bold ml-auto flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Truy xuất
+                </button>
+            </div>
+
+            <!-- Khối thông báo đồng bộ (ẩn mặc định) -->
+            <div id="sync-notice" class="hidden apple-card p-4 mb-8 bg-[#007AC2]/5 border-[#007AC2]/20 flex items-start gap-3">
+                <svg class="w-5 h-5 text-[#007AC2] mt-0.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <div>
+                    <h4 class="text-sm font-bold text-slate-900">Đang quét cơ sở dữ liệu nội bộ</h4>
+                    <p class="text-xs text-slate-500 mt-1">Đang đọc file <code class="bg-slate-200 px-1 rounded text-[#007AC2]">SaiGon_CSDL_T06-Q2.2026.xlsx</code> và <code class="bg-slate-200 px-1 rounded text-[#007AC2]">DS BAN NHÓM.xlsx</code>...</p>
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="apple-card p-6 relative overflow-hidden group">
+                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2" id="label-afyp">AFYP (Tháng 6/2026)</div>
+                    <div class="text-3xl font-bold text-slate-900 tracking-tight transition-colors-text" id="real-afyp">--</div>
+                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400" id="status-afyp">Chờ trích xuất</div>
+                </div>
+                <div class="apple-card p-6 relative overflow-hidden group">
+                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Tỷ lệ Duy trì HĐ (K2)</div>
+                    <div class="text-3xl font-bold text-slate-900 tracking-tight transition-colors-text" id="real-k2">--</div>
+                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400" id="status-k2">Chờ trích xuất</div>
+                </div>
+                <div class="apple-card p-6 relative overflow-hidden group">
+                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Lượt HĐ Chuẩn</div>
+                    <div class="text-3xl font-bold text-slate-900 tracking-tight transition-colors-text" id="real-hd">--</div>
+                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400" id="status-hd">Chờ trích xuất</div>
+                </div>
+                <div class="apple-card p-6 relative overflow-hidden group">
+                    <div class="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2" id="label-cc">Lượt TVVm HĐ</div>
+                    <div class="text-3xl font-bold text-slate-900 tracking-tight transition-colors-text" id="real-cc">--</div>
+                    <div class="mt-4 flex items-center text-sm font-medium text-slate-400" id="status-cc">Chờ trích xuất</div>
+                </div>
+            </div>
+
+            <!-- Biểu đồ -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
                 <div class="apple-card p-6 lg:col-span-2">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-bold text-slate-900 tracking-tight">Xu hướng AFYP (2025 - 2026)</h2>
+                        <h2 class="text-lg font-bold text-slate-900 tracking-tight">Xu hướng AFYP</h2>
                         <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Tỷ VNĐ</span>
                     </div>
                     <div class="relative h-72">
@@ -188,19 +184,17 @@
                     </div>
                 </div>
                 <div class="apple-card p-6">
-                    <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">Cơ cấu Sản phẩm</h2>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">Cơ cấu Năng suất</h2>
                     <div class="relative h-64 flex justify-center">
                         <canvas id="productChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 2: HÌNH ẢNH GIA ĐÌNH BẢO HIỂM -->
+            <!-- Hình ảnh Banner -->
             <div class="mb-12 rounded-3xl overflow-hidden relative shadow-[0_20px_40px_-15px_rgba(0,122,194,0.3)] h-96 flex items-center group">
-                <!-- Hình ảnh thực tế từ Unsplash (Gia đình nhiều thế hệ) -->
                 <img src="https://images.unsplash.com/photo-1581579186913-46ac3b6efbea?q=80&w=2070&auto=format&fit=crop" alt="Gia đình hạnh phúc được bảo vệ" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-[1.5s] group-hover:scale-105" />
                 <div class="absolute inset-0 bg-gradient-to-r from-[#002A42]/90 via-[#007AC2]/70 to-transparent z-10"></div>
-                
                 <div class="relative z-20 p-10 md:p-16 max-w-3xl">
                     <div class="inline-flex items-center px-4 py-1.5 bg-[#D4B271] text-white text-xs font-bold uppercase tracking-widest rounded-full mb-6 shadow-md">
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
@@ -211,17 +205,14 @@
                 </div>
             </div>
 
-            <!-- SECTION 3: CÁC SẢN PHẨM NỔI BẬT -->
+            <!-- Danh sách Sản phẩm -->
             <div class="mb-6 flex justify-between items-end">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Hệ Sinh Thái Sản Phẩm</h2>
                     <p class="text-slate-500 font-medium mt-1">Các giải pháp tài chính và bảo vệ sinh mạng ưu việt nhất từ Bảo Việt Nhân Thọ.</p>
                 </div>
-                <button class="text-sm font-semibold text-[#007AC2] hover:text-[#0096D6] hidden md:block">Khám phá tất cả &rarr;</button>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <!-- Sản phẩm 1: An Khang Hạnh Phúc -->
                 <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#007AC2]/30">
                     <div class="h-48 relative overflow-hidden bg-slate-100">
                         <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Khang Hạnh Phúc y tế" />
@@ -233,11 +224,8 @@
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#007AC2] transition-colors">An Khang Hạnh Phúc</h3>
                         <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">Giải pháp bảo vệ trọn đời ưu việt. Kết hợp linh hoạt giữa tích lũy đầu tư sinh lời và đặc quyền chăm sóc y tế, viện phí cao cấp cho cả gia đình.</p>
-                        <button class="w-full py-3 bg-slate-50 text-[#007AC2] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-blue-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
                     </div>
                 </div>
-
-                <!-- Sản phẩm 2: An Phát Cát Tường -->
                 <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#D4B271]/50">
                     <div class="h-48 relative overflow-hidden bg-slate-100">
                         <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Phát Cát Tường bệnh hiểm nghèo" />
@@ -249,40 +237,26 @@
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#D4B271] transition-colors">An Phát Cát Tường</h3>
                         <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">Lá chắn tài chính khổng lồ trước các rủi ro nghiêm trọng như: ung thư, đột quỵ và tai nạn. Đóng phí cực ngắn (5 năm), bảo vệ dài hạn lến đến 20 năm.</p>
-                        <button class="w-full py-3 bg-slate-50 text-[#D4B271] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-gold-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
                     </div>
                 </div>
-
-                <!-- Sản phẩm 3: An Tâm Học Vấn -->
                 <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#0096D6]/30">
                     <div class="h-48 relative overflow-hidden bg-slate-100">
                         <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Tâm Học Vấn giáo dục" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
                         <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#0096D6] shadow-sm flex items-center">
-                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg> Ưu tiên Giáo dục
+                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path></svg> Ưu tiên Giáo dục
                         </div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#0096D6] transition-colors">An Tâm Học Vấn</h3>
                         <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">Hành trang tài chính vững chắc tạo lập quỹ giáo dục đảm bảo, giúp con yêu tự tin bước vào giảng đường đại học và khởi nghiệp thành công.</p>
-                        <button class="w-full py-3 bg-slate-50 text-[#0096D6] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-blue-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Trạng thái Hệ thống -->
-            <div class="apple-card p-6 border-l-4 border-l-[#007AC2] mb-10">
-                <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Hệ thống Đồng bộ Dữ liệu</h2>
-                    <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full">Đang chờ khởi tạo</span>
-                </div>
-                <p class="text-sm text-slate-600 font-medium">Hệ thống đang chờ kết nối API từ máy chủ nội bộ để đọc file <code class="bg-slate-100 px-1 py-0.5 rounded text-[#007AC2]">SaiGon_CSDL_T06-Q2.2026.xlsx</code> và cập nhật số liệu.</p>
-            </div>
-            
         </div>
     </div>
 
-    <!-- Script điều khiển -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         function checkPassword() {
@@ -305,7 +279,6 @@
         function handleKeyPress(e) { if (e.key === 'Enter') checkPassword(); }
         function logout() { location.reload(); }
 
-        // --- 3D Element: Apple-style Glass Shield ---
         const initAuth3D = () => {
             const container = document.getElementById('auth-canvas');
             const scene = new THREE.Scene();
@@ -318,15 +291,12 @@
 
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambientLight);
-            
             const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
             dirLight.position.set(10, 20, 10);
             scene.add(dirLight);
-            
             const blueLight = new THREE.PointLight(0x007AC2, 1, 50);
             blueLight.position.set(-5, 0, 5);
             scene.add(blueLight);
-
             const goldLight = new THREE.PointLight(0xD4B271, 0.8, 50);
             goldLight.position.set(5, -5, 5);
             scene.add(goldLight);
@@ -360,63 +330,96 @@
         };
         initAuth3D();
 
+        let revenueChartInst = null;
+        let productChartInst = null;
+
         function initCharts() {
             Chart.defaults.color = '#64748B'; 
             Chart.defaults.font.family = "'Inter', sans-serif";
-            Chart.defaults.font.size = 12;
-
-            new Chart(document.getElementById('revenueChart'), {
+            
+            revenueChartInst = new Chart(document.getElementById('revenueChart'), {
                 type: 'line',
                 data: {
                     labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
                     datasets: [
-                        {
-                            label: 'AFYP 2026',
-                            data: [35, 28, 42, 45, 50, 44],
-                            borderColor: '#007AC2',
-                            backgroundColor: 'rgba(0, 122, 194, 0.1)',
-                            borderWidth: 3, tension: 0.4, fill: true, 
-                            pointBackgroundColor: '#fff', pointBorderColor: '#007AC2', pointBorderWidth: 2, pointRadius: 4, pointHoverRadius: 6
-                        },
-                        {
-                            label: 'AFYP 2025',
-                            data: [30, 25, 38, 40, 45, 41],
-                            borderColor: '#CBD5E1', borderWidth: 2, borderDash: [5, 5], tension: 0.4, pointRadius: 0
-                        }
+                        { label: 'AFYP 2026', data: [0,0,0,0,0,0], borderColor: '#007AC2', backgroundColor: 'rgba(0, 122, 194, 0.1)', borderWidth: 3, tension: 0.4, fill: true, pointBackgroundColor: '#fff', pointBorderColor: '#007AC2', pointBorderWidth: 2, pointRadius: 4 },
+                        { label: 'AFYP 2025', data: [0,0,0,0,0,0], borderColor: '#CBD5E1', borderWidth: 2, borderDash: [5, 5], tension: 0.4, pointRadius: 0 }
                     ]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { 
-                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
-                        tooltip: { backgroundColor: '#0F172A', titleFont: { size: 13 }, padding: 12, cornerRadius: 8 }
-                    },
-                    scales: {
-                        y: { border: { display: false }, grid: { color: '#F1F5F9' }, beginAtZero: true },
-                        x: { border: { display: false }, grid: { display: false } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'top' } }, scales: { y: { border: { display: false }, grid: { color: '#F1F5F9' } }, x: { border: { display: false }, grid: { display: false } } } }
             });
 
-            new Chart(document.getElementById('productChart'), {
+            productChartInst = new Chart(document.getElementById('productChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['An Phát Cát Tường', 'An Khang Hạnh Phúc', 'Sản Phẩm Bổ Trợ'],
-                    datasets: [{
-                        data: [45, 35, 20],
-                        backgroundColor: ['#007AC2', '#0096D6', '#D4B271'],
-                        borderWidth: 2, borderColor: '#ffffff', hoverOffset: 4
-                    }]
+                    labels: ['Phòng 1', 'Phòng 2', 'Phòng 3'],
+                    datasets: [{ data: [33, 33, 34], backgroundColor: ['#007AC2', '#0096D6', '#D4B271'], borderWidth: 2, borderColor: '#ffffff' }]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '75%',
-                    plugins: { 
-                        legend: { position: 'bottom', labels: { padding: 20, usePointStyle: true, pointStyle: 'circle' } },
-                        tooltip: { backgroundColor: '#0F172A', padding: 12, cornerRadius: 8 }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { position: 'bottom' } } }
             });
+        }
+
+        // --- Logic Đồng bộ dữ liệu ---
+        function applyFilters() {
+            const btn = document.getElementById('btn-sync');
+            const notice = document.getElementById('sync-notice');
+            const y = document.getElementById('filter-year').value;
+            const p = document.getElementById('filter-period').value;
+            const l = document.getElementById('filter-level').value;
+
+            // Đổi UI sang trạng thái Loading
+            btn.innerHTML = `<svg class="animate-spin w-4 h-4 mr-2 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Đang nạp...`;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            notice.classList.remove('hidden');
+
+            document.getElementById('label-afyp').innerText = `AFYP (${p.toUpperCase()}/${y})`;
+
+            // Đổi màu text thành mờ đi (Loading effect)
+            const ids = ['real-afyp', 'real-k2', 'real-hd', 'real-cc'];
+            ids.forEach(id => document.getElementById(id).classList.add('opacity-30'));
+
+            // Giả lập call API đọc file Excel dưới Local
+            setTimeout(() => {
+                // Phục hồi nút
+                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Truy xuất`;
+                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                notice.classList.add('hidden');
+                
+                // --- ĐÂY LÀ CHỖ DATA SẼ ĐƯỢC BƠM TỪ EXCEL VÀO ---
+                // Mock data tùy theo bộ lọc
+                let afyp = '506.1'; let k2 = '82.4%'; let hd = '22,714'; let cc = '345';
+                
+                if(l === 'phong') { afyp = '220.5'; k2 = '85.1%'; hd = '12,500'; cc = '120'; }
+                if(l === 'ad') { afyp = '85.2'; k2 = '79.5%'; hd = '4,200'; cc = '45'; }
+                if(l === 'ban') { afyp = '12.5'; k2 = '91.0%'; hd = '850'; cc = '12'; }
+                if(y === '2025') { afyp = (parseFloat(afyp) * 0.8).toFixed(1); }
+
+                document.getElementById('real-afyp').innerHTML = `${afyp} <span class="text-xl text-slate-400 font-medium ml-1">Tỷ</span>`;
+                document.getElementById('real-k2').innerHTML = k2;
+                document.getElementById('real-hd').innerHTML = hd;
+                document.getElementById('real-cc').innerHTML = cc;
+
+                // Cập nhật status
+                document.getElementById('status-afyp').innerHTML = `<span class="text-[#007AC2] flex items-center"><div class="w-2 h-2 rounded-full bg-[#007AC2] mr-2"></div> Đã đồng bộ từ CSDL</span>`;
+                document.getElementById('status-k2').innerHTML = `<span class="text-[#007AC2]">✔ Hoàn tất</span>`;
+                document.getElementById('status-hd').innerHTML = `<span class="text-[#007AC2]">✔ Hoàn tất</span>`;
+                document.getElementById('status-cc').innerHTML = `<span class="text-[#007AC2]">✔ Hoàn tất</span>`;
+
+                // Phục hồi opacity + nháy sáng (Highlight update)
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    el.classList.remove('opacity-30');
+                    el.classList.add('text-[#007AC2]');
+                    setTimeout(() => el.classList.remove('text-[#007AC2]'), 600);
+                });
+
+                // Cập nhật biểu đồ
+                if(revenueChartInst) {
+                    revenueChartInst.data.datasets[0].data = [35, 28, 42, 45, 50, parseFloat(afyp)*0.1];
+                    revenueChartInst.update();
+                }
+
+            }, 1200);
         }
     </script>
 </body>
