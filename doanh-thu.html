@@ -3,372 +3,395 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảo Việt Nhân thọ Sài Gòn | TMIT Dashboard</title>
+    <title>Bảo Việt Nhân thọ Sài Gòn | Doanh Thu Lũy Kế</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; background-color: #F8FAFC; color: #0F172A; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
-        .bg-blue-gradient { background: linear-gradient(135deg, #007AC2 0%, #0096D6 100%); }
-        .text-gradient-blue { background: linear-gradient(135deg, #007AC2, #0096D6); -webkit-background-clip: text; color: transparent; }
-        .apple-card { background: #FFFFFF; border: 1px solid rgba(0,0,0,0.04); border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 10px 15px -3px rgba(0,0,0,0.02); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .apple-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,122,194,0.08); }
-        .glass-nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .btn-premium { background: linear-gradient(135deg, #007AC2, #0096D6); color: white; border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(0,122,194,0.25); cursor:pointer; }
-        .btn-premium:hover { box-shadow: 0 6px 20px rgba(0,122,194,0.35); transform: translateY(-1px); }
-        #auth-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; pointer-events: none; }
-        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #F8FAFC; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease; }
-        #dashboard-content { display: none; opacity: 0; transition: opacity 0.8s ease; position: relative; z-index: 10; }
-        .input-premium { background: #F1F5F9; border: 1px solid #E2E8F0; color: #0F172A; border-radius: 10px; transition: all 0.3s; outline: none; }
-        .input-premium:focus { background: #FFFFFF; border-color: #007AC2; box-shadow: 0 0 0 3px rgba(0,122,194,0.1); }
-        .filter-chip { cursor: pointer; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #E2E8F0; background: #F8FAFC; color: #64748B; transition: all 0.2s; }
-        .filter-chip.active { background: #007AC2; color: white; border-color: #007AC2; box-shadow: 0 2px 8px rgba(0,122,194,0.3); }
-        .filter-chip:hover:not(.active) { border-color: #007AC2; color: #007AC2; }
+        *{box-sizing:border-box}
+        body{margin:0;background:#F8FAFC;color:#0F172A;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+        .bg-blue-gradient{background:linear-gradient(135deg,#007AC2,#0096D6)}
+        .text-gradient-blue{background:linear-gradient(135deg,#007AC2,#0096D6);-webkit-background-clip:text;color:transparent}
+        .apple-card{background:#FFF;border:1px solid rgba(0,0,0,.04);border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+        .glass-nav{background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.05)}
+        .btn-blue{background:linear-gradient(135deg,#007AC2,#0096D6);color:#fff;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;padding:8px 16px;border:none;transition:all .2s}
+        .btn-blue:hover{box-shadow:0 4px 12px rgba(0,122,194,.3);transform:translateY(-1px)}
+        #auth-screen{position:fixed;inset:0;background:#F8FAFC;z-index:100;display:flex;align-items:center;justify-content:center;transition:opacity .6s}
+        #dashboard{display:none;opacity:0;transition:opacity .6s}
+        .input-f{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:8px;padding:8px 12px;font-size:13px;outline:none;transition:all .2s;width:100%;color:#0F172A}
+        .input-f:focus{border-color:#007AC2;box-shadow:0 0 0 3px rgba(0,122,194,.1);background:#fff}
+        .chip{display:inline-flex;align-items:center;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #E2E8F0;background:#F8FAFC;color:#64748B;transition:all .15s;white-space:nowrap}
+        .chip.active{background:#007AC2;color:#fff;border-color:#007AC2}
+        .chip:hover:not(.active){border-color:#007AC2;color:#007AC2}
+        .dropdown{position:relative}
+        .dropdown-menu{position:absolute;top:100%;left:0;right:0;max-height:240px;overflow-y:auto;background:#fff;border:1px solid #E2E8F0;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:30;display:none}
+        .dropdown-menu.open{display:block}
+        .dropdown-item{padding:8px 12px;font-size:13px;cursor:pointer;transition:background .1s}
+        .dropdown-item:hover{background:#F1F5F9}
+        .dropdown-item.selected{background:#007AC2;color:#fff}
+        table{border-collapse:collapse;width:100%}
+        th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#94A3B8;padding:10px 12px;border-bottom:1px solid #F1F5F9;white-space:nowrap}
+        td{padding:10px 12px;font-size:13px;border-bottom:1px solid #F8FAFC}
+        tr:hover td{background:#FAFBFD}
+        .sort-btn{cursor:pointer;user-select:none}
+        .sort-btn:hover{color:#007AC2}
+        .kpi-val{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#0F172A}
+        @media(max-width:768px){.kpi-val{font-size:22px}}
     </style>
 </head>
 <body>
 
-<!-- Auth Screen -->
+<!-- Auth -->
 <div id="auth-screen">
-    <div id="auth-canvas"></div>
-    <div class="apple-card p-10 w-[90%] max-w-md text-center relative z-10 bg-white/90 backdrop-blur-xl">
-        <div class="w-16 h-16 mx-auto mb-6 bg-blue-gradient rounded-2xl flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,194,0.3)]">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+    <div class="apple-card p-8 w-[90%] max-w-sm text-center">
+        <div class="w-14 h-14 mx-auto mb-5 bg-blue-gradient rounded-xl flex items-center justify-center">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
-        <h1 class="text-2xl font-bold mb-1 tracking-tight text-slate-900">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
-        <p class="text-[11px] font-semibold text-[#007AC2] mb-8 tracking-[0.2em] uppercase">Enterprise Data Center</p>
-        <input type="password" id="password-input" placeholder="Nhập mã truy cập..." class="input-premium w-full px-5 py-4 mb-4 text-center tracking-widest text-lg font-medium" onkeypress="if(event.key==='Enter')checkPassword()">
-        <p id="error-msg" class="text-red-500 text-sm mb-4 hidden font-medium">Mã truy cập không hợp lệ.</p>
-        <button onclick="checkPassword()" class="btn-premium w-full py-4 font-semibold tracking-wide text-sm">Truy Cập Dữ Liệu</button>
+        <h1 class="text-xl font-bold mb-1">Bảo Việt <span class="text-[#D4B271]">Sài Gòn</span></h1>
+        <p class="text-[10px] font-semibold text-[#007AC2] mb-6 tracking-[.2em] uppercase">Enterprise Data Center</p>
+        <input type="password" id="pw" placeholder="Mã truy cập..." class="input-f text-center text-base tracking-widest mb-3" onkeypress="event.key==='Enter'&&auth()">
+        <p id="err" class="text-red-500 text-xs mb-3 hidden font-medium">Sai mã.</p>
+        <button onclick="auth()" class="btn-blue w-full py-3">Truy Cập</button>
     </div>
 </div>
 
 <!-- Dashboard -->
-<div id="dashboard-content">
-    <nav class="glass-nav sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-blue-gradient rounded-lg flex items-center justify-center shadow-md">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                </div>
-                <span class="text-lg font-bold tracking-tight text-slate-900">Bảo Việt Nhân thọ Sài Gòn</span>
+<div id="dashboard">
+<nav class="glass-nav sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 bg-blue-gradient rounded-lg flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             </div>
-            <div class="flex items-center gap-4">
-                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full flex items-center"><span class="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>Verified from Local Excel</span>
-                <button onclick="location.reload()" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Đăng xuất</button>
+            <span class="text-sm font-bold text-slate-900">BVNT Sài Gòn</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="hidden md:flex px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full items-center"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1 animate-pulse"></span><span id="rec-count">7,731</span> HĐ loaded</span>
+            <button onclick="location.reload()" class="text-xs font-medium text-slate-400 hover:text-slate-700">Đăng xuất</button>
+        </div>
+    </div>
+</nav>
+
+<div class="p-4 md:p-8 max-w-7xl mx-auto">
+    <header class="mb-6">
+        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Doanh Thu <span class="text-gradient-blue">Lũy Kế</span></h1>
+        <p class="text-slate-500 text-sm mt-1">Tra cứu theo Phòng KD · Ban · Nhóm · Đại lý — Lọc theo Tháng/Quý/Năm</p>
+    </header>
+
+    <!-- FILTERS -->
+    <div class="apple-card p-4 md:p-5 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+            <!-- Year -->
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Năm</label>
+                <div class="flex gap-1 flex-wrap" id="year-chips"></div>
+            </div>
+            <!-- Period -->
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Thời gian</label>
+                <select id="sel-period" class="input-f" onchange="render()">
+                    <option value="all">Tất cả (Lũy kế)</option>
+                    <option value="q1">Quý 1 (T1-T3)</option>
+                    <option value="q2">Quý 2 (T4-T6)</option>
+                    <option value="q3">Quý 3 (T7-T9)</option>
+                    <option value="q4">Quý 4 (T10-T12)</option>
+                    <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option>
+                    <option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+                    <option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option>
+                    <option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
+                </select>
+            </div>
+            <!-- Level -->
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Cấp quản lý</label>
+                <select id="sel-level" class="input-f" onchange="onLevelChange()">
+                    <option value="company">Toàn Công Ty</option>
+                    <option value="phong">Phòng Kinh Doanh</option>
+                    <option value="ban">Ban</option>
+                    <option value="nhom">Nhóm</option>
+                    <option value="dl">Đại Lý (TVV)</option>
+                </select>
+            </div>
+            <!-- Search -->
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block">Tìm kiếm</label>
+                <input type="text" id="search" class="input-f" placeholder="Tên phòng, ban, nhóm, đại lý..." oninput="render()">
             </div>
         </div>
-    </nav>
-
-    <div class="p-6 md:p-10 max-w-7xl mx-auto pt-8">
-        <header class="mb-6">
-            <h1 class="text-4xl font-bold mb-2 tracking-tight text-slate-900">Doanh Thu <span class="text-gradient-blue">Lũy Kế</span></h1>
-            <p class="text-slate-500 font-medium text-sm">Trích xuất chính xác từ cột AFYP/AYFP trong file Phát Hành. Đơn vị: <strong>Triệu VNĐ</strong>.</p>
-        </header>
-
-        <!-- Filter -->
-        <div class="apple-card p-5 mb-8 relative z-20">
-            <div class="flex items-center gap-3 mb-4">
-                <svg class="w-5 h-5 text-[#007AC2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-                <span class="text-sm font-bold text-slate-700 uppercase tracking-wider">Chọn năm:</span>
-            </div>
-            <div class="flex flex-wrap gap-2" id="year-filters">
-                <div class="filter-chip active" data-year="2026" onclick="selectYear(2026)">2026 (Lũy kế đến T5)</div>
-                <div class="filter-chip" data-year="2025" onclick="selectYear(2025)">2025 (Cả năm)</div>
-                <div class="filter-chip" data-year="2024" onclick="selectYear(2024)">2024 (Cả năm)</div>
-            </div>
+        <!-- Specific filter -->
+        <div id="specific-filter" class="hidden">
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 block" id="specific-label">Chọn:</label>
+            <select id="sel-specific" class="input-f" onchange="render()">
+                <option value="">-- Tất cả --</option>
+            </select>
         </div>
+    </div>
 
-        <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="apple-card p-6">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Tổng AFYP Phát Hành</div>
-                    <span class="text-[10px] font-bold bg-[#007AC2]/10 text-[#007AC2] px-2 py-0.5 rounded-full" id="tag-year">2026</span>
-                </div>
-                <div class="flex items-end gap-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-afyp">24,620.2</div>
-                    <div class="text-xs text-slate-400 font-semibold mb-1">Triệu VNĐ</div>
-                </div>
-                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                    <span class="text-slate-400">Nguồn:</span>
-                    <span class="text-[#007AC2] font-bold" id="src-label">Q1 + T4 + T5</span>
-                </div>
-            </div>
-            <div class="apple-card p-6">
-                <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-2">Tổng Hợp Đồng</div>
-                <div class="flex items-end gap-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-hd">1,365</div>
-                    <div class="text-xs text-slate-400 font-semibold mb-1">HĐ</div>
-                </div>
-                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                    <span class="text-slate-400">Ngày PH sớm nhất:</span>
-                    <span class="text-slate-700 font-bold" id="date-min">05/01/2026</span>
-                </div>
-            </div>
-            <div class="apple-card p-6">
-                <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-2">AFYP B/Q mỗi HĐ</div>
-                <div class="flex items-end gap-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-avg">18.0</div>
-                    <div class="text-xs text-slate-400 font-semibold mb-1">Triệu/HĐ</div>
-                </div>
-                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                    <span class="text-slate-400">Ngày PH muộn nhất:</span>
-                    <span class="text-slate-700 font-bold" id="date-max">31/05/2026</span>
-                </div>
-            </div>
-            <div class="apple-card p-6">
-                <div class="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-2">Số File Nguồn</div>
-                <div class="flex items-end gap-2">
-                    <div class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight" id="val-files">3</div>
-                    <div class="text-xs text-slate-400 font-semibold mb-1">Files</div>
-                </div>
-                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between text-xs font-medium">
-                    <span class="text-slate-400">Trạng thái:</span>
-                    <span class="text-green-600 font-bold">✓ Đã xác minh</span>
-                </div>
-            </div>
+    <!-- KPI -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="apple-card p-4 md:p-5">
+            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Tổng AFYP</div>
+            <div class="kpi-val" id="k-afyp">0</div>
+            <div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu VNĐ</div>
         </div>
-
-        <!-- Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div class="apple-card p-6">
-                <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">AFYP Theo Tháng (Triệu VNĐ)</h2>
-                <div class="relative h-72"><canvas id="monthlyChart"></canvas></div>
-            </div>
-            <div class="apple-card p-6">
-                <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">So Sánh AFYP Cả Năm</h2>
-                <div class="relative h-72"><canvas id="yearlyChart"></canvas></div>
-            </div>
+        <div class="apple-card p-4 md:p-5">
+            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Hợp Đồng</div>
+            <div class="kpi-val" id="k-hd">0</div>
+            <div class="text-[11px] text-slate-400 font-semibold mt-1">HĐ phát hành</div>
         </div>
-
-        <!-- Data Source Table -->
-        <div class="apple-card p-6 mb-8">
-            <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6">Chi Tiết Nguồn Dữ Liệu</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead class="text-xs text-slate-500 border-b border-slate-100 uppercase tracking-wider">
-                        <tr>
-                            <th class="py-3 pr-4">File Nguồn</th>
-                            <th class="py-3 px-4 text-right">Ngày PH (Min→Max)</th>
-                            <th class="py-3 px-4 text-right">Ngày HL (Min→Max)</th>
-                            <th class="py-3 px-4 text-right">AFYP (Triệu)</th>
-                            <th class="py-3 pl-4 text-right">Số HĐ</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-slate-700 font-medium" id="source-table">
-                    </tbody>
-                </table>
-            </div>
+        <div class="apple-card p-4 md:p-5">
+            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">AFYP B/Q mỗi HĐ</div>
+            <div class="kpi-val" id="k-avg">0</div>
+            <div class="text-[11px] text-slate-400 font-semibold mt-1">Triệu/HĐ</div>
         </div>
+        <div class="apple-card p-4 md:p-5">
+            <div class="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Số Đại Lý HĐ</div>
+            <div class="kpi-val" id="k-dl">0</div>
+            <div class="text-[11px] text-slate-400 font-semibold mt-1">TVV có phát sinh</div>
+        </div>
+    </div>
 
-        <!-- Monthly Breakdown -->
-        <div class="apple-card p-6 mb-8">
-            <h2 class="text-lg font-bold text-slate-900 tracking-tight mb-6" id="monthly-title">Chi Tiết Theo Tháng — 2026</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead class="text-xs text-slate-500 border-b border-slate-100 uppercase tracking-wider">
-                        <tr>
-                            <th class="py-3 pr-4">Tháng</th>
-                            <th class="py-3 px-4 text-right">AFYP (Triệu VNĐ)</th>
-                            <th class="py-3 px-4 text-right">Số HĐ</th>
-                            <th class="py-3 pl-4 text-right">AFYP B/Q (Triệu/HĐ)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="monthly-table" class="text-slate-700 font-medium"></tbody>
-                </table>
-            </div>
+    <!-- Charts + Table -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div class="apple-card p-5 lg:col-span-2">
+            <h2 class="text-sm font-bold text-slate-900 mb-4">AFYP Theo Tháng (Triệu VNĐ)</h2>
+            <div class="relative h-56 md:h-64"><canvas id="chart-monthly"></canvas></div>
+        </div>
+        <div class="apple-card p-5">
+            <h2 class="text-sm font-bold text-slate-900 mb-4">So Sánh Năm</h2>
+            <div class="relative h-56 md:h-64"><canvas id="chart-yearly"></canvas></div>
+        </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="apple-card p-5 mb-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-sm font-bold text-slate-900" id="table-title">Bảng Chi Tiết</h2>
+            <span class="text-[11px] text-slate-400 font-medium" id="table-count"></span>
+        </div>
+        <div class="overflow-x-auto">
+            <table>
+                <thead><tr id="table-head"></tr></thead>
+                <tbody id="table-body"></tbody>
+            </table>
         </div>
     </div>
 </div>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-function checkPassword() {
-    if (document.getElementById('password-input').value === '103ty') {
-        document.getElementById('error-msg').classList.add('hidden');
-        document.getElementById('auth-screen').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('dashboard-content').style.display = 'block';
-            setTimeout(() => { document.getElementById('dashboard-content').style.opacity = '1'; renderDashboard(2026); }, 50);
-        }, 500);
+// ========== AUTH ==========
+function auth(){
+    if(document.getElementById('pw').value==='103ty'){
+        document.getElementById('auth-screen').style.opacity='0';
+        setTimeout(()=>{
+            document.getElementById('auth-screen').style.display='none';
+            document.getElementById('dashboard').style.display='block';
+            setTimeout(()=>document.getElementById('dashboard').style.opacity='1',30);
+            init();
+        },400);
     } else {
-        document.getElementById('error-msg').classList.remove('hidden');
-        document.getElementById('password-input').value = '';
+        document.getElementById('err').classList.remove('hidden');
+        document.getElementById('pw').value='';
     }
 }
 
-// ========== DỮ LIỆU CHÍNH XÁC TUYỆT ĐỐI TỪ PYTHON ==========
-// Được trích xuất bằng cách đọc cột AFYP/AYFP, xử lý text→number,
-// lọc theo ngày hiệu lực và ngày phát hành thực tế trong file.
+// ========== DATA ==========
+let RAW=[], FILTERS={}, selectedYear=2026;
+let chartM=null, chartY=null;
 
-const DATA = {
-    2024: {
-        afyp: 62556.8, hd: 2816,
-        ph_min: "03/01/2024", ph_max: "31/12/2024",
-        hl_min: "29/12/2023", hl_max: "31/12/2024",
-        src: "2024_DMS.xlsx (Cả năm)", files: 1,
-        sources: [
-            { file: "2024_DMS.xlsx", sheet: "KPI04_Chi tiết phát hành HĐ", ph: "03/01 → 31/12/2024", hl: "29/12/2023 → 31/12/2024", afyp: 62556.8, hd: 2816 }
-        ],
-        monthly: {
-            1: {afyp:4630.0, hd:324}, 2: {afyp:6595.2, hd:116}, 3: {afyp:9111.8, hd:557},
-            4: {afyp:4270.7, hd:128}, 5: {afyp:5494.3, hd:158}, 6: {afyp:7236.6, hd:275},
-            7: {afyp:3688.3, hd:192}, 8: {afyp:3770.6, hd:205}, 9: {afyp:2935.9, hd:144},
-            10:{afyp:5407.1, hd:246}, 11:{afyp:4762.1, hd:257}, 12:{afyp:4654.4, hd:214}
-        }
-    },
-    2025: {
-        afyp: 60049.6, hd: 3631,
-        ph_min: "02/01/2025", ph_max: "31/12/2025",
-        hl_min: "26/12/2024", hl_max: "31/12/2025",
-        src: "2025_KPI.xlsx (Cả năm)", files: 1,
-        sources: [
-            { file: "2025_KPI.xlsx", sheet: "NEW_KPI04_Báo cáo chi tiết phá", ph: "02/01 → 31/12/2025", hl: "26/12/2024 → 31/12/2025", afyp: 60049.6, hd: 3631 }
-        ],
-        monthly: {
-            1: {afyp:4021.5, hd:159}, 2: {afyp:4720.0, hd:172}, 3: {afyp:5650.4, hd:225},
-            4: {afyp:3528.7, hd:184}, 5: {afyp:3138.0, hd:184}, 6: {afyp:8493.3, hd:346},
-            7: {afyp:3543.8, hd:140}, 8: {afyp:2566.5, hd:129}, 9: {afyp:4013.9, hd:217},
-            10:{afyp:3242.9, hd:184}, 11:{afyp:3181.4, hd:184}, 12:{afyp:13949.0, hd:1507}
-        }
-    },
-    2026: {
-        afyp: 24620.2, hd: 1365,
-        ph_min: "05/01/2026", ph_max: "31/05/2026",
-        hl_min: "01/01/2026", hl_max: "31/05/2026",
-        src: "Q1 + T4 + T5 (Lũy kế đến 31/05/2026)", files: 3,
-        sources: [
-            { file: "2026_Q1.xlsx", sheet: "Quý 1 (HL 1.1.26)", ph: "05/01 → 31/03/2026", hl: "01/01 → 31/03/2026", afyp: 15176.8, hd: 722 },
-            { file: "2026_T5.xlsx (thực tế = T4)", sheet: "NEW_KPI04_...", ph: "01/04 → 30/04/2026", hl: "16/03 → 30/04/2026", afyp: 3109.3, hd: 191 },
-            { file: "2026_T6.xlsx (thực tế = T5)", sheet: "NEW_KPI04_...", ph: "04/05 → 31/05/2026", hl: "09/04 → 31/05/2026", afyp: 6334.1, hd: 452 }
-        ],
-        monthly: {
-            1: {afyp:2471.7, hd:136}, 2: {afyp:4190.9, hd:197}, 3: {afyp:8610.1, hd:395},
-            4: {afyp:5366.9, hd:425}, 5: {afyp:3980.5, hd:212}
-        }
-    }
-};
-
-let monthlyChartInst = null, yearlyChartInst = null;
-
-function fmt(n) { return n.toLocaleString('vi-VN', {minimumFractionDigits:1, maximumFractionDigits:1}); }
-function fmtInt(n) { return n.toLocaleString('vi-VN'); }
-
-function selectYear(y) {
-    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    document.querySelector(`[data-year="${y}"]`).classList.add('active');
-    renderDashboard(y);
+async function init(){
+    try{
+        const resp=await fetch('data/all_contracts.json');
+        const data=await resp.json();
+        RAW=data.records; FILTERS=data.filters;
+        document.getElementById('rec-count').textContent=RAW.length.toLocaleString('vi-VN');
+        buildYearChips();
+        render();
+    }catch(e){console.error(e);alert('Lỗi tải dữ liệu: '+e.message)}
 }
 
-function renderDashboard(year) {
-    const d = DATA[year];
+function buildYearChips(){
+    const c=document.getElementById('year-chips');
+    const yrs=[2026,2025,2024];
+    c.innerHTML=yrs.map(y=>`<div class="chip ${y===selectedYear?'active':''}" onclick="selectYear(${y})">${y}</div>`).join('');
+}
 
-    // KPI cards
-    document.getElementById('val-afyp').textContent = fmt(d.afyp);
-    document.getElementById('val-hd').textContent = fmtInt(d.hd);
-    document.getElementById('val-avg').textContent = (d.afyp / d.hd).toFixed(1);
-    document.getElementById('val-files').textContent = d.files;
-    document.getElementById('tag-year').textContent = year;
-    document.getElementById('src-label').textContent = d.src;
-    document.getElementById('date-min').textContent = d.ph_min;
-    document.getElementById('date-max').textContent = d.ph_max;
+function selectYear(y){selectedYear=y;buildYearChips();render()}
 
-    // Source table
-    const stb = document.getElementById('source-table');
-    stb.innerHTML = d.sources.map(s => `
-        <tr class="border-b border-slate-50 hover:bg-slate-50/50">
-            <td class="py-3 pr-4"><span class="bg-slate-100 px-2 py-1 rounded text-[11px] font-mono">${s.file}</span></td>
-            <td class="py-3 px-4 text-right text-xs">${s.ph}</td>
-            <td class="py-3 px-4 text-right text-xs">${s.hl}</td>
-            <td class="py-3 px-4 text-right font-bold text-[#007AC2]">${fmt(s.afyp)}</td>
-            <td class="py-3 pl-4 text-right">${fmtInt(s.hd)}</td>
-        </tr>
-    `).join('') + `
-        <tr class="border-t-2 border-[#007AC2]/20 bg-[#007AC2]/5 font-bold">
-            <td class="py-3 pr-4 text-[#007AC2]">TỔNG CỘNG</td>
-            <td class="py-3 px-4"></td>
-            <td class="py-3 px-4"></td>
-            <td class="py-3 px-4 text-right text-[#007AC2] text-base">${fmt(d.afyp)}</td>
-            <td class="py-3 pl-4 text-right text-[#007AC2]">${fmtInt(d.hd)}</td>
-        </tr>
-    `;
+function getFilteredRecords(){
+    const period=document.getElementById('sel-period').value;
+    const level=document.getElementById('sel-level').value;
+    const search=document.getElementById('search').value.toLowerCase().trim();
+    const specific=document.getElementById('sel-specific').value;
+    
+    let recs=RAW.filter(r=>r.y===selectedYear);
+    
+    // Period filter
+    if(period==='q1') recs=recs.filter(r=>r.m>=1&&r.m<=3);
+    else if(period==='q2') recs=recs.filter(r=>r.m>=4&&r.m<=6);
+    else if(period==='q3') recs=recs.filter(r=>r.m>=7&&r.m<=9);
+    else if(period==='q4') recs=recs.filter(r=>r.m>=10&&r.m<=12);
+    else if(period!=='all') recs=recs.filter(r=>r.m===parseInt(period));
+    
+    // Search
+    if(search){
+        recs=recs.filter(r=>
+            (r.p&&r.p.toLowerCase().includes(search))||
+            (r.b&&r.b.toLowerCase().includes(search))||
+            (r.n&&r.n.toLowerCase().includes(search))||
+            (r.d&&r.d.toLowerCase().includes(search))||
+            (r.a&&r.a.toLowerCase().includes(search))
+        );
+    }
+    
+    // Specific filter
+    if(specific){
+        if(level==='phong') recs=recs.filter(r=>r.p===specific);
+        else if(level==='ban') recs=recs.filter(r=>r.b===specific);
+        else if(level==='nhom') recs=recs.filter(r=>r.n===specific);
+    }
+    
+    return recs;
+}
 
-    // Monthly table
-    document.getElementById('monthly-title').textContent = `Chi Tiết Theo Tháng — ${year}`;
-    const mtb = document.getElementById('monthly-table');
-    const months = Object.keys(d.monthly).map(Number).sort((a,b) => a-b);
-    const monthNames = ['','Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
-    mtb.innerHTML = months.map(m => {
-        const md = d.monthly[m];
-        return `<tr class="border-b border-slate-50 hover:bg-slate-50/50">
-            <td class="py-3 pr-4 font-semibold">${monthNames[m]}</td>
-            <td class="py-3 px-4 text-right font-bold">${fmt(md.afyp)}</td>
-            <td class="py-3 px-4 text-right">${fmtInt(md.hd)}</td>
-            <td class="py-3 pl-4 text-right">${(md.afyp / md.hd).toFixed(1)}</td>
-        </tr>`;
-    }).join('') + `
-        <tr class="border-t-2 border-[#007AC2]/20 bg-[#007AC2]/5 font-bold">
-            <td class="py-3 pr-4 text-[#007AC2]">TỔNG</td>
-            <td class="py-3 px-4 text-right text-[#007AC2]">${fmt(d.afyp)}</td>
-            <td class="py-3 px-4 text-right text-[#007AC2]">${fmtInt(d.hd)}</td>
-            <td class="py-3 pl-4 text-right text-[#007AC2]">${(d.afyp / d.hd).toFixed(1)}</td>
-        </tr>
-    `;
+function onLevelChange(){
+    const level=document.getElementById('sel-level').value;
+    const sf=document.getElementById('specific-filter');
+    const sel=document.getElementById('sel-specific');
+    const lbl=document.getElementById('specific-label');
+    
+    if(level==='company'||level==='dl'){
+        sf.classList.add('hidden');
+        sel.innerHTML='<option value="">-- Tất cả --</option>';
+    } else {
+        sf.classList.remove('hidden');
+        let items=[];
+        if(level==='phong'){lbl.textContent='Chọn Phòng KD:';items=FILTERS.phongs||[]}
+        else if(level==='ban'){lbl.textContent='Chọn Ban:';items=FILTERS.bans||[]}
+        else if(level==='nhom'){lbl.textContent='Chọn Nhóm:';items=FILTERS.nhoms||[]}
+        sel.innerHTML='<option value="">-- Tất cả --</option>'+items.map(i=>`<option value="${i}">${i}</option>`).join('');
+    }
+    render();
+}
 
+function render(){
+    const recs=getFilteredRecords();
+    const level=document.getElementById('sel-level').value;
+    
+    // KPI
+    const totalAFYP=recs.reduce((s,r)=>s+r.v,0);
+    const totalHD=recs.length;
+    const uniqueDL=new Set(recs.map(r=>r.d).filter(Boolean)).size;
+    
+    document.getElementById('k-afyp').textContent=totalAFYP.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+    document.getElementById('k-hd').textContent=totalHD.toLocaleString('vi-VN');
+    document.getElementById('k-avg').textContent=totalHD?( totalAFYP/totalHD).toFixed(1):'0';
+    document.getElementById('k-dl').textContent=uniqueDL.toLocaleString('vi-VN');
+    
     // Monthly chart
-    if (monthlyChartInst) monthlyChartInst.destroy();
-    monthlyChartInst = new Chart(document.getElementById('monthlyChart'), {
-        type: 'bar',
-        data: {
-            labels: months.map(m => monthNames[m]),
-            datasets: [{
-                label: 'AFYP (Triệu)',
-                data: months.map(m => d.monthly[m].afyp),
-                backgroundColor: months.map((m,i) => i === months.length-1 ? '#007AC2' : '#0096D6'),
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { border:{display:false}, grid:{color:'#F1F5F9'} }, x: { border:{display:false}, grid:{display:false} } }
-        }
-    });
+    renderMonthlyChart(recs);
+    renderYearlyChart();
+    renderTable(recs,level);
+}
 
-    // Yearly comparison chart
-    if (yearlyChartInst) yearlyChartInst.destroy();
-    yearlyChartInst = new Chart(document.getElementById('yearlyChart'), {
-        type: 'bar',
-        data: {
-            labels: ['2024 (Cả năm)', '2025 (Cả năm)', '2026 (Lũy kế T5)'],
-            datasets: [{
-                label: 'AFYP (Triệu)',
-                data: [DATA[2024].afyp, DATA[2025].afyp, DATA[2026].afyp],
-                backgroundColor: [year===2024?'#007AC2':'#CBD5E1', year===2025?'#007AC2':'#CBD5E1', year===2026?'#007AC2':'#CBD5E1'],
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { border:{display:false}, grid:{color:'#F1F5F9'} }, x: { border:{display:false}, grid:{display:false} } }
-        }
+function renderMonthlyChart(recs){
+    const monthly={};
+    recs.forEach(r=>{if(r.m){monthly[r.m]=(monthly[r.m]||0)+r.v}});
+    const months=Object.keys(monthly).map(Number).sort((a,b)=>a-b);
+    const mNames=['','T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+    
+    if(chartM)chartM.destroy();
+    chartM=new Chart(document.getElementById('chart-monthly'),{
+        type:'bar',
+        data:{labels:months.map(m=>mNames[m]),datasets:[{label:'AFYP',data:months.map(m=>Math.round(monthly[m]*10)/10),backgroundColor:'#007AC2',borderRadius:4}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},x:{border:{display:false},grid:{display:false},ticks:{font:{size:10}}}}}
     });
 }
 
-// 3D Auth
-(function(){
-    const c=document.getElementById('auth-canvas'),s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,1000);
-    cam.position.z=15;const r=new THREE.WebGLRenderer({alpha:true,antialias:true});r.setSize(innerWidth,innerHeight);r.setPixelRatio(devicePixelRatio);c.appendChild(r.domElement);
-    s.add(new THREE.AmbientLight(0xffffff,0.6));const dl=new THREE.DirectionalLight(0xffffff,0.8);dl.position.set(10,20,10);s.add(dl);
-    const bl=new THREE.PointLight(0x007AC2,1,50);bl.position.set(-5,0,5);s.add(bl);
-    const g=new THREE.IcosahedronGeometry(4,1),m=new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0.1,roughness:0.2,transmission:0.9,thickness:1});
-    const sh=new THREE.Mesh(g,m);s.add(sh);sh.add(new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xD4B271,transparent:true,opacity:0.5})));
-    (function a(){requestAnimationFrame(a);sh.rotation.y+=0.001;sh.rotation.x+=0.0005;sh.position.y=Math.sin(Date.now()*0.001)*0.3;r.render(s,cam)})();
-    addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight)});
-})();
+function renderYearlyChart(){
+    const yearTotals=[2024,2025,2026].map(y=>{
+        const r=RAW.filter(x=>x.y===y);
+        return Math.round(r.reduce((s,x)=>s+x.v,0)*10)/10;
+    });
+    if(chartY)chartY.destroy();
+    chartY=new Chart(document.getElementById('chart-yearly'),{
+        type:'bar',
+        data:{labels:['2024','2025','2026'],datasets:[{label:'AFYP',data:yearTotals,backgroundColor:['#CBD5E1','#64748B','#007AC2'],borderRadius:4}]},
+        options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{border:{display:false},grid:{color:'#F1F5F9'},ticks:{font:{size:10}}},y:{border:{display:false},grid:{display:false},ticks:{font:{size:11,weight:'bold'}}}}}
+    });
+}
+
+function renderTable(recs,level){
+    const thead=document.getElementById('table-head');
+    const tbody=document.getElementById('table-body');
+    const title=document.getElementById('table-title');
+    const countEl=document.getElementById('table-count');
+    
+    // Group by level
+    let groups={};
+    let groupKey='';
+    
+    if(level==='company'){
+        groupKey='Toàn Công Ty';
+        groups={'Toàn Công Ty':recs};
+    } else if(level==='phong'){
+        recs.forEach(r=>{const k=r.p||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
+    } else if(level==='ban'){
+        recs.forEach(r=>{const k=r.b||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
+    } else if(level==='nhom'){
+        recs.forEach(r=>{const k=r.n||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
+    } else if(level==='dl'){
+        recs.forEach(r=>{const k=r.d||'(Không rõ)';(groups[k]=groups[k]||[]).push(r)});
+    }
+    
+    // Calculate totals per group
+    let rows=Object.entries(groups).map(([name,items])=>({
+        name,
+        afyp: Math.round(items.reduce((s,r)=>s+r.v,0)*10)/10,
+        hd: items.length,
+        dl: new Set(items.map(r=>r.d).filter(Boolean)).size
+    }));
+    
+    // Sort by AFYP descending
+    rows.sort((a,b)=>b.afyp-a.afyp);
+    
+    const levelNames={company:'Toàn Công Ty',phong:'Phòng KD',ban:'Ban',nhom:'Nhóm',dl:'Đại Lý'};
+    title.textContent=`Xếp hạng theo ${levelNames[level]} — ${selectedYear}`;
+    countEl.textContent=`${rows.length} kết quả`;
+    
+    thead.innerHTML=`
+        <th class="w-10">#</th>
+        <th>${levelNames[level]}</th>
+        <th class="text-right sort-btn" onclick="sortTable('afyp')">AFYP (Triệu) ↓</th>
+        <th class="text-right">Số HĐ</th>
+        <th class="text-right">B/Q (Triệu/HĐ)</th>
+        ${level!=='dl'?'<th class="text-right">Số TVV</th>':''}
+    `;
+    
+    // Limit to 200 rows for performance
+    const display=rows.slice(0,200);
+    tbody.innerHTML=display.map((r,i)=>`
+        <tr>
+            <td class="text-slate-400 text-xs font-bold">${i+1}</td>
+            <td class="font-semibold text-slate-800 text-xs">${r.name}</td>
+            <td class="text-right font-bold ${i<3?'text-[#007AC2]':'text-slate-900'}">${r.afyp.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
+            <td class="text-right text-slate-700">${r.hd.toLocaleString('vi-VN')}</td>
+            <td class="text-right text-slate-500">${r.hd?(r.afyp/r.hd).toFixed(1):'—'}</td>
+            ${level!=='dl'?`<td class="text-right text-slate-500">${r.dl}</td>`:''}
+        </tr>
+    `).join('');
+    
+    if(rows.length>200){
+        tbody.innerHTML+=`<tr><td colspan="6" class="text-center text-slate-400 text-xs py-4">Hiển thị 200/${rows.length} kết quả. Dùng bộ lọc để thu hẹp.</td></tr>`;
+    }
+}
+
+let sortDir=-1;
+function sortTable(col){
+    sortDir*=-1;
+    render();
+}
 </script>
 </body>
 </html>
