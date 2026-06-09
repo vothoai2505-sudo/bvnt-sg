@@ -14,6 +14,8 @@
         .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         .btn-premium { background: linear-gradient(135deg, #007AC2, #0096D6); color: white; border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(0, 122, 194, 0.25); }
         .btn-premium:hover { box-shadow: 0 6px 20px rgba(0, 122, 194, 0.35); transform: translateY(-1px); }
+        .btn-outline-blue { border: 1px solid #007AC2; color: #007AC2; border-radius: 12px; transition: all 0.3s ease; }
+        .btn-outline-blue:hover { background-color: #f0f9ff; }
     </style>
 </head>
 <body>
@@ -52,58 +54,68 @@
             </div>
         </div>
 
-        <!-- Danh sách Sản phẩm -->
+        <!-- Danh sách Sản phẩm MỚI NHẤT -->
         <div id="products" class="mb-10 flex flex-col items-center text-center pt-8">
             <h2 class="text-4xl font-bold text-slate-900 tracking-tight">Hệ Sinh Thái Sản Phẩm</h2>
-            <p class="text-slate-500 font-medium mt-3 text-lg max-w-2xl">Các giải pháp tài chính và bảo vệ sinh mạng ưu việt nhất từ Bảo Việt Nhân Thọ Sài Gòn, thiết kế riêng cho từng giai đoạn cuộc đời bạn.</p>
+            <p class="text-slate-500 font-medium mt-3 text-lg max-w-2xl">Khám phá các giải pháp bảo hiểm liên kết chung và hỗn hợp mới nhất, mang lại giá trị bảo vệ và đầu tư vượt trội.</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <!-- Sản phẩm 1 -->
+            <!-- Sản phẩm 1: An Khang Như Ý -->
             <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#007AC2]/30">
-                <div class="h-64 relative overflow-hidden bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Khang Hạnh Phúc y tế" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#007AC2] shadow-sm flex items-center">
-                        <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5 animate-pulse"></span> Bán chạy nhất
+                <div class="h-64 relative overflow-hidden bg-slate-100 flex items-center justify-center p-6">
+                    <!-- Placeholder cho hình ảnh sản phẩm (có thể thay bằng link thực tế sau) -->
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" alt="An Khang Như Ý" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                    <div class="relative z-10 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 text-[#007AC2] rounded-full flex items-center justify-center shadow-sm">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h4 class="text-[#007AC2] font-bold text-lg uppercase tracking-wide">Bảo hiểm liên kết chung</h4>
                     </div>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#007AC2] transition-colors">An Khang Hạnh Phúc</h3>
-                    <p class="text-slate-500 text-base mb-8 flex-grow leading-relaxed">Giải pháp bảo vệ trọn đời ưu việt. Kết hợp linh hoạt giữa tích lũy đầu tư sinh lời và đặc quyền chăm sóc y tế, viện phí cao cấp cho cả gia đình.</p>
-                    <button class="w-full py-4 bg-slate-50 text-[#007AC2] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-blue-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
+                <div class="p-8 flex flex-col flex-grow text-center">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-[#007AC2] transition-colors">An Khang Như Ý</h3>
+                    <p class="text-slate-600 text-base mb-8 flex-grow leading-relaxed font-medium">Quyền lợi bảo vệ lên đến <span class="text-[#007AC2] font-bold">300 lần</span> Phí bảo hiểm cơ bản, tối đa tới <span class="text-[#007AC2] font-bold">25 tỷ đồng</span>.</p>
+                    <button class="w-full py-4 btn-outline-blue font-semibold text-sm">Tìm hiểu ngay</button>
                 </div>
             </div>
 
-            <!-- Sản phẩm 2 -->
-            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#D4B271]/50">
-                <div class="h-64 relative overflow-hidden bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Phát Cát Tường bệnh hiểm nghèo" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#D4B271] shadow-sm flex items-center">
-                        <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg> Giải pháp Đột phá
+            <!-- Sản phẩm 2: An Tâm Hoạch Định -->
+            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#007AC2]/30">
+                <div class="h-64 relative overflow-hidden bg-slate-100 flex items-center justify-center p-6">
+                    <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" alt="An Tâm Hoạch Định" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                    <div class="relative z-10 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 text-[#007AC2] rounded-full flex items-center justify-center shadow-sm">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <h4 class="text-[#007AC2] font-bold text-lg uppercase tracking-wide">Bảo hiểm liên kết chung</h4>
                     </div>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#D4B271] transition-colors">An Phát Cát Tường</h3>
-                    <p class="text-slate-500 text-base mb-8 flex-grow leading-relaxed">Lá chắn tài chính khổng lồ trước các rủi ro nghiêm trọng như: ung thư, đột quỵ và tai nạn. Đóng phí cực ngắn (5 năm), bảo vệ dài hạn lến đến 20 năm.</p>
-                    <button class="w-full py-4 bg-slate-50 text-[#D4B271] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-gold-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
+                <div class="p-8 flex flex-col flex-grow text-center">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-[#007AC2] transition-colors">An Tâm Hoạch Định</h3>
+                    <p class="text-slate-600 text-base mb-8 flex-grow leading-relaxed font-medium">Linh hoạt đầu tư và hưởng nhiều ưu đãi với Phí bảo hiểm đóng thêm.</p>
+                    <button class="w-full py-4 btn-outline-blue font-semibold text-sm">Tìm hiểu ngay</button>
                 </div>
             </div>
 
-            <!-- Sản phẩm 3 -->
-            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#0096D6]/30">
-                <div class="h-64 relative overflow-hidden bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="An Tâm Học Vấn giáo dục" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-                    <div class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-[#0096D6] shadow-sm flex items-center">
-                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path></svg> Ưu tiên Giáo dục
+            <!-- Sản phẩm 3: An Lộc Vững Bền -->
+            <div class="apple-card overflow-hidden group flex flex-col h-full hover:border-[#007AC2]/30">
+                <div class="h-64 relative overflow-hidden bg-slate-100 flex items-center justify-center p-6">
+                    <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" alt="An Lộc Vững Bền" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                    <div class="relative z-10 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 text-[#007AC2] rounded-full flex items-center justify-center shadow-sm">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h4 class="text-[#007AC2] font-bold text-lg uppercase tracking-wide">Sản phẩm bảo hiểm hỗn hợp</h4>
                     </div>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#0096D6] transition-colors">An Tâm Học Vấn</h3>
-                    <p class="text-slate-500 text-base mb-8 flex-grow leading-relaxed">Hành trang tài chính vững chắc tạo lập quỹ giáo dục đảm bảo, giúp con yêu tự tin bước vào giảng đường đại học và khởi nghiệp thành công.</p>
-                    <button class="w-full py-4 bg-slate-50 text-[#0096D6] font-semibold rounded-xl text-sm border border-slate-200 group-hover:bg-blue-gradient group-hover:text-white group-hover:border-transparent transition-all shadow-sm">Tìm hiểu quyền lợi</button>
+                <div class="p-8 flex flex-col flex-grow text-center">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-[#007AC2] transition-colors">An Lộc Vững Bền</h3>
+                    <p class="text-slate-600 text-base mb-8 flex-grow leading-relaxed font-medium">Bảo vệ trọn vẹn một lời hứa.</p>
+                    <button class="w-full py-4 btn-outline-blue font-semibold text-sm">Tìm hiểu ngay</button>
                 </div>
             </div>
         </div>
