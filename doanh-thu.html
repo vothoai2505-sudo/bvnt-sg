@@ -29,18 +29,6 @@
       }
       body {
         background: var(--bg);
-        background-image:
-          
-          /* removed */(
-            at 50% 0%,
-            hsla(202, 100%, 92%, 1) 0,
-            transparent 50%
-          ),
-          /* removed */(
-            at 100% 0%,
-            hsla(220, 100%, 95%, 1) 0,
-            transparent 50%
-          );
         color: var(--text);
         -webkit-font-smoothing: antialiased;
         min-height: 100vh;
@@ -1468,17 +1456,10 @@
         }
 
         let k = calcKPI(r);
-        let targetHT = calcKHTarget("6", spec, l); // BC02 is always Month 6 currently
-        document.getElementById("ht-big-afyp").innerText =
-          k.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 2 });
-        let pctHT = targetHT > 0 ? (k.afyp / targetHT) * 100 : 0;
-        document.getElementById("ht-pct-text").innerHTML =
-          `Mục tiêu: <span class="text-slate-800">${targetHT.toLocaleString("vi-VN")}</span> Tr | Đạt <span class="${pctHT >= 100 ? "text-emerald-600" : "text-blue-600"}">${pctHT.toFixed(1)}%</span>`;
-
         let targetKPIHT = calcKHTarget("6", spec, l, false); // Kế hoạch riêng tháng 6 (Tháng Hiện Tại)
-        let pctHT = targetKPIHT > 0 ? (k.afyp / targetKPIHT) * 100 : 0;
-        document.getElementById("ht-pct-text").innerText = `Mục tiêu: ${targetKPIHT.toLocaleString("vi-VN", {minimumFractionDigits:1, maximumFractionDigits:1})} | Đạt ${pctHT.toFixed(1)}%`;
-        if (pctHT >= 100) document.getElementById("ht-pct-text").className = "text-xs font-bold text-emerald-600 mt-1";
+        let pctHT_val = targetKPIHT > 0 ? (k.afyp / targetKPIHT) * 100 : 0;
+        document.getElementById("ht-pct-text").innerText = `Mục tiêu: ${targetKPIHT.toLocaleString("vi-VN", {minimumFractionDigits:1, maximumFractionDigits:1})} | Đạt ${pctHT_val.toFixed(1)}%`;
+        if (pctHT_val >= 100) document.getElementById("ht-pct-text").className = "text-xs font-bold text-emerald-600 mt-1";
         else document.getElementById("ht-pct-text").className = "text-xs text-slate-400 font-semibold mt-1";
 
         let hl = r.filter((x) =>
