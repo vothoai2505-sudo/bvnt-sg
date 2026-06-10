@@ -1034,8 +1034,8 @@
         ) {
           rows = KH_DATA.filter(
             (x) =>
-              x.p === "Công ty" || x.p === "Ca'ng ty" || x.total === 5000.0,
-          ); // Hard fallback for encoding issues
+              x.p === "Tổng Công Ty" || x.total >= 60000.0,
+          ); // Targeting the 65,000 row
         } else {
           if (level === "phong")
             rows = KH_DATA.filter((x) => selected_specs.includes(x.p));
@@ -1232,26 +1232,37 @@
         let rows = Object.entries(g)
           .map(([n, items]) => {
             let x = calcKPI(items);
-            return { n, ...x };
+            // Calculate target for this specific item
+            let t = 0;
+            if (l !== "dl") {
+               t = calcKHTarget(p, [n], l);
+            }
+            return { n, ...x, target: t };
           })
           .sort((a, b) => b.afyp - a.afyp);
 
         document.getElementById("grid-sub").innerText =
           `${rows.length} kết quả tìm thấy`;
         document.getElementById("grid-head").innerHTML =
-          `<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">AFYP (Tr)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
+          `<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">Kế Hoạch (Tr)</th><th class="text-right">Thực Hiện (Tr)</th><th class="text-right">% Đạt</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
         document.getElementById("grid-body").innerHTML = rows
           .slice(0, 100)
           .map(
-            (r, i) => `<tr>
+            (r, i) => {
+              let pct = r.target > 0 ? (r.afyp / r.target) * 100 : 0;
+              let pctColor = pct >= 100 ? "text-amber-500" : pct >= 50 ? "text-emerald-600" : "text-slate-500";
+              return `<tr>
     <td class="text-slate-400 font-bold">${i + 1}</td>
     <td class="font-bold text-slate-800">${r.n}</td>
+    <td class="text-right font-medium text-slate-400">${r.target > 0 ? r.target.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '--'}</td>
     <td class="text-right font-black ${i < 3 ? "text-[#007AC2]" : ""}">${r.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
+    <td class="text-right font-bold ${pctColor}">${pct > 0 ? pct.toFixed(1) + '%' : '--'}</td>
     <td class="text-right font-semibold">${r.hd}</td>
     <td class="text-right">${r.dolon.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
     <td class="text-right"><b>${r.lhd}</b> <span class="text-[10px] text-emerald-600 block">${r.lhdc} chuẩn</span></td>
     <td class="text-right font-semibold">${r.ns.toLocaleString("vi-VN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-</tr>`,
+</tr>`;
+            }
           )
           .join("");
       }
