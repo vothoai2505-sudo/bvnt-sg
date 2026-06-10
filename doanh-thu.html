@@ -1381,12 +1381,7 @@
         }
 
         let k = calcKPI(r);
-        // Kế hoạch riêng tháng 6 (Tháng Hiện Tại)
-        let pctHT_val = targetKPIHT > 0 ? (k.afyp / targetKPIHT) * 100 : 0;
-        document.getElementById("ht-pct-text").innerText = `Mục tiêu: ${targetKPIHT.toLocaleString("vi-VN", {minimumFractionDigits:1, maximumFractionDigits:1})} | Đạt ${pctHT_val.toFixed(1)}%`;
-        if (pctHT_val >= 100) document.getElementById("ht-pct-text").className = "text-xs font-bold text-emerald-600 mt-1";
-        else document.getElementById("ht-pct-text").className = "text-xs text-slate-400 font-semibold mt-1";
-
+        document.getElementById("ht-big-afyp").innerText = k.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 1 });
         let hl = r.filter((x) =>
           (x.tt || "").toLowerCase().includes("hiệu lực"),
         ).length;
