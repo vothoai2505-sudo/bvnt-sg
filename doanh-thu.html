@@ -598,25 +598,12 @@
                 >
                   0.0
                 </div>
-                <div class="text-[11px] font-bold text-slate-500 mb-2">
-                  Mục tiêu:
-                  <span id="kpi-target" class="text-slate-700">0.0</span>
-                  <span class="text-[9px] font-semibold">Tr</span>
-                </div>
                 <div class="flex items-center justify-between">
                   <span
                     class="text-xs text-slate-500 font-semibold"
-                    id="kpi-pct-text"
-                    >Đạt 0% KH</span
+                    >Triệu VNĐ</span
                   >
                   <div id="yoy-afyp" class="trend neutral">--</div>
-                </div>
-                <div class="kpi-progress-bg">
-                  <div
-                    class="kpi-progress-bar"
-                    id="kpi-progress"
-                    style="width: 0%"
-                  ></div>
                 </div>
               </div>
             </div>
@@ -1201,17 +1188,7 @@
         document.getElementById("kpi-lhdc").innerText =
           `${currKPI.lhdc.toLocaleString("vi-VN")} Lượt Chuẩn (IP≥12)`;
 
-        let pct = targetKPI > 0 ? (currKPI.afyp / targetKPI) * 100 : 0;
-        let pctEl = document.getElementById("kpi-pct-text");
-        pctEl.innerText = `Đạt ${pct.toFixed(1)}% KH`;
-        if (pct >= 100) pctEl.className = "text-xs font-bold text-emerald-600";
-        else pctEl.className = "text-xs font-bold text-slate-500";
-
-        let progBar = document.getElementById("kpi-progress");
-        progBar.style.width = Math.min(pct, 100) + "%";
-        if (pct >= 100) progBar.classList.add("over");
-        else progBar.classList.remove("over");
-
+        
         renderTrend("yoy-afyp", yoy.afyp);
         renderTrend("yoy-hd", yoy.hd);
         renderTrend("yoy-dolon", yoy.dolon);
@@ -1240,30 +1217,22 @@
           .map(([n, items]) => {
             let x = calcKPI(items);
             // Calculate target for this specific item (accumulated)
-            let t = 0;
-            if (l !== "dl") {
-               t = calcKHTarget(p, [n], l, true);
-            }
-            return { n, ...x, target: t };
+            return { n, ...x };
           })
           .sort((a, b) => b.afyp - a.afyp);
 
         document.getElementById("grid-sub").innerText =
           `${rows.length} kết quả tìm thấy`;
         document.getElementById("grid-head").innerHTML =
-          `<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">Kế Hoạch (Tr)</th><th class="text-right">Thực Hiện (Tr)</th><th class="text-right">% Đạt</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
+          `<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">AFYP (Tr)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
         document.getElementById("grid-body").innerHTML = rows
           .slice(0, 100)
           .map(
             (r, i) => {
-              let pct = r.target > 0 ? (r.afyp / r.target) * 100 : 0;
-              let pctColor = pct >= 100 ? "text-amber-500" : pct >= 50 ? "text-emerald-600" : "text-slate-500";
               return `<tr>
     <td class="text-slate-400 font-bold">${i + 1}</td>
     <td class="font-bold text-slate-800">${r.n}</td>
-    <td class="text-right font-medium text-slate-400">${r.target > 0 ? r.target.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '--'}</td>
     <td class="text-right font-black ${i < 3 ? "text-[#007AC2]" : ""}">${r.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
-    <td class="text-right font-bold ${pctColor}">${pct > 0 ? pct.toFixed(1) + '%' : '--'}</td>
     <td class="text-right font-semibold">${r.hd}</td>
     <td class="text-right">${r.dolon.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
     <td class="text-right"><b>${r.lhd}</b> <span class="text-[10px] text-emerald-600 block">${r.lhdc} chuẩn</span></td>
