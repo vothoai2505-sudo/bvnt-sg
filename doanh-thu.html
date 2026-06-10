@@ -1020,7 +1020,7 @@
       }
 
       // Plan calculation helper
-      function calcKHTarget(period, selected_specs, level) {
+      function calcKHTarget(period, selected_specs, level, isAccumulated = true) {
         if (!KH_DATA || KH_DATA.length === 0) return 0;
 
         // Filter rows based on level and selected specs
@@ -1052,11 +1052,24 @@
             target += r.total || 0;
           } else if (period.startsWith("q")) {
             let q = parseInt(period[1]);
-            let start = (q - 1) * 3 + 1;
-            for (let i = start; i <= start + 2; i++) target += r["m" + i] || 0;
+            let endMonth = q * 3;
+            if (isAccumulated) {
+                // Lũy kế từ đầu năm đến hết Quý đó
+                for (let i = 1; i <= endMonth; i++) target += r["m" + i] || 0;
+            } else {
+                // Chỉ tính riêng Quý đó
+                let start = (q - 1) * 3 + 1;
+                for (let i = start; i <= start + 2; i++) target += r["m" + i] || 0;
+            }
           } else {
             let m = parseInt(period);
-            if (m >= 1 && m <= 12) target += r["m" + m] || 0;
+            if (isAccumulated) {
+                // Lũy kế từ đầu năm đến tháng được chọn
+                for (let i = 1; i <= m; i++) target += r["m" + i] || 0;
+            } else {
+                // Chỉ tính riêng tháng đó
+                if (m >= 1 && m <= 12) target += r["m" + m] || 0;
+            }
           }
         });
         return target;
@@ -1170,7 +1183,7 @@
         let prevRecs = filterData(y - 1);
         let currKPI = calcKPI(currRecs);
         let yoy = getYoY(currKPI, prevRecs);
-        let targetKPI = calcKHTarget(p, spec, l);
+        let targetKPI = calcKHTarget(p, spec, l, true); // true = Tính lũy kế kế hoạch từ đầu năm đến m
 
         document.getElementById("kpi-afyp").innerText =
           currKPI.afyp.toLocaleString("vi-VN", {
@@ -1232,10 +1245,10 @@
         let rows = Object.entries(g)
           .map(([n, items]) => {
             let x = calcKPI(items);
-            // Calculate target for this specific item
+            // Calculate target for this specific item (accumulated)
             let t = 0;
             if (l !== "dl") {
-               t = calcKHTarget(p, [n], l);
+               t = calcKHTarget(p, [n], l, true);
             }
             return { n, ...x, target: t };
           })
@@ -1474,6 +1487,12 @@
         let pctHT = targetHT > 0 ? (k.afyp / targetHT) * 100 : 0;
         document.getElementById("ht-pct-text").innerHTML =
           `Mục tiêu: <span class="text-slate-800">${targetHT.toLocaleString("vi-VN")}</span> Tr | Đạt <span class="${pctHT >= 100 ? "text-emerald-600" : "text-blue-600"}">${pctHT.toFixed(1)}%</span>`;
+
+        let targetKPIHT = calcKHTarget("6", spec, l, false); // Kế hoạch riêng tháng 6 (Tháng Hiện Tại)
+        let pctHT = targetKPIHT > 0 ? (k.afyp / targetKPIHT) * 100 : 0;
+        document.getElementById("ht-pct-text").innerText = `Mục tiêu: ${targetKPIHT.toLocaleString("vi-VN", {minimumFractionDigits:1, maximumFractionDigits:1})} | Đạt ${pctHT.toFixed(1)}%`;
+        if (pctHT >= 100) document.getElementById("ht-pct-text").className = "text-xs font-bold text-emerald-600 mt-1";
+        else document.getElementById("ht-pct-text").className = "text-xs text-slate-400 font-semibold mt-1";
 
         let hl = r.filter((x) =>
           (x.tt || "").toLowerCase().includes("hiệu lực"),
