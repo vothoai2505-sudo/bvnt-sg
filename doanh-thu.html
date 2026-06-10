@@ -1001,62 +1001,6 @@
       }
 
       // Plan calculation helper
-      function calcKHTarget(period, selected_specs, level, isAccumulated = true) {
-        if (!KH_DATA || KH_DATA.length === 0) return 0;
-
-        // Filter rows based on level and selected specs
-        let rows = KH_DATA;
-
-        // In plan data, check company total first
-        if (
-          level === "company" ||
-          !selected_specs ||
-          selected_specs.length === 0
-        ) {
-          rows = KH_DATA.filter(
-            (x) =>
-              x.p === "Tổng Công Ty" || x.total >= 60000.0,
-          ); // Targeting the 65,000 row
-        } else {
-          if (level === "phong")
-            rows = KH_DATA.filter((x) => selected_specs.includes(x.p));
-          else if (level === "ban")
-            rows = KH_DATA.filter((x) => selected_specs.includes(x.b));
-          else if (level === "nhom")
-            rows = KH_DATA.filter((x) => selected_specs.includes(x.n));
-          else if (level === "dl") return 0; // KH_DATA is usually only down to Nhom
-        }
-
-        let target = 0;
-        rows.forEach((r) => {
-          if (period === "all") {
-            target += r.total || 0;
-          } else if (period.startsWith("q")) {
-            let q = parseInt(period[1]);
-            let endMonth = q * 3;
-            if (isAccumulated) {
-                // Lũy kế từ đầu năm đến hết Quý đó
-                for (let i = 1; i <= endMonth; i++) target += r["m" + i] || 0;
-            } else {
-                // Chỉ tính riêng Quý đó
-                let start = (q - 1) * 3 + 1;
-                for (let i = start; i <= start + 2; i++) target += r["m" + i] || 0;
-            }
-          } else {
-            let m = parseInt(period);
-            if (isAccumulated) {
-                // Lũy kế từ đầu năm đến tháng được chọn
-                for (let i = 1; i <= m; i++) target += r["m" + i] || 0;
-            } else {
-                // Chỉ tính riêng tháng đó
-                if (m >= 1 && m <= 12) target += r["m" + m] || 0;
-            }
-          }
-        });
-        return target;
-      }
-
-      // ===== LŨY KẾ =====
       function initFilters() {
         let yel = document.getElementById("flt-year");
         yel.innerHTML = FLT.years
@@ -1162,15 +1106,10 @@
         let prevRecs = filterData(y - 1);
         let currKPI = calcKPI(currRecs);
         let yoy = getYoY(currKPI, prevRecs);
-        let targetKPI = calcKHTarget(p, spec, l, true); // true = Tính lũy kế kế hoạch từ đầu năm đến m
+        // true = Tính lũy kế kế hoạch từ đầu năm đến m
 
         document.getElementById("kpi-afyp").innerText =
           currKPI.afyp.toLocaleString("vi-VN", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
-          });
-        document.getElementById("kpi-target").innerText =
-          targetKPI.toLocaleString("vi-VN", {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1,
           });
@@ -1442,7 +1381,7 @@
         }
 
         let k = calcKPI(r);
-        let targetKPIHT = calcKHTarget("6", spec, l, false); // Kế hoạch riêng tháng 6 (Tháng Hiện Tại)
+        // Kế hoạch riêng tháng 6 (Tháng Hiện Tại)
         let pctHT_val = targetKPIHT > 0 ? (k.afyp / targetKPIHT) * 100 : 0;
         document.getElementById("ht-pct-text").innerText = `Mục tiêu: ${targetKPIHT.toLocaleString("vi-VN", {minimumFractionDigits:1, maximumFractionDigits:1})} | Đạt ${pctHT_val.toFixed(1)}%`;
         if (pctHT_val >= 100) document.getElementById("ht-pct-text").className = "text-xs font-bold text-emerald-600 mt-1";
