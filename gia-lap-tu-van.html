@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ Thống Giả Lập Tư Vấn Khách Hàng</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg-main: #E8F0FE;
+    --card-bg: #FFFFFF;
+    --text-dark: #1E293B;
+    --border-color: #E2E8F0;
+    --p-blue: #007AC2;
+    --purple-header: #3B006B;
+}
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background-color: var(--bg-main); color: var(--text-dark); margin: 0; min-height: 100vh; display: flex; flex-direction: column; }
+
+.header-bar {
+    background: var(--purple-header);
+    border-bottom: 2px solid #D4B271;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(59, 0, 107, 0.3);
+}
+.header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #D4B271, #FDF0A6, #D4B271);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Login Screen */
+#loginScreen {
+    position: fixed; inset: 0; background: var(--bg-main); z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+}
+.login-box {
+    background: #fff; padding: 40px; border-radius: 12px; width: 100%; max-w: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid var(--purple-header);
+}
+
+/* Setup Screen */
+#setupScreen {
+    flex: 1; padding: 40px 20px; display: none;
+    align-items: center; justify-content: center;
+}
+.setup-box {
+    background: #fff; padding: 30px; border-radius: 12px; width: 100%; max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
+.form-control {
+    width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;
+    font-size: 15px; outline: none; transition: border-color 0.3s;
+}
+.form-control:focus { border-color: var(--p-blue); }
+
+/* Chat Screen */
+#chatScreen {
+    flex: 1; display: none; flex-direction: column; height: calc(100vh - 64px);
+    max-width: 900px; margin: 0 auto; width: 100%; background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+.chat-header {
+    padding: 15px 20px; border-bottom: 1px solid var(--border-color);
+    background: #f8fafc; display: flex; justify-content: space-between; align-items: center;
+}
+.chat-messages {
+    flex: 1; overflow-y: auto; padding: 20px; background: #f1f5f9;
+    display: flex; flex-direction: column; gap: 15px;
+}
+.msg-bubble {
+    max-width: 80%; padding: 12px 16px; border-radius: 12px; line-height: 1.5; font-size: 15px;
+}
+.msg-bot {
+    background: #fff; border: 1px solid var(--border-color);
+    align-self: flex-start; border-bottom-left-radius: 4px;
+}
+.msg-user {
+    background: var(--p-blue); color: #fff;
+    align-self: flex-end; border-bottom-right-radius: 4px;
+}
+.chat-input-area {
+    padding: 15px 20px; border-top: 1px solid var(--border-color); background: #fff;
+    display: flex; gap: 10px;
+}
+.chat-input {
+    flex: 1; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 24px;
+    outline: none; font-size: 15px;
+}
+.chat-input:focus { border-color: var(--p-blue); }
+.btn-send {
+    background: var(--p-blue); color: #fff; border: none; width: 46px; height: 46px;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+}
+.btn-send:hover { background: #00609a; }
+
+.btn {
+    background: var(--p-blue); color: #fff; padding: 12px 24px; border-radius: 8px;
+    font-weight: 600; cursor: pointer; border: none; transition: opacity 0.3s; width: 100%;
+}
+.btn:hover { opacity: 0.9; }
+.btn-end { background: #ef4444; width: auto; padding: 8px 16px; font-size: 14px; }
+.btn-end:hover { background: #dc2626; }
+
+/* Result Modal */
+#resultModal {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200;
+    display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+}
+.result-box {
+    background: #fff; padding: 40px; border-radius: 16px; width: 100%; max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: 90vh; overflow-y: auto;
+}
+.score-circle {
+    width: 100px; height: 100px; border-radius: 50%; border: 8px solid var(--p-blue);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+    font-size: 32px; font-weight: 800; color: var(--p-blue);
+}
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+    <div class="flex items-center gap-3">
+        <a href="index.html" class="text-white hover:text-[#D4B271] transition-colors" title="Trở về Trang Chủ">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        </a>
+        <div class="header-title">BẢO VIỆT NHÂN THỌ SÀI GÒN</div>
+    </div>
+    <div class="text-[#D4B271] font-semibold text-sm">HỆ THỐNG HUẤN LUYỆN TVV</div>
+</div>
+
+<!-- 1. Login Screen -->
+<div id="loginScreen">
+    <div class="login-box">
+        <h2 class="text-2xl font-bold mb-2">Giả Lập Tư Vấn</h2>
+        <p class="text-sm text-slate-500 mb-6">Vui lòng nhập mã bảo mật để truy cập hệ thống huấn luyện</p>
+        <input type="password" id="passInput" class="form-control mb-4" placeholder="Nhập mật khẩu..." onkeypress="if(event.key==='Enter') doLogin()">
+        <button onclick="doLogin()" class="btn">Đăng Nhập</button>
+        <p id="loginErr" class="text-red-500 text-sm mt-3 hidden">Mật khẩu không đúng!</p>
+    </div>
+</div>
+
+<!-- 2. Setup Screen -->
+<div id="setupScreen">
+    <div class="setup-box">
+        <h2 class="text-2xl font-bold mb-2 text-center text-[--purple-header]">Thiết lập Hồ sơ Khách hàng</h2>
+        <p class="text-sm text-slate-500 mb-8 text-center">Hệ thống AI sẽ đóng vai khách hàng dựa trên các thông số bạn chọn bên dưới.</p>
+        
+        <div class="form-group">
+            <label>Giới tính</label>
+            <select id="simGender" class="form-control">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Độ tuổi</label>
+            <select id="simAge" class="form-control">
+                <option value="25-30 tuổi, độc thân">25-30 tuổi (Người trẻ, độc thân)</option>
+                <option value="30-40 tuổi, có gia đình">30-40 tuổi (Có gia đình, con nhỏ)</option>
+                <option value="45-55 tuổi, sắp nghỉ hưu">45-55 tuổi (Chuẩn bị nghỉ hưu)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tính cách / Thái độ</label>
+            <select id="simPersonality" class="form-control">
+                <option value="Dễ tính, cởi mở, có quan tâm đến bảo vệ sức khỏe">Dễ tính, quan tâm đến sức khỏe</option>
+                <option value="Kỹ tính, hay hỏi chi tiết về điều khoản và lãi suất">Kỹ tính, quan tâm dòng tiền & lãi suất</option>
+                <option value="Đang có định kiến về bảo hiểm, cho rằng bảo hiểm là lừa đảo">Có định kiến, cho rằng BH là lừa đảo</option>
+                <option value="Đã có bảo hiểm của công ty khác, đang so sánh">Đã có hợp đồng hãng khác, thích so sánh</option>
+                <option value="Viện cớ không có tiền, thu nhập bấp bênh">Hay từ chối vì lý do không có tiền</option>
+            </select>
+        </div>
+
+        <button onclick="startSimulation()" class="btn mt-4">Bắt Đầu Thực Hành Tư Vấn</button>
+    </div>
+</div>
+
+<!-- 3. Chat Screen -->
+<div id="chatScreen">
+    <div class="chat-header">
+        <div>
+            <div class="font-bold text-slate-800" id="chatTitle">Khách hàng AI</div>
+            <div class="text-xs text-slate-500" id="chatSubtitle">Đang kết nối...</div>
+        </div>
+        <button class="btn btn-end" onclick="endSimulation()">Kết Thúc & Chấm Điểm</button>
+    </div>
+    
+    <div class="chat-messages" id="chatMessages">
+        <!-- Messages will appear here -->
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Nhập câu tư vấn của bạn..." onkeypress="if(event.key==='Enter') sendMessage()">
+        <button class="btn-send" onclick="sendMessage()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        </button>
+    </div>
+</div>
+
+<!-- 4. Result Modal -->
+<div id="resultModal">
+    <div class="result-box">
+        <h2 class="text-2xl font-bold mb-6 text-center">Đánh Giá Kết Quả Tư Vấn</h2>
+        
+        <div class="score-circle" id="finalScore">0</div>
+        
+        <div class="mb-6">
+            <h3 class="font-bold text-slate-800 mb-2 border-b pb-2">Nhận Xét Của AI (Vai Khách Hàng)</h3>
+            <p id="aiFeedback" class="text-slate-600 text-sm leading-relaxed whitespace-pre-wrap">Đang phân tích dữ liệu cuộc trò chuyện...</p>
+        </div>
+
+        <div class="space-y-4 mb-8">
+            <div>
+                <div class="flex justify-between text-sm font-semibold mb-1"><span>Kỹ năng khơi gợi nhu cầu</span> <span id="score1">0/10</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" id="bar1" style="width: 0%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-sm font-semibold mb-1"><span>Kỹ năng xử lý từ chối</span> <span id="score2">0/10</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" id="bar2" style="width: 0%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-sm font-semibold mb-1"><span>Sự đồng cảm & Lắng nghe</span> <span id="score3">0/10</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" id="bar3" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <button onclick="location.reload()" class="btn">Thực Hành Lại Ca Khác</button>
+    </div>
+</div>
+
+<script>
+let chatHistory = [];
+let customerProfile = {};
+
+function doLogin() {
+    if(document.getElementById('passInput').value === 'bvl') {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('setupScreen').style.display = 'flex';
+    } else {
+        document.getElementById('loginErr').classList.remove('hidden');
+    }
+}
+
+function startSimulation() {
+    customerProfile = {
+        gender: document.getElementById('simGender').value,
+        age: document.getElementById('simAge').value,
+        personality: document.getElementById('simPersonality').value
+    };
+    
+    document.getElementById('setupScreen').style.display = 'none';
+    document.getElementById('chatScreen').style.display = 'flex';
+    
+    document.getElementById('chatTitle').innerText = `Khách hàng: ${customerProfile.gender}, ${customerProfile.age.split(',')[0]}`;
+    document.getElementById('chatSubtitle').innerText = `Hồ sơ: ${customerProfile.personality}`;
+    
+    // System prompt for OpenAI
+    chatHistory = [
+        {
+            role: "system",
+            content: `Bạn là một hệ thống đóng giả khách hàng để huấn luyện Tư vấn viên (TVV) của Bảo Việt Nhân thọ. 
+Thông tin của bạn: Giới tính ${customerProfile.gender}, ${customerProfile.age}. Tính cách/Tình trạng: ${customerProfile.personality}.
+Nhiệm vụ: 
+- Bạn KHÔNG BAO GIỜ được nhận mình là AI. Bạn phải nhập vai khách hàng 100%.
+- Ở câu đầu tiên, hãy mở lời một cách tự nhiên (vd: "Chào bạn, tôi nghe nói công ty mình đang có chương trình gì đó phải không?" hoặc "Tôi đang bận lắm, bạn có việc gì không?").
+- Phản hồi ngắn gọn, giống người thật nhắn tin (1-3 câu). 
+- Hãy phản ứng đúng với tính cách được giao. Nếu là người có định kiến, hãy gay gắt một chút. Nếu là người kỹ tính, hãy hỏi xoáy về dòng tiền, phí rơi.
+- Đừng dễ dàng đồng ý mua ngay. Hãy đưa ra ít nhất 1-2 lời từ chối để TVV có cơ hội thể hiện kỹ năng xử lý từ chối.
+- Xưng hô phù hợp với giới tính và độ tuổi so với một TVV.`
+        }
+    ];
+
+    addBotMessage("...", true);
+    fetchAIResponse();
+}
+
+function addBotMessage(text, isTyping = false) {
+    const div = document.createElement('div');
+    div.className = 'msg-bubble msg-bot';
+    div.id = isTyping ? 'typingMsg' : '';
+    div.innerText = text;
+    document.getElementById('chatMessages').appendChild(div);
+    scrollToBottom();
+}
+
+function addUserMessage(text) {
+    const div = document.createElement('div');
+    div.className = 'msg-bubble msg-user';
+    div.innerText = text;
+    document.getElementById('chatMessages').appendChild(div);
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    const c = document.getElementById('chatMessages');
+    c.scrollTop = c.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if(!text) return;
+    
+    input.value = '';
+    addUserMessage(text);
+    chatHistory.push({ role: "user", content: text });
+    
+    addBotMessage("...", true);
+    fetchAIResponse();
+}
+
+async function fetchAIResponse() {
+    // In a real environment, this should call a secure backend to hide API keys.
+    // For this prototype demonstration without backend, we will simulate a mock response logic,
+    // OR you can attach an actual API call here if a proxy route is provided.
+    
+    // --- MOCK LOGIC FOR DEMO ---
+    setTimeout(() => {
+        const typing = document.getElementById('typingMsg');
+        if(typing) typing.remove();
+        
+        let reply = "";
+        let turns = chatHistory.length;
+        let p = customerProfile.personality;
+        
+        if(turns === 1) {
+            if(p.includes('định kiến')) reply = "Chào bạn. Nói thật là tôi không có ấn tượng tốt với bảo hiểm lắm. Mua dễ khó đòi, tôi thấy nhiều vụ um sùm trên mạng rồi.";
+            else if(p.includes('không có tiền')) reply = "Chào em. Chị cũng đang tính tìm hiểu thử, nhưng dạo này kinh tế khó khăn quá, lương bấp bênh không biết có đóng nổi không.";
+            else if(p.includes('Kỹ tính')) reply = "Chào bạn. Tôi đang quan tâm gói tích lũy, nhưng tôi muốn biết rõ dòng tiền và các khoản phí trừ đi hàng năm như thế nào? Đừng tư vấn chung chung nhé.";
+            else reply = "Chào bạn. Mình đang muốn tìm hiểu một gói bảo vệ sức khỏe cho bản thân. Bạn tư vấn sơ cho mình xem Bảo Việt có gói nào tốt không?";
+        } else {
+            // Very simple mock responses based on length
+            if(turns < 5) {
+                if(p.includes('định kiến')) reply = "Làm sao tôi tin được những lời cam kết đó? Lúc ký thì tư vấn hay lắm, lúc hữu sự thì bắt bẻ từng chữ trong hợp đồng.";
+                else reply = "Bạn nói rõ hơn phần quyền lợi giúp mình được không? Mình vẫn chưa hiểu lắm nếu mình nằm viện thì sẽ được chi trả như thế nào.";
+            } else {
+                reply = "Cảm ơn bạn đã giải thích. Thông tin cũng khá rõ ràng rồi, để tôi cân nhắc thêm và trao đổi lại với gia đình nhé.";
+            }
+        }
+        
+        addBotMessage(reply);
+        chatHistory.push({ role: "assistant", content: reply });
+    }, 1500);
+}
+
+function endSimulation() {
+    if(chatHistory.length < 3) {
+        alert("Cuộc trò chuyện quá ngắn để có thể đánh giá!");
+        return;
+    }
+    
+    document.getElementById('resultModal').style.display = 'flex';
+    
+    // Simulate grading based on turns
+    setTimeout(() => {
+        let score = Math.min(Math.floor(60 + (chatHistory.length * 5) + Math.random()*10), 95);
+        document.getElementById('finalScore').innerText = score;
+        
+        let s1 = Math.min(Math.floor(score / 10) + 1, 10);
+        let s2 = Math.min(Math.floor(score / 10), 10);
+        let s3 = Math.min(Math.floor(score / 10) + 2, 10);
+        
+        document.getElementById('score1').innerText = s1 + "/10";
+        document.getElementById('bar1').style.width = (s1*10) + "%";
+        
+        document.getElementById('score2').innerText = s2 + "/10";
+        document.getElementById('bar2').style.width = (s2*10) + "%";
+        
+        document.getElementById('score3').innerText = s3 + "/10";
+        document.getElementById('bar3').style.width = (s3*10) + "%";
+        
+        let feedback = "";
+        if(score > 85) feedback = "Kỹ năng tư vấn của bạn rất tuyệt vời! Bạn nắm bắt tâm lý tốt, biết cách xoa dịu sự nghi ngờ và dẫn dắt khách hàng. Cách xử lý từ chối rất mềm mỏng và chuyên nghiệp.";
+        else if(score > 70) feedback = "Bạn làm khá tốt. Tuy nhiên cần chú ý khai thác sâu hơn nỗi đau (pain point) của khách hàng trước khi trình bày giải pháp. Tránh việc nói quá nhiều về sản phẩm mà chưa nghe khách hàng chia sẻ đủ.";
+        else feedback = "Bạn có cố gắng nhưng phản hồi còn hơi cứng nhắc. Khi gặp khách hàng khó tính, hãy đồng cảm ('Dạ em rất hiểu suy nghĩ của anh/chị') trước khi giải thích, thay vì vội vàng phản bác lại họ.";
+        
+        document.getElementById('aiFeedback').innerText = feedback;
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
