@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hệ Thống Phân Tích Thu Nhập BVNT Sài Gòn | Dành cho Cấp Quản Lý</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React JS -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bv-blue-dark: #005A9C;
+            --bv-blue-primary: #007AC2;
+            --bv-blue-light: #0096D6;
+            --bv-gold-dark: #A67C00;
+            --bv-gold-primary: #C8A046;
+            --bv-gold-light: #D4B271;
+            --bg-bright: #F4F9FF;
+        }
+
+        body {
+            background-color: var(--bg-bright);
+            color: #334155;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 150, 214, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 122, 194, 0.05) 0%, transparent 40%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .text-corporate-blue { color: var(--bv-blue-primary); }
+        .text-corporate-gold {
+            background: linear-gradient(135deg, var(--bv-gold-primary), var(--bv-gold-light), var(--bv-gold-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gold-3d-text {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            color: #FFD700;
+            text-shadow: 
+                0px 1px 0px #cf9b00,
+                0px 2px 0px #b58300,
+                0px 3px 0px #9a6b00,
+                0px 4px 0px #7b5200,
+                0px 5px 10px rgba(0,0,0,0.4),
+                0px 10px 20px rgba(0,0,0,0.2);
+            background: linear-gradient(to bottom, #FFF9C4 0%, #FFD700 40%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 4px 6px rgba(212, 175, 55, 0.4));
+            line-height: 1.1; 
+            padding-bottom: 5px; 
+        }
+
+        .blue-gold-3d-text {
+            color: var(--bv-blue-primary);
+            text-shadow: 
+                0px 1px 0px #cf9b00,
+                0px 2px 0px #b58300,
+                0px 3px 0px #9a6b00,
+                0px 4px 0px #7b5200,
+                0px 5px 10px rgba(0,0,0,0.3);
+            filter: drop-shadow(0px 4px 6px rgba(212, 175, 55, 0.3));
+            line-height: 1.1;
+            padding-bottom: 5px; 
+        }
+
+        .title-monumental {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 40px -10px rgba(0, 122, 194, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+            border-radius: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .premium-glass:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 122, 194, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .input-premium {
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
+            color: #1E293B;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            font-size: 16px; 
+        }
+        .input-premium:focus {
+            background: #FFFFFF;
+            border-color: var(--bv-blue-light);
+            box-shadow: 0 0 0 4px rgba(0, 150, 214, 0.1), inset 0 2px 4px rgba(0,0,0,0.02);
+            outline: none;
+        }
+
+        .role-selector { background: #F1F5F9; border-radius: 1rem; padding: 0.375rem; border: 1px solid #E2E8F0; }
+        .btn-role { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); color: #64748B; background: transparent; }
+        .btn-role.active {
+            background: #FFFFFF; color: var(--bv-blue-primary);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #E2E8F0;
+        }
+
+        .premium-checkbox {
+            appearance: none; width: 1.5rem; height: 1.5rem;
+            border: 1.5px solid #CBD5E1; border-radius: 0.375rem; background: #FFFFFF; cursor: pointer;
+            position: relative; transition: all 0.2s ease;
+        }
+        .premium-checkbox:checked {
+            background: var(--bv-blue-primary); border-color: var(--bv-blue-primary);
+            box-shadow: 0 4px 10px rgba(0, 122, 194, 0.2);
+        }
+        .premium-checkbox:checked::after {
+            content: '✓'; position: absolute; color: #FFF; font-size: 1rem; font-weight: 900;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+
+        .font-money { font-family: 'Inter', sans-serif; font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+        .total-card {
+            background: linear-gradient(135deg, var(--bv-blue-primary) 0%, var(--bv-blue-dark) 100%);
+            color: #FFFFFF; box-shadow: 0 20px 40px -10px rgba(0, 90, 156, 0.4); border-radius: 1.5rem; overflow: hidden; position: relative;
+        }
+        .total-card::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-20deg); animation: shine 6s infinite;
+        }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        
+        .float-slow { animation: float 5s ease-in-out infinite; }
+        .float-delayed { animation: float 6s ease-in-out infinite 1.5s; }
+        .float-fast { animation: float 4s ease-in-out infinite 0.5s; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        
+        .accordion-btn { transition: background-color 0.2s; }
+        .accordion-btn:hover { background-color: #F8FAFC; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        
+        @media (max-width: 1279px) { .mobile-pb { padding-bottom: 7.5rem; } }
+    </style>
+</head>
+<body>
+<!-- Login Screen -->
+ <div id="loginScreen" style="position:fixed;inset:0;background:#E8F0FE;z-index:9999;display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:40px;border-radius:12px;width:100%;max-width:400px;box-shadow:0 10px 25px rgba(0,0,0,0.05);text-align:center;border-top:4px solid #3B006B;">
+        <h2 style="font-size:24px;font-weight:bold;margin-bottom:8px;">Giả Lập Thu Nhập</h2>
+        <p style="font-size:14px;color:#64748B;margin-bottom:24px;">Vui lòng nhập mã bảo mật để truy cập hệ thống</p>
+        <input type="password" id="passInputTN" style="width:100%;padding:12px;border:1px solid #E2E8F0;border-radius:8px;font-size:15px;outline:none;margin-bottom:16px;" placeholder="Nhập mật khẩu..." onkeypress="if(event.key==='Enter') checkPassTN()">
+        <button onclick="checkPassTN()" style="background:#007AC2;color:#fff;padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer;border:none;width:100%;">Đăng Nhập</button>
+        <p id="loginErrTN" style="color:#ef4444;font-size:14px;margin-top:12px;display:none;">Mật khẩu không đúng!</p>
+    </div>
+ </div>
+ <script>
+ function checkPassTN() {
+     if(document.getElementById('passInputTN').value === '233DK') {
+         document.getElementById('loginScreen').style.display = 'none';
+     } else {
+         document.getElementById('loginErrTN').style.display = 'block';
+     }
+ }
+ </script>
+ 
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+
+        function App() {
+            // === STATE QUẢN LÝ CHỨC VỤ VÀ PHÂN LOẠI ===
+            const [role, setRole] = useState('TVV');
+            const [isNewAgent, setIsNewAgent] = useState(false);
+            
+            // Checkbox: Có thể tick đồng thời cả 2 nếu là TN
+            const [isTuyenNgang, setIsTuyenNgang] = useState(false);
+            const [thangChucVuTN, setThangChucVuTN] = useState(1);
+            const [thuongLuyKeTuyenNgang, setThuongLuyKeTuyenNgang] = useState('');
+
+            const [isNewManager, setIsNewManager] = useState(false);
+            const [thangChucVu, setThangChucVu] = useState(1);
+
+            const [thangChucVuTNMoi, setThangChucVuTNMoi] = useState(1);
+            const [thuongQuanLyMoiTNMoi, setThuongQuanLyMoiTNMoi] = useState('');
+
+            // === STATE CÁ NHÂN ===
+            const [ipThang, setIpThang] = useState('');
+            const [fycThang, setFycThang] = useState('');
+            const [thangThamNien, setThangThamNien] = useState(1);
+            const [daHocDaoTao, setDaHocDaoTao] = useState(true);
+            
+            const [ipChangGiaDinh1, setIpChangGiaDinh1] = useState('');
+            const [ipChangGiaDinh2, setIpChangGiaDinh2] = useState('');
+
+            const [ipGiaDinh1, setIpGiaDinh1] = useState('');
+            const [ipGiaDinh2, setIpGiaDinh2] = useState('');
+
+            const [pr15, setPr15] = useState(85);
+            const [tltp, setTltp] = useState(90);
+            const [phiThucThuQuy, setPhiThucThuQuy] = useState(30);
+
+            // === STATE NHÓM TRỰC TIẾP ===
+            const [soTvvmHdc, setSoTvvmHdc] = useState('');
+            const [fypTvvm, setFypTvvm] = useState('');
+            const [tongThuongTvvm, setTongThuongTvvm] = useState(''); 
+            
+            const [fypNhomThang, setFypNhomThang] = useState('');
+            const [fycNhomThang, setFycNhomThang] = useState('');
+            const [luotHdcNhom, setLuotHdcNhom] = useState('');
+            
+            const [fypNhomGiaDinh1, setFypNhomGiaDinh1] = useState('');
+            const [fypNhomGiaDinh2, setFypNhomGiaDinh2] = useState('');
+            const [tuyenTvvmQuy, setTuyenTvvmQuy] = useState('');
+            const [luotHoatDongQuy, setLuotHoatDongQuy] = useState('');
+
+            // === STATE THI ĐUA ===
+            const [thiDuaTCT, setThiDuaTCT] = useState('');
+            const [thiDuaCT, setThiDuaCT] = useState('');
+
+            // === AI STATE ===
+            const [geminiAdvice, setGeminiAdvice] = useState('');
+            const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+            const [openPanels, setOpenPanels] = useState({ caNhan: true, nhom: true, thiDua: true });
+            const togglePanel = (panel) => {
+                setOpenPanels(prev => ({ ...prev, [panel]: !prev[panel] }));
+            };
+
+            const num = (val) => Number(val) || 0;
+            const fmt = (value) => new Intl.NumberFormat('vi-VN').format(Math.round(value));
+
+            // ================= LOGIC TÍNH TOÁN =================
+            const tongIpLuyKeChang = useMemo(() => num(ipThang) + num(ipChangGiaDinh1) + num(ipChangGiaDinh2), [ipThang, ipChangGiaDinh1, ipChangGiaDinh2]);
+            const tongFypQuyCaNhan = useMemo(() => num(ipThang) + num(ipGiaDinh1) + num(ipGiaDinh2), [ipThang, ipGiaDinh1, ipGiaDinh2]);
+            const tongFypQuyNhom = useMemo(() => num(fypNhomThang) + num(fypNhomGiaDinh1) + num(fypNhomGiaDinh2), [fypNhomThang, fypNhomGiaDinh1, fypNhomGiaDinh2]);
+
+            const calcCaNhan = useMemo(() => {
+                let thuongTvvmThang = 0, thuongChangTvvm = 0, ipTrieu = num(ipThang); 
+                if (isNewAgent && thangThamNien <= 12 && ipTrieu >= 12) {
+                    if (daHocDaoTao) thuongTvvmThang = thangThamNien <= 3 ? 1000000 : 500000;
+                    else thuongTvvmThang = thangThamNien <= 3 ? 1000000 : 0;
+                }
+                if (isNewAgent && role === 'TVV' && thangThamNien >= 1 && thangThamNien <= 12) {
+                    let chang = Math.ceil(thangThamNien / 3), ipLuyKe = tongIpLuyKeChang;
+                    if (chang === 1) {
+                        if (ipLuyKe >= 100) thuongChangTvvm = daHocDaoTao ? 6000000 : 3000000; 
+                        else if (ipLuyKe >= 50) thuongChangTvvm = 3000000; 
+                    } else {
+                        if (ipLuyKe >= 50) thuongChangTvvm = daHocDaoTao ? 3000000 : 1500000;
+                    }
+                }
+                
+                let tyLeNangSuat = 0;
+                if (ipTrieu >= 50) tyLeNangSuat = 0.18;
+                else if (ipTrieu >= 24) tyLeNangSuat = 0.15;
+                else if (ipTrieu >= 12) tyLeNangSuat = 0.10;
+                const thuongNangSuat = num(fycThang) * tyLeNangSuat;
+
+                let tyLeThuongQuy = 0, fQuy = tongFypQuyCaNhan;
+                // FIX: Sửa lại điều kiện thưởng quý thành >= thay vì >
+                if (fQuy >= 500) tyLeThuongQuy = 0.25;
+                else if (fQuy >= 350) tyLeThuongQuy = 0.20;
+                else if (fQuy >= 250) tyLeThuongQuy = 0.18;
+                else if (fQuy >= 150) tyLeThuongQuy = 0.15;
+                else if (fQuy >= 90) tyLeThuongQuy = 0.13;
+                else if (fQuy >= 60) tyLeThuongQuy = 0.10;
+                else if (fQuy >= 24) tyLeThuongQuy = 0.08;
+
+                let tyLeDieuChinhTltp = 0;
+                if (pr15 >= 85) {
+                    if (tltp >= 88) tyLeDieuChinhTltp = num(phiThucThuQuy) >= 30 ? (tltp / 100) : 1;
+                    else if (tltp >= 80) tyLeDieuChinhTltp = 0.8;
+                    else if (tltp >= 70) tyLeDieuChinhTltp = 0.5;
+                    else if (tltp >= 60) tyLeDieuChinhTltp = 0.3;
+                    else tyLeDieuChinhTltp = 0;
+                }
+
+                let thuongQuyCaNhan = 0;
+                if (pr15 >= 85) {
+                    let fycQuyUocTinh = fQuy * 1000000 * 0.3; 
+                    thuongQuyCaNhan = tyLeThuongQuy * tyLeDieuChinhTltp * fycQuyUocTinh;
+                }
+
+                return {
+                    hoaHong: num(fycThang), thuongTvvmThang, thuongChangTvvm, thuongNangSuat, tyLeNangSuat,
+                    thuongQuyCaNhan, tyLeThuongQuy, tyLeDieuChinhTltp,
+                    tong: num(fycThang) + thuongTvvmThang + thuongChangTvvm + thuongNangSuat + thuongQuyCaNhan
+                };
+            }, [ipThang, fycThang, isNewAgent, thangThamNien, daHocDaoTao, tongFypQuyCaNhan, tongIpLuyKeChang, pr15, tltp, phiThucThuQuy, role]);
+
+            const calcNhom = useMemo(() => {
+                if (role === 'TVV') return { tong: 0 };
+                let thuongTuyenLuyen = 0, thuongDongHanh = 0, thuongVuotTroi = 0;
+                let tyLeDongHanh = 0, tyLeTuyenLuyen = 0, tyLePtkd = 0, tyLeTieuChuanQuy = 0, tyLeDieuChinhTltp = 0;
+                let t_tvvm = num(soTvvmHdc), f_tvvm = num(fypTvvm), t_thuong = num(tongThuongTvvm);
+
+                if (role === 'TTN') {
+                    tyLeDongHanh = t_tvvm >= 2 ? 2.0 : t_tvvm === 1 ? 1.0 : 0;
+                    thuongDongHanh = tyLeDongHanh * t_thuong;
+                    if (t_tvvm >= 3 && f_tvvm >= 45) thuongVuotTroi = 5000000;
+                    else if (t_tvvm >= 1 && f_tvvm >= 35) thuongVuotTroi = 3000000;
+                } else if (role === 'TN') {
+                    tyLeTuyenLuyen = t_tvvm >= 3 ? 1.5 : t_tvvm === 2 ? 1.25 : t_tvvm === 1 ? 1.0 : 0;
+                    thuongTuyenLuyen = tyLeTuyenLuyen * t_thuong;
+                }
+
+                let thuongPtkdNhom = 0;
+                let fNhom = num(fypNhomThang);
+                let lHdc = num(luotHdcNhom);
+
+                if (role === 'TN') {
+                    if (fNhom >= 400) tyLePtkd = lHdc >= 5 ? 0.30 : lHdc >= 3 ? 0.28 : lHdc === 2 ? 0.26 : 0.10;
+                    else if (fNhom >= 200) tyLePtkd = lHdc >= 5 ? 0.26 : lHdc >= 3 ? 0.22 : lHdc === 2 ? 0.20 : 0.10;
+                    else if (fNhom >= 100) tyLePtkd = lHdc >= 5 ? 0.22 : lHdc >= 3 ? 0.20 : lHdc === 2 ? 0.18 : 0.10;
+                    else if (fNhom >= 50) tyLePtkd = lHdc >= 5 ? 0.20 : lHdc >= 3 ? 0.18 : lHdc === 2 ? 0.14 : 0.10;
+                    else tyLePtkd = lHdc >= 5 ? 0.16 : lHdc >= 3 ? 0.14 : lHdc === 2 ? 0.10 : 0.10;
+                    thuongPtkdNhom = tyLePtkd * num(fycNhomThang);
+                }
+
+                let thuongQuyNhom = 0;
+                let lHdQuy = num(luotHoatDongQuy);
+                
+                if (role === 'TN' && pr15 >= 85 && lHdQuy >= 6) {
+                    let coTuyenMoi = num(tuyenTvvmQuy) >= 1;
+                    let fNhomQuy = tongFypQuyNhom;
+                    
+                    if (fNhomQuy >= 600) tyLeTieuChuanQuy = coTuyenMoi ? 0.22 : 0.04; 
+                    else if (fNhomQuy >= 450) tyLeTieuChuanQuy = coTuyenMoi ? 0.18 : 0.04;
+                    else if (fNhomQuy >= 270) tyLeTieuChuanQuy = coTuyenMoi ? 0.14 : 0.04;
+                    else if (fNhomQuy >= 150) tyLeTieuChuanQuy = coTuyenMoi ? 0.09 : 0.04;
+                    else tyLeTieuChuanQuy = 0; 
+
+                    if (tltp >= 88) tyLeDieuChinhTltp = (num(phiThucThuQuy) * 3) >= 100 ? (tltp / 100) : 1; 
+                    else if (tltp >= 80) tyLeDieuChinhTltp = 0.8;
+                    else if (tltp >= 70) tyLeDieuChinhTltp = 0.5;
+                    else if (tltp >= 60) tyLeDieuChinhTltp = 0.3;
+                    
+                    thuongQuyNhom = (fNhomQuy * 1000000 * 0.3) * tyLeTieuChuanQuy * tyLeDieuChinhTltp;
+                }
+
+                let thuongTuyenNgangThang = 0;
+                if (isTuyenNgang) {
+                    let m = num(thangChucVuTN);
+                    if (role === 'TTN') {
+                        const targetsTTN = [{ m: 1, fyp: 25, hdc: 2 }, { m: 2, fyp: 35, hdc: 3 }, { m: 3, fyp: 45, hdc: 4 }, { m: 4, fyp: 45, hdc: 5 }, { m: 5, fyp: 50, hdc: 6 }, { m: 6, fyp: 50, hdc: 6 }];
+                        let t = targetsTTN.find(x => x.m === m);
+                        if (t) thuongTuyenNgangThang = 2000000 + ((fNhom >= t.fyp && lHdc >= t.hdc) ? 8000000 : 0);
+                    } else if (role === 'TN') {
+                        const targetsTN = [{ m: 1, fyp: 55, hdc: 2 }, { m: 2, fyp: 65, hdc: 3 }, { m: 3, fyp: 65, hdc: 3 }, { m: 4, fyp: 70, hdc: 3 }, { m: 5, fyp: 70, hdc: 4 }, { m: 6, fyp: 80, hdc: 4 }, { m: 7, fyp: 85, hdc: 4 }, { m: 8, fyp: 90, hdc: 4 }, { m: 9, fyp: 90, hdc: 4 }, { m: 10, fyp: 100, hdc: 4 }, { m: 11, fyp: 110, hdc: 5 }, { m: 12, fyp: 120, hdc: 5 }];
+                        let t = targetsTN.find(x => x.m === m);
+                        if (t) thuongTuyenNgangThang = (m <= 6 ? 5000000 : 0) + ((fNhom >= t.fyp && num(soTvvmHdc) >= t.hdc) ? 15000000 : 0);
+                    }
+                }
+
+                let thuongQuanLyMoiTN = 0;
+                if (isNewManager && role === 'TN') {
+                    let m = num(thangChucVu);
+                    if (m <= 12) {
+                        if (lHdc >= 4) {
+                            if (fNhom >= 85) thuongQuanLyMoiTN = 8000000;
+                            else if (fNhom >= 55) thuongQuanLyMoiTN = 5000000;
+                            else if (fNhom >= 45) thuongQuanLyMoiTN = 5000000;
+                        } else if (lHdc === 3) {
+                            if (fNhom >= 85) thuongQuanLyMoiTN = 5000000;
+                            else if (fNhom >= 55) thuongQuanLyMoiTN = 5000000;
+                            else if (fNhom >= 45) thuongQuanLyMoiTN = 3000000;
+                        } else if (lHdc === 2) {
+                            if (fNhom >= 45) thuongQuanLyMoiTN = 3000000;
+                        }
+                    }
+                }
+
+                let thuongPhatTrienHeThongTN = 0;
+                if (role === 'TN') {
+                    let m = num(thangChucVuTNMoi), qlm = num(thuongQuanLyMoiTNMoi);
+                    if (m >= 1 && m <= 6) thuongPhatTrienHeThongTN = qlm * 2.0;
+                    else if (m >= 7 && m <= 12) thuongPhatTrienHeThongTN = qlm * 1.5;
+                }
+
+                return {
+                    thuongTuyenLuyen, tyLeTuyenLuyen, thuongDongHanh, tyLeDongHanh, thuongVuotTroi, 
+                    thuongPtkdNhom, tyLePtkd, thuongQuyNhom, tyLeTieuChuanQuy, tyLeDieuChinhTltp, 
+                    thuongTuyenNgangThang, thuongQuanLyMoiTN, thuongPhatTrienHeThongTN,
+                    tong: thuongTuyenLuyen + thuongDongHanh + thuongVuotTroi + thuongPtkdNhom + thuongQuyNhom + thuongTuyenNgangThang + thuongQuanLyMoiTN + thuongPhatTrienHeThongTN
+                };
+            }, [role, soTvvmHdc, fypTvvm, tongThuongTvvm, fypNhomThang, fycNhomThang, luotHdcNhom, pr15, tongFypQuyNhom, tuyenTvvmQuy, tltp, phiThucThuQuy, isTuyenNgang, thangChucVuTN, isNewManager, thangChucVu, luotHoatDongQuy, thangChucVuTNMoi, thuongQuanLyMoiTNMoi]);
+
+            // ================= AI CỐ VẤN TỐI ƯU =================
+            const aiInsights = useMemo(() => {
+                let insights = [];
+                let ipTrieu = num(ipThang);
+                
+                if (ipTrieu > 0 && ipTrieu < 12) insights.push(`🚀 CÁ NHÂN: Thiếu ${12 - ipTrieu}Tr IP để đạt mốc Thưởng năng suất (10%). Lên số ngay!`);
+                else if (ipTrieu >= 12 && ipTrieu < 24) insights.push(`🚀 CÁ NHÂN: Cố gắng thêm ${24 - ipTrieu}Tr IP để nâng thưởng Năng Suất lên 15%.`);
+                else if (ipTrieu >= 24 && ipTrieu < 50) insights.push(`🔥 CÁ NHÂN: Bạn sắp chạm đỉnh! Thêm ${50 - ipTrieu}Tr IP để đạt MAX 18% Năng Suất.`);
+                else if (ipTrieu >= 50) insights.push(`👑 CÁ NHÂN: Tuyệt đỉnh! Bạn đã đạt mức MAX 18% Năng Suất Tháng.`);
+
+                if (num(pr15) > 0 && num(pr15) < 85) insights.push("⚠️ CẢNH BÁO: PR15 dưới 85%, bạn có nguy cơ MẤT TOÀN BỘ Thưởng Quý.");
+
+                if (isNewAgent && role === 'TVV' && thangThamNien <= 12) {
+                    let chang = Math.ceil(thangThamNien / 3), ipLuyKe = tongIpLuyKeChang;
+                    if (chang === 1) {
+                        if (ipLuyKe < 50) insights.push(`🔥 TVVm (Chặng 1): Cố gắng thêm ${50 - ipLuyKe}Tr IP lũy kế để nhận 3 Triệu Thưởng Vượt Chặng.`);
+                        else if (ipLuyKe >= 50 && ipLuyKe < 100) insights.push(`🔥 TVVm (Chặng 1): Thêm ${100 - ipLuyKe}Tr IP lũy kế để lấy thêm 3 Triệu (Xuất phát nhanh).`);
+                    } else {
+                        if (ipLuyKe < 50) insights.push(`🔥 TVVm (Chặng ${chang}): Đạt đủ 50Tr IP lũy kế chặng để nhận Thưởng Vượt Chặng.`);
+                    }
+                }
+
+                if (role !== 'TVV') {
+                    let tvvm = num(soTvvmHdc), f_tvvm = num(fypTvvm);
+                    if (role === 'TTN') {
+                        if (tvvm === 0) insights.push(`💎 ĐỒNG HÀNH: Bạn đang bỏ lỡ 100% Thưởng Đồng Hành. Tuyển ngay 1 TVVm HĐC để kích hoạt!`);
+                        else if (tvvm === 1) insights.push(`💎 ĐỒNG HÀNH: Tuyệt vời! Tuyển THÊM 1 TVVm HĐC nữa để NHÂN ĐÔI (200%) Thưởng Đồng Hành!`);
+
+                        if (tvvm >= 1 && tvvm < 3) {
+                            if (f_tvvm < 35) insights.push(`🎯 VƯỢT TRỘI: Cần thêm ${35 - f_tvvm}Tr FYP TVVm để ẵm trọn 3 Triệu Thưởng Vượt Trội.`);
+                            else if (f_tvvm >= 35 && f_tvvm < 45) insights.push(`🎯 VƯỢT TRỘI: Đã đạt 3 Triệu! Hãy đạt tổng 3 TVVm HĐC và 45Tr FYP để lấy MAX 5 Triệu.`);
+                        } else if (tvvm >= 3) {
+                            if (f_tvvm < 35) insights.push(`🎯 VƯỢT TRỘI: Quân số đã đủ, đẩy FYP TVVm lên 35Tr để lấy 3 Triệu, hoặc 45Tr để lấy 5 Triệu.`);
+                            else if (f_tvvm >= 35 && f_tvvm < 45) insights.push(`🎯 VƯỢT TRỘI: Quá xuất sắc! Chỉ rướn thêm chút FYP TVVm nữa là đạt MAX 5 Triệu.`);
+                        }
+                    } else if (role === 'TN') { 
+                        if (tvvm === 0) insights.push("💎 TUYỂN LUYỆN: Chưa có TVVm HĐC, bạn đang mất 100% Thưởng Tuyển Luyện. Tuyển ngay 1 người để nhận thưởng!");
+                        else if (tvvm === 1) insights.push(`💎 TUYỂN LUYỆN: Tuyển thêm 1 TVVm HĐC để nâng tỷ lệ Tuyển Luyện lên 125%.`);
+                        else if (tvvm === 2) insights.push(`💎 TUYỂN LUYỆN: Tuyển thêm 1 TVVm HĐC để đạt MAX 150% Thưởng Tuyển Luyện.`);
+                        
+                        let fNhom = num(fypNhomThang), hdc = num(luotHdcNhom);
+                        let currentTyLe = calcNhom.tyLePtkd * 100;
+                        if (fNhom >= 400 && hdc >= 5) {
+                            insights.push(`👑 PTKD NHÓM: Chúc mừng! Nhóm đã đạt mốc PTKD Cao Nhất (30%).`);
+                        } else if (fNhom < 50 && hdc < 2) {
+                            insights.push(`📈 PTKD NHÓM: Phải có ít nhất 2 Lượt HĐC và 50Tr FYP để nhận 14% Thưởng PTKD Nhóm. Lên số ngay!`);
+                        }
+                        
+                        let lHdQuy = num(luotHoatDongQuy);
+                        if (lHdQuy < 6) insights.push(`🔥 Quý Nhóm: Cần đạt TỐI THIỂU 6 Lượt HĐ trong Quý (đang có ${lHdQuy}). Tăng tốc!`);
+                    }
+                }
+
+                return insights.slice(0, 5); 
+            }, [ipThang, isNewAgent, role, thangThamNien, daHocDaoTao, pr15, tltp, soTvvmHdc, fypTvvm, fypNhomThang, luotHdcNhom, tuyenTvvmQuy, tongFypQuyNhom, tongIpLuyKeChang, calcNhom.tyLePtkd, luotHoatDongQuy]);
+
+            const totalIncome = calcCaNhan.tong + calcNhom.tong + num(thiDuaTCT) + num(thiDuaCT) + num(thuongLuyKeTuyenNgang);
+
+            const tyLeThuNhapSoVoiDoanhThu = useMemo(() => {
+                if (totalIncome === 0) return 0;
+                let tongDoanhThu = 0;
+                let doanhThuCaNhan = Math.max(tongFypQuyCaNhan, tongIpLuyKeChang) * 1000000;
+                
+                if (role === 'TVV') {
+                    tongDoanhThu = doanhThuCaNhan;
+                } else if (role === 'TTN' || role === 'TN') {
+                    tongDoanhThu = Math.max(doanhThuCaNhan, tongFypQuyNhom * 1000000);
+                }
+                if (tongDoanhThu === 0) return 0;
+                return (totalIncome / tongDoanhThu) * 100;
+            }, [totalIncome, role, tongFypQuyCaNhan, tongIpLuyKeChang, tongFypQuyNhom]);
+
+            // ================= TÍCH HỢP GEMINI AI (EXPONENTIAL BACKOFF) =================
+            const handleGeminiInsight = async () => {
+                if (totalIncome === 0) {
+                    setGeminiAdvice("Vui lòng nhập các thông số thu nhập dự kiến trước khi để AI phân tích nhé!");
+                    return;
+                }
+
+                setIsAnalyzing(true);
+                setGeminiAdvice('');
+                
+                const apiKey = ""; 
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                
+                const systemPrompt = `Bạn là một Cố Vấn Tài Chính xuất sắc và Chuyên gia Phân tích dữ liệu cấp cao của Bảo Việt Nhân Thọ Sài Gòn.
+Hãy dùng chuyên môn phân tích một cách ngắn gọn, súc tích (3-4 câu) bằng tiếng Việt để tư vấn, động viên cho người dùng tăng trưởng doanh số. 
+Lưu ý quan trọng: Biết người dùng 24 tuổi, có đam mê số liệu, thiết kế, thể hình, ăn sạch tăng cơ và AI Agent. Bạn có thể sử dụng thông tin này để đưa ra lời khuyên cá nhân hóa, dí dỏm, khéo léo lồng ghép động lực từ sở thích của họ vào công việc. Sử dụng emoji cho sinh động.`;
+
+                // CẬP NHẬT: Thêm thông tin FYP Quý Cá nhân vào prompt để AI tư vấn cả Thưởng Quý
+                const userQuery = `Hãy phân tích chiến lược tăng thu nhập cho chức vụ ${role} dựa trên dữ liệu sau: 
+                - Thu nhập đang dự tính: ${fmt(totalIncome)} VNĐ
+                - IP cá nhân tháng này: ${ipThang} Triệu.
+                - Tổng FYP Quý cá nhân: ${tongFypQuyCaNhan} Triệu. (Lưu ý: Thưởng quý tăng dần theo các mốc 24tr, 60tr, 90tr, 150tr, 250tr, 350tr, và tối đa là 500tr đạt 25%)
+                - FYP nhóm (nếu có quản lý): ${fypNhomThang || 0} Triệu.`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                const fetchWithBackoff = async (retries = 5, delay = 1000) => {
+                    for (let i = 0; i <= retries; i++) {
+                        try {
+                            const response = await fetch(url, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(payload)
+                            });
+                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                            return await response.json();
+                        } catch (error) {
+                            if (i === retries) throw error;
+                            await new Promise(res => setTimeout(res, delay));
+                            delay *= 2;
+                        }
+                    }
+                };
+
+                try {
+                    const result = await fetchWithBackoff();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) {
+                        setGeminiAdvice(text);
+                    } else {
+                        setGeminiAdvice("Không thể nhận phản hồi từ AI lúc này, vui lòng thử lại sau.");
+                    }
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    setGeminiAdvice("Đã xảy ra lỗi kết nối với máy chủ AI. Vui lòng thử lại sau.");
+                } finally {
+                    setIsAnalyzing(false);
+                }
+            };
+
+            return (
+                <div className="relative min-h-screen pb-16">
+                    <div className="ambient-bg"></div>
+
+                    {/* HERO SECTION TRẮNG SÁNG & PREMIUM */}
+                    <section className="relative w-full pt-12 pb-10 flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-4 md:px-6 z-10">
+                        {/* 3D Icons Decor */}
+                        <div className="absolute top-0 left-10 hidden md:block text-5xl float-slow opacity-90">💎</div>
+                        <div className="absolute top-4 right-10 hidden md:block text-5xl float-delayed opacity-90">🏆</div>
+
+                        {/* Cột trái: Typography & CTA */}
+                        <div className="lg:w-1/2 text-center lg:text-left z-20">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-xs font-bold text-corporate-blue uppercase tracking-widest mb-6 shadow-sm">
+                                <i className="fas fa-gem text-[var(--bv-gold-primary)]"></i> Premium Analytical Platform 2026
+                            </div>
+                            
+                            <h1 className="title-monumental text-4xl md:text-6xl lg:text-[6rem] font-black blue-gold-3d-text m-0 p-0 leading-[0.95] tracking-tight text-center lg:text-left">
+                                BẢO VIỆT<br/>NHÂN THỌ
+                            </h1>
+                            <h2 className="title-monumental text-4xl md:text-6xl lg:text-[5.5rem] font-black gold-3d-text m-0 p-0 mt-2 tracking-tight text-center lg:text-left">
+                                SÀI GÒN
+                            </h2>
+                            
+                            <p className="mt-6 text-sm md:text-lg text-slate-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 px-2 lg:px-0">
+                                Giải pháp quản trị và mô phỏng thu nhập thông minh. Nâng tầm trải nghiệm tài chính với thiết kế tinh tế, minh bạch hóa mọi nỗ lực của đội ngũ kinh doanh.
+                            </p>
+                        </div>
+
+                        {/* Cột phải: 3D Clean Corporate Representation */}
+                        <div className="lg:w-1/2 mt-12 lg:mt-0 relative flex justify-center items-center h-64 md:h-80 lg:h-auto perspective-1000 hidden md:flex">
+                            <div className="relative w-64 h-64 md:w-72 md:h-72 lg:w-96 lg:h-96 float-slow">
+                                {/* Clean glass layered cards */}
+                                <div className="absolute inset-0 bg-white/90 rounded-[2.5rem] border border-white backdrop-blur-xl transform rotate-6 scale-105 shadow-[0_20px_40px_rgba(0,122,194,0.1)]"></div>
+                                <div className="absolute inset-0 bg-gradient-to-bl from-blue-50/90 to-white rounded-[2.5rem] border border-blue-50 backdrop-blur-md transform -rotate-3 translate-x-4 translate-y-4 shadow-lg"></div>
+                                
+                                {/* Central Element */}
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-[#E0F2FE] to-[#F0F9FF] absolute shadow-inner border border-white"></div>
+                                    <i className="fas fa-shield-alt text-6xl md:text-7xl text-corporate-blue drop-shadow-md relative z-10"></i>
+                                </div>
+
+                                {/* Floating badges */}
+                                <div className="absolute -right-4 md:-right-8 top-10 bg-white border border-slate-100 p-3 md:p-4 rounded-2xl float-fast shadow-[0_10px_20px_rgba(0,0,0,0.05)]">
+                                    <i className="fas fa-chart-bar text-[var(--bv-gold-primary)] text-xl md:text-2xl"></i>
+                                </div>
+                                <div className="absolute -left-6 md:-left-10 bottom-16 md:bottom-20 bg-white border border-slate-100 p-3 md:p-4 rounded-2xl float-delayed shadow-[0_10px_20px_rgba(0,0,0,0.05)]">
+                                    <i className="fas fa-hand-holding-usd text-[var(--bv-blue-primary)] text-xl md:text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Bộ Calculator Chính */}
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-12 gap-8 relative z-10 px-4 md:px-6">
+                        
+                        {/* ================= CỘT TRÁI: FORM NHẬP LIỆU ================= */}
+                        <div className="xl:col-span-7 space-y-6">
+                            
+                            {/* BỘ CHỌN CHỨC VỤ */}
+                            <div className="premium-glass p-5 md:p-8">
+                                <h2 className="text-lg md:text-xl font-bold mb-6 text-corporate-blue flex items-center gap-3">
+                                    <i className="fas fa-sliders-h"></i> BỘ TÙY CHỈNH CHỨC VỤ
+                                </h2>
+                                <div className="role-selector flex flex-wrap gap-2">
+                                    {['TVV', 'TTN', 'TN'].map((r) => (
+                                        <button
+                                            key={r}
+                                            onClick={() => { 
+                                                setRole(r); 
+                                                if(r!=='TVV') setIsNewAgent(false); 
+                                                if(r!=='TTN' && r!=='TN') { setIsTuyenNgang(false); setThuongLuyKeTuyenNgang(''); }
+                                            }}
+                                            className={`flex-1 py-3 px-2 text-sm md:text-base rounded-xl font-bold btn-role ${role === r ? 'active' : ''}`}
+                                        >
+                                            {r === 'TVV' ? 'Tư Vấn Viên' : r === 'TTN' ? 'Tiền Trưởng Nhóm' : r === 'TN' ? 'Trưởng Nhóm' : ''}
+                                        </button>
+                                    ))}
+                                </div>
+                                
+                                {role === 'TVV' && (
+                                    <div className="mt-5 flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                        <input type="checkbox" id="isNew" checked={isNewAgent} onChange={e => setIsNewAgent(e.target.checked)} className="premium-checkbox" />
+                                        <label htmlFor="isNew" className="text-sm md:text-base text-slate-700 font-semibold cursor-pointer">Tư vấn viên mới (Dưới 12 tháng)</label>
+                                    </div>
+                                )}
+
+                                {(role === 'TTN' || role === 'TN') && (
+                                    <div className="mt-5 flex flex-col md:flex-row gap-4">
+                                        <div className="flex-1 p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-4">
+                                            <input type="checkbox" id="isTuyenNgang" checked={isTuyenNgang} onChange={e => setIsTuyenNgang(e.target.checked)} className="premium-checkbox" />
+                                            <label htmlFor="isTuyenNgang" className="text-sm md:text-base text-slate-700 font-semibold cursor-pointer">Quản lý Tuyển ngang (Khởi nghiệp)</label>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {role === 'TN' && (
+                                    <div className="mt-4 flex flex-col md:flex-row gap-4">
+                                        <div className="flex-1 p-4 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-4">
+                                            <input type="checkbox" id="isNewManager" checked={isNewManager} onChange={e => setIsNewManager(e.target.checked)} className="premium-checkbox" />
+                                            <label htmlFor="isNewManager" className="text-sm md:text-base text-corporate-blue font-bold cursor-pointer">Quản lý mới thăng tiến (Dưới 12 tháng)</label>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* PANEL 1: CÁ NHÂN */}
+                            <div className="premium-glass overflow-hidden">
+                                <button onClick={() => togglePanel('caNhan')} className="accordion-btn w-full p-5 md:p-6 flex justify-between items-center transition focus:outline-none border-b border-slate-200">
+                                    <h3 className="text-base md:text-lg font-bold text-corporate-blue flex items-center gap-4">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-blue-100 flex items-center justify-center text-corporate-blue"><i className="fas fa-user-tie"></i></div> 
+                                        1. Kết Quả Cá Nhân
+                                    </h3>
+                                    <i className={`fas fa-chevron-${openPanels.caNhan ? 'up' : 'down'} text-slate-400 transition-transform`}></i>
+                                </button>
+                                
+                                {openPanels.caNhan && (
+                                    <div className="p-5 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 bg-white">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">IP Cá nhân Tháng (Triệu VNĐ)</label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={ipThang} onChange={e => {
+                                                const val = e.target.value; setIpThang(val);
+                                                if(val) setFycThang(String(Math.round(Number(val) * 1000000 * 0.3))); else setFycThang('');
+                                            }} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="VD: 50" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex justify-between items-center">
+                                                FYC Cá nhân (VNĐ) <span className="text-[10px] text-corporate-blue bg-blue-100 border border-blue-200 px-2 py-0.5 rounded-md font-bold">AUTO 30%</span>
+                                            </label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={fycThang} onChange={e => setFycThang(e.target.value)} className="w-full input-premium px-4 py-3 font-money text-corporate-blue bg-slate-50 border-slate-300" />
+                                        </div>
+                                        
+                                        {isNewAgent && role === 'TVV' && (
+                                            <div className="md:col-span-2 p-4 md:p-5 rounded-2xl bg-white border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+                                                <div className="md:col-span-3 border-b border-slate-100 pb-2 mb-2 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                                    <h5 className="text-sm font-bold text-slate-700">Tư vấn viên mới (Dưới 12 tháng)</h5>
+                                                    <div className="flex items-center gap-3">
+                                                        <input type="checkbox" id="trained" checked={daHocDaoTao} onChange={e => setDaHocDaoTao(e.target.checked)} className="premium-checkbox scale-75" />
+                                                        <label htmlFor="trained" className="text-xs font-bold text-slate-600 cursor-pointer">Đã hoàn thành Đào tạo AS1</label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng thâm niên (1-12)</label>
+                                                    <input type="number" inputMode="numeric" pattern="[0-9]*" min="1" max="12" value={thangThamNien} onChange={e => setThangThamNien(Number(e.target.value))} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                                </div>
+                                                <div className="md:col-span-3 pt-2">
+                                                    <h5 className="text-xs font-bold text-slate-500 mb-3 flex items-center gap-2"><i className="fas fa-route text-orange-400"></i> Giả lập IP Lũy kế Chặng {Math.ceil(thangThamNien / 3) || 1}</h5>
+                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng hiện tại</label>
+                                                            <div className="w-full input-premium px-4 py-3 bg-slate-100 text-slate-500 font-money border border-slate-200">
+                                                                {ipThang || 0}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng giả định 2</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={ipChangGiaDinh1} onChange={e => setIpChangGiaDinh1(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Triệu VNĐ" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng giả định 3</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={ipChangGiaDinh2} onChange={e => setIpChangGiaDinh2(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Triệu VNĐ" />
+                                                        </div>
+                                                        <div className="md:col-span-3 mt-1">
+                                                            <label className="block text-[10px] font-bold text-corporate-blue mb-2 uppercase tracking-wide flex items-center justify-between">
+                                                                Tổng IP Chặng (Triệu VNĐ) <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded text-[8px]">TỰ ĐỘNG CỘNG</span>
+                                                            </label>
+                                                            <div className="w-full input-premium px-4 py-3 bg-blue-50 text-corporate-blue font-bold font-money border border-blue-200">
+                                                                {tongIpLuyKeChang}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="md:col-span-2 mt-2 pt-6 border-t border-slate-200">
+                                            <h4 className="text-xs font-bold text-corporate-blue uppercase tracking-widest mb-4">Dữ liệu xét Thưởng Quý Cá Nhân</h4>
+                                        </div>
+                                        <div className="md:col-span-2 bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            <div className="md:col-span-3 border-b border-slate-100 pb-2 mb-2">
+                                                <h5 className="text-sm font-bold text-slate-700">Giả lập FYP Cá nhân Quý</h5>
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng hiện tại</label>
+                                                <div className="w-full input-premium px-4 py-3 bg-slate-100 text-slate-500 font-money border border-slate-200">
+                                                    {ipThang || 0}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng giả định 2</label>
+                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={ipGiaDinh1} onChange={e => setIpGiaDinh1(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Triệu VNĐ" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng giả định 3</label>
+                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={ipGiaDinh2} onChange={e => setIpGiaDinh2(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Triệu VNĐ" />
+                                            </div>
+                                            <div className="md:col-span-3 mt-2">
+                                                <label className="block text-[10px] font-bold text-corporate-blue mb-2 uppercase tracking-wide flex items-center justify-between">
+                                                    Tổng FYP Quý Cá nhân (Triệu VNĐ) <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded text-[8px]">TỰ ĐỘNG CỘNG</span>
+                                                </label>
+                                                <div className="w-full input-premium px-4 py-3 bg-blue-50 text-corporate-blue font-bold font-money border border-blue-200">
+                                                    {tongFypQuyCaNhan}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tỷ lệ PR15 (%)</label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={pr15} onChange={e => setPr15(Number(e.target.value))} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">TLTP (%)</label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={tltp} onChange={e => setTltp(Number(e.target.value))} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Phí thực thu Quý (Triệu VNĐ)</label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={phiThucThuQuy} onChange={e => setPhiThucThuQuy(Number(e.target.value))} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* PANEL 2: QUẢN LÝ NHÓM */}
+                            {role !== 'TVV' && (
+                                <div className="premium-glass overflow-hidden">
+                                    <button onClick={() => togglePanel('nhom')} className="accordion-btn w-full p-5 md:p-6 flex justify-between items-center transition focus:outline-none border-b border-slate-200">
+                                        <h3 className="text-base md:text-lg font-bold text-corporate-blue flex items-center gap-4">
+                                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-blue-100 flex items-center justify-center text-corporate-blue"><i className="fas fa-users"></i></div> 
+                                            2. Kết Quả Nhóm Trực Tiếp
+                                        </h3>
+                                        <i className={`fas fa-chevron-${openPanels.nhom ? 'up' : 'down'} text-slate-400 transition-transform`}></i>
+                                    </button>
+                                    
+                                    {openPanels.nhom && (
+                                        <div className="p-5 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 bg-white">
+                                            
+                                            {/* MODULE TUYỂN NGANG */}
+                                            {isTuyenNgang && (role === 'TTN' || role === 'TN') && (
+                                                <div className="md:col-span-2 mb-2 p-4 md:p-5 rounded-2xl bg-[#FFFDF5] border border-[#FDE68A]">
+                                                    <h4 className="text-xs font-bold text-[#B45309] uppercase tracking-widest mb-4 flex items-center"><i className="fas fa-crown text-[var(--bv-gold-primary)] mr-2"></i>Tuyển Ngang ({role === 'TN' ? 'Leader Hunt' : 'Fresh Leader'})</h4>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng chức vụ (1-{role === 'TTN' ? 6 : 12})</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" min="1" max={role === 'TTN' ? 6 : 12} value={thangChucVuTN} onChange={e => setThangChucVuTN(e.target.value)} className="w-full input-premium px-4 py-3 bg-white border-amber-200" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Thưởng Lũy Kế Chặng (VNĐ)</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={thuongLuyKeTuyenNgang} onChange={e => setThuongLuyKeTuyenNgang(e.target.value)} className="w-full input-premium px-4 py-3 font-money bg-white border-amber-200" placeholder="Chỉ nhập khi chốt chặng" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* MODULE QUẢN LÝ MỚI TN */}
+                                            {isNewManager && role === 'TN' && (
+                                                <div className="md:col-span-2 mb-2 p-4 md:p-5 rounded-2xl bg-blue-50 border border-blue-200">
+                                                    <h4 className="text-xs font-bold text-corporate-blue uppercase tracking-widest mb-4 flex items-center"><i className="fas fa-star mr-2"></i>Quản Lý Mới - TN (Dưới 12 tháng)</h4>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng chức vụ (1-12)</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" min="1" max="12" value={thangChucVu} onChange={e => setThangChucVu(e.target.value)} className="w-full input-premium px-4 py-3 bg-white border-blue-200" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* PHÁT TRIỂN HỆ THỐNG TN */}
+                                            {role === 'TN' && (
+                                                <div className="md:col-span-2 mb-2 p-4 md:p-5 rounded-2xl bg-indigo-50 border border-indigo-200">
+                                                    <h4 className="text-xs font-bold text-indigo-700 uppercase tracking-widest mb-4 flex items-center"><i className="fas fa-network-wired mr-2"></i>Phát triển Hệ thống TN</h4>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng chức vụ của TN F1 (1-12)</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" min="1" max="12" value={thangChucVuTNMoi} onChange={e => setThangChucVuTNMoi(e.target.value)} className="w-full input-premium px-4 py-3 bg-white border-indigo-200" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Thưởng QL Mới của TN F1 (VNĐ)</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={thuongQuanLyMoiTNMoi} onChange={e => setThuongQuanLyMoiTNMoi(e.target.value)} className="w-full input-premium px-4 py-3 font-money bg-white border-indigo-200" placeholder="Thưởng QLM của TN bên dưới" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            <div className="md:col-span-2 mt-2"><h4 className="text-xs font-bold text-corporate-blue uppercase tracking-widest mb-2 border-b border-slate-200 pb-3">Tuyển Dụng & Hỗ Trợ (Tháng)</h4></div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Số TVVm HĐC tháng</label>
+                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={soTvvmHdc} onChange={e => setSoTvvmHdc(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tổng FYP TVVm (Triệu VNĐ)</label>
+                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={fypTvvm} onChange={e => setFypTvvm(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                            </div>
+                                            <div className="md:col-span-2">
+                                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tổng quỹ thưởng TVVm tại tháng xét (VNĐ)</label>
+                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={tongThuongTvvm} onChange={e => setTongThuongTvvm(e.target.value)} className="w-full input-premium px-4 py-3 font-money bg-slate-50 border-slate-300" />
+                                            </div>
+
+                                            {(role === 'TN' || (role === 'TTN' && isTuyenNgang)) && (
+                                                <>
+                                                    <div className="md:col-span-2 mt-4"><h4 className="text-xs font-bold text-corporate-blue uppercase tracking-widest mb-2 border-b border-slate-200 pb-3">Kinh Doanh Nhóm (Tháng & Quý)</h4></div>
+                                                    <div>
+                                                        <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">FYP Nhóm Tháng (Triệu VNĐ)</label>
+                                                        <input type="number" inputMode="numeric" pattern="[0-9]*" value={fypNhomThang} onChange={e => {
+                                                            const val = e.target.value; setFypNhomThang(val);
+                                                            if(val) setFycNhomThang(String(Math.round(Number(val) * 1000000 * 0.3))); else setFycNhomThang('');
+                                                        }} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex justify-between items-center">FYC Nhóm (VNĐ) <span className="text-[10px] text-corporate-blue bg-blue-100 border border-blue-200 px-2 py-0.5 rounded-md font-bold">AUTO</span></label>
+                                                        <input type="number" inputMode="numeric" pattern="[0-9]*" value={fycNhomThang} onChange={e => setFycNhomThang(e.target.value)} className="w-full input-premium px-4 py-3 font-money text-corporate-blue bg-slate-50 border-slate-300" />
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Lượt HĐC Nhóm</label>
+                                                        <input type="number" inputMode="numeric" pattern="[0-9]*" value={luotHdcNhom} onChange={e => setLuotHdcNhom(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" />
+                                                    </div>
+                                                    
+                                                    <div className="md:col-span-2 bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-sm mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                        <div className="md:col-span-3 border-b border-slate-100 pb-2 mb-2">
+                                                            <h5 className="text-sm font-bold text-slate-700">Giả lập FYP Nhóm Xét Quý</h5>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng hiện tại</label>
+                                                            <div className="w-full input-premium px-4 py-3 bg-slate-100 text-slate-500 font-money border border-slate-200">
+                                                                {fypNhomThang || 0}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng giả định 2</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={fypNhomGiaDinh1} onChange={e => setFypNhomGiaDinh1(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Triệu VNĐ" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">Tháng giả định 3</label>
+                                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={fypNhomGiaDinh2} onChange={e => setFypNhomGiaDinh2(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Triệu VNĐ" />
+                                                        </div>
+                                                        <div className="md:col-span-3 mt-2">
+                                                            <label className="block text-[10px] font-bold text-corporate-blue mb-2 uppercase tracking-wide flex items-center justify-between">
+                                                                Tổng FYP Nhóm Xét Quý (Triệu VNĐ) <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded text-[8px]">TỰ ĐỘNG CỘNG</span>
+                                                            </label>
+                                                            <div className="w-full input-premium px-4 py-3 bg-blue-50 text-corporate-blue font-bold font-money border border-blue-200">
+                                                                {tongFypQuyNhom}
+                                                            </div>
+                                                        </div>
+                                                        <div className="md:col-span-3 pt-4 border-t border-slate-100 mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                                            <div>
+                                                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Lượt HĐ Nhóm (Cả Quý)</label>
+                                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={luotHoatDongQuy} onChange={e => setLuotHoatDongQuy(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Tối thiểu 6" />
+                                                            </div>
+                                                            <div>
+                                                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">TVVm HĐC tuyển trong quý</label>
+                                                                <input type="number" inputMode="numeric" pattern="[0-9]*" value={tuyenTvvmQuy} onChange={e => setTuyenTvvmQuy(e.target.value)} className="w-full input-premium px-4 py-3 bg-slate-50 border-slate-300" placeholder="Ví dụ: 1" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* PANEL 3: THI ĐUA */}
+                            <div className="premium-glass overflow-hidden">
+                                <button onClick={() => togglePanel('thiDua')} className="accordion-btn w-full p-5 md:p-6 flex justify-between items-center transition focus:outline-none border-b border-slate-200">
+                                    <h3 className="text-base md:text-lg font-bold text-corporate-blue flex items-center gap-4">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-blue-100 flex items-center justify-center text-[var(--bv-gold-primary)]"><i className="fas fa-gift"></i></div> 
+                                        {role==='TVV'?'2':'3'}. Thi Đua TCT & BVNT SG
+                                    </h3>
+                                    <i className={`fas fa-chevron-${openPanels.thiDua ? 'up' : 'down'} text-slate-400 transition-transform`}></i>
+                                </button>
+                                
+                                {openPanels.thiDua && (
+                                    <div className="p-5 md:p-6 pt-2 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 bg-white/40">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Thưởng TCT (VNĐ)</label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={thiDuaTCT} onChange={e => setThiDuaTCT(e.target.value)} className="w-full input-premium px-4 py-3 font-money bg-slate-50 border-slate-300" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Thưởng BVNT SG (VNĐ)</label>
+                                            <input type="number" inputMode="numeric" pattern="[0-9]*" value={thiDuaCT} onChange={e => setThiDuaCT(e.target.value)} className="w-full input-premium px-4 py-3 font-money bg-slate-50 border-slate-300" />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+
+                        {/* ================= CỘT PHẢI: BẢNG LƯƠNG TRẮNG SÁNG ================= */}
+                        <div className="xl:col-span-5 relative mt-8 xl:mt-0" id="bang-luong-chi-tiet">
+                            <div className="xl:sticky xl:top-8 bg-white rounded-[2rem] shadow-xl border border-slate-200 p-6 md:p-8 flex flex-col xl:h-[calc(100vh-4rem)]">
+                                
+                                <div className="text-center mb-6 pb-6 border-b border-slate-100">
+                                    <h2 className="text-2xl font-black tracking-widest mb-2 text-corporate-blue uppercase">
+                                        Bảng Lương Dự Kiến
+                                    </h2>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100">
+                                        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                                        <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Đồng bộ Hệ thống</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 space-y-6 overflow-y-auto pr-2 pb-6">
+
+                                    {/* TÍCH HỢP GEMINI AI BUTTON */}
+                                    <button 
+                                        onClick={handleGeminiInsight}
+                                        disabled={isAnalyzing}
+                                        className="w-full p-4 rounded-xl bg-gradient-to-r from-blue-600 to-[var(--bv-blue-primary)] text-white font-bold shadow-[0_10px_20px_rgba(0,122,194,0.3)] hover:scale-[1.02] transition-transform duration-300 flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+                                    >
+                                        {isAnalyzing ? (
+                                            <><i className="fas fa-spinner fa-spin text-xl"></i> Trí tuệ nhân tạo đang tính toán...</>
+                                        ) : (
+                                            <><i className="fas fa-magic text-yellow-300"></i> Xem phân tích từ Chuyên gia AI</>
+                                        )}
+                                    </button>
+
+                                    {/* KẾT QUẢ TỪ GEMINI AI */}
+                                    {geminiAdvice && (
+                                        <div className="bg-gradient-to-br from-blue-50 to-white p-5 rounded-2xl border border-blue-200 shadow-sm relative overflow-hidden">
+                                            <div className="absolute -top-2 -right-2 p-4 opacity-10"><i className="fas fa-robot text-7xl text-blue-500"></i></div>
+                                            <h3 className="text-xs font-black text-blue-800 uppercase tracking-widest flex items-center gap-2 mb-3 relative z-10">
+                                                <i className="fas fa-chart-line text-blue-500"></i> Cố Vấn Tối Ưu:
+                                            </h3>
+                                            <p className="text-sm text-slate-700 font-medium leading-relaxed relative z-10 whitespace-pre-line">
+                                                {geminiAdvice}
+                                            </p>
+                                        </div>
+                                    )}
+                                    
+                                    {/* SECTION 0: LOCAL AI CỐ VẤN */}
+                                    {!geminiAdvice && aiInsights.length > 0 && (
+                                        <div className="bg-amber-50 p-4 md:p-5 rounded-2xl border border-amber-200 mb-6 shadow-sm">
+                                            <h3 className="text-[10px] font-black text-amber-700 uppercase tracking-widest flex items-center gap-2 mb-3">
+                                                <i className="fas fa-lightbulb text-sm"></i> Gợi Ý Hệ Thống
+                                            </h3>
+                                            <ul className="space-y-3">
+                                                {aiInsights.map((insight, idx) => (
+                                                    <li key={idx} className="text-xs text-slate-700 flex items-start gap-2 leading-relaxed font-medium">
+                                                        <i className="fas fa-caret-right text-amber-500 mt-0.5"></i>
+                                                        <span>{insight}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {/* SECTION: THU NHẬP CÁ NHÂN */}
+                                    <div className="space-y-4">
+                                        <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                            <i className="fas fa-wallet text-slate-300"></i> Năng Suất Cá Nhân
+                                        </h3>
+                                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-slate-600 font-medium">Hoa hồng khai thác</span>
+                                                <span className="font-money font-bold text-lg text-corporate-blue">{fmt(calcCaNhan.hoaHong)}</span>
+                                            </div>
+                                            {calcCaNhan.thuongNangSuat > 0 && (
+                                                <div className="flex flex-col gap-1 pt-3 border-t border-slate-200">
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-sm text-slate-600 font-medium">Thưởng Năng Suất</span>
+                                                        <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcCaNhan.thuongNangSuat)}</span>
+                                                    </div>
+                                                    <span className="text-[10px] text-slate-400 font-data text-right">Tỷ lệ: {calcCaNhan.tyLeNangSuat * 100}%</span>
+                                                </div>
+                                            )}
+                                            {calcCaNhan.thuongTvvmThang > 0 && (
+                                                <div className="flex justify-between items-center pt-3 border-t border-slate-200">
+                                                    <span className="text-sm text-slate-600 font-medium">Thưởng TVVm mới</span>
+                                                    <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcCaNhan.thuongTvvmThang)}</span>
+                                                </div>
+                                            )}
+                                            {calcCaNhan.thuongChangTvvm > 0 && (
+                                                <div className="flex justify-between items-center pt-3 border-t border-slate-200">
+                                                    <span className="text-sm text-slate-600 font-medium flex items-center gap-2">Thưởng Chặng TVVm</span>
+                                                    <span className="font-money font-bold text-base text-[var(--bv-gold-primary)]">+{fmt(calcCaNhan.thuongChangTvvm)}</span>
+                                                </div>
+                                            )}
+                                            {calcCaNhan.thuongQuyCaNhan > 0 && (
+                                                <div className="flex flex-col gap-1 p-3 mt-2 rounded-lg bg-blue-50 border border-blue-100">
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-sm text-corporate-blue font-bold">Thưởng Quý Cá Nhân</span>
+                                                        <span className="font-money font-bold text-lg text-corporate-blue">+{fmt(calcCaNhan.thuongQuyCaNhan)}</span>
+                                                    </div>
+                                                    <div className="flex justify-end gap-2 text-[9px] text-blue-600/80 font-data mt-1 uppercase">
+                                                        <span>TL: {calcCaNhan.tyLeThuongQuy * 100}%</span>
+                                                        <span>|</span>
+                                                        <span>ĐC: {calcCaNhan.tyLeDieuChinhTltp * 100}%</span>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* SECTION: THU NHẬP QUẢN LÝ NHÓM */}
+                                    {role !== 'TVV' && calcNhom.tong > 0 && (
+                                        <div className="space-y-4">
+                                            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                                <i className="fas fa-users-cog text-slate-300"></i> Quản Lý Nhóm
+                                            </h3>
+                                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
+                                                
+                                                {calcNhom.thuongTuyenNgangThang > 0 && (
+                                                    <div className="flex justify-between items-center p-3 rounded-lg bg-amber-50 border border-amber-200">
+                                                        <span className="text-sm text-amber-800 font-bold">Tuyển Ngang (T{thangChucVuTN})</span>
+                                                        <span className="font-money font-bold text-lg text-amber-600">+{fmt(calcNhom.thuongTuyenNgangThang)}</span>
+                                                    </div>
+                                                )}
+                                                {num(thuongLuyKeTuyenNgang) > 0 && (
+                                                    <div className="flex justify-between items-center p-3 mt-2 rounded-lg bg-[var(--bv-gold-light)]/20 border border-[var(--bv-gold-primary)]/40">
+                                                        <span className="text-sm text-[var(--bv-gold-dark)] font-bold">Lũy Kế Tuyển Ngang</span>
+                                                        <span className="font-money font-bold text-lg text-[var(--bv-gold-primary)]">+{fmt(thuongLuyKeTuyenNgang)}</span>
+                                                    </div>
+                                                )}
+
+                                                {(role === 'TTN' || role === 'TN') && calcNhom.thuongDongHanh > 0 && (
+                                                    <div className="flex flex-col gap-1 pt-3 border-t border-slate-200">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-sm text-slate-600 font-medium">Thưởng Đồng Hành</span>
+                                                            <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcNhom.thuongDongHanh)}</span>
+                                                        </div>
+                                                        <span className="text-[10px] text-slate-400 font-data text-right">Tỷ lệ: {calcNhom.tyLeDongHanh * 100}%</span>
+                                                    </div>
+                                                )}
+                                                {(role === 'TTN' || role === 'TN') && calcNhom.thuongVuotTroi > 0 && (
+                                                    <div className="flex justify-between items-center pt-3 border-t border-slate-200">
+                                                        <span className="text-sm text-slate-600 font-medium">Thưởng Vượt Trội</span>
+                                                        <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcNhom.thuongVuotTroi)}</span>
+                                                    </div>
+                                                )}
+                                                
+                                                {role === 'TN' && calcNhom.thuongTuyenLuyen > 0 && (
+                                                    <div className="flex flex-col gap-1 pt-3 border-t border-slate-200">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-sm text-slate-600 font-medium">Thưởng Tuyển Luyện</span>
+                                                            <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcNhom.thuongTuyenLuyen)}</span>
+                                                        </div>
+                                                        <span className="text-[10px] text-slate-400 font-data text-right">Tỷ lệ: {calcNhom.tyLeTuyenLuyen * 100}%</span>
+                                                    </div>
+                                                )}
+
+                                                {isNewManager && calcNhom.thuongQuanLyMoiTN > 0 && (
+                                                    <div className="flex justify-between items-center pt-3 border-t border-slate-200">
+                                                        <span className="text-sm text-corporate-blue font-bold flex items-center gap-2"><i className="fas fa-star"></i> Thưởng Quản Lý Mới (TN)</span>
+                                                        <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcNhom.thuongQuanLyMoiTN)}</span>
+                                                    </div>
+                                                )}
+                                                
+                                                {role === 'TN' && calcNhom.thuongPhatTrienHeThongTN > 0 && (
+                                                    <div className="flex justify-between items-center pt-3 border-t border-slate-200">
+                                                        <span className="text-sm text-indigo-700 font-bold flex items-center gap-2"><i className="fas fa-network-wired text-indigo-500"></i> PT Hệ Thống (TN)</span>
+                                                        <span className="font-money font-bold text-base text-indigo-600">+{fmt(calcNhom.thuongPhatTrienHeThongTN)}</span>
+                                                    </div>
+                                                )}
+
+                                                {role === 'TN' && calcNhom.thuongPtkdNhom > 0 && (
+                                                    <div className="flex flex-col gap-1 pt-3 border-t border-slate-200">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-sm text-slate-600 font-medium">Thưởng PTKD Nhóm</span>
+                                                            <span className="font-money font-bold text-base text-corporate-blue">+{fmt(calcNhom.thuongPtkdNhom)}</span>
+                                                        </div>
+                                                        <span className="text-[10px] text-slate-400 font-data text-right">Tỷ lệ: {calcNhom.tyLePtkd * 100}%</span>
+                                                    </div>
+                                                )}
+                                                {role === 'TN' && calcNhom.thuongQuyNhom > 0 && (
+                                                    <div className="flex flex-col gap-1 p-3 mt-2 rounded-lg bg-blue-50 border border-blue-100">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-sm text-corporate-blue font-bold">Thưởng Quý Nhóm</span>
+                                                            <span className="font-money font-bold text-lg text-corporate-blue">+{fmt(calcNhom.thuongQuyNhom)}</span>
+                                                        </div>
+                                                        <div className="flex justify-end gap-2 text-[9px] text-blue-600/80 font-data mt-1 uppercase">
+                                                            <span>TC: {calcNhom.tyLeTieuChuanQuy * 100}%</span>
+                                                            <span>|</span>
+                                                            <span>ĐC: {calcNhom.tyLeDieuChinhTltp * 100}%</span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* SECTION: THI ĐUA */}
+                                    {(num(thiDuaTCT) > 0 || num(thiDuaCT) > 0) && (
+                                        <div className="space-y-4">
+                                            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                                <i className="fas fa-gift text-slate-300"></i> Thi Đua
+                                            </h3>
+                                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
+                                                {num(thiDuaTCT) > 0 && (
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-sm text-slate-600 font-medium">Thi Đua TCT</span>
+                                                        <span className="font-money font-bold text-base text-[var(--bv-gold-primary)]">+{fmt(thiDuaTCT)}</span>
+                                                    </div>
+                                                )}
+                                                {num(thiDuaCT) > 0 && (
+                                                    <div className="flex justify-between items-center pt-3 border-t border-slate-200">
+                                                        <span className="text-sm text-slate-600 font-medium">Thi Đua BVNT SG</span>
+                                                        <span className="font-money font-bold text-base text-[var(--bv-gold-primary)]">+{fmt(thiDuaCT)}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* BẢNG TỔNG KẾT BLUE */}
+                                <div className="mt-auto total-card p-6 md:p-8 text-center rounded-[2rem] mt-6">
+                                    <div className="relative z-10">
+                                        <div className="inline-block bg-white/20 px-5 py-1.5 rounded-full text-blue-50 text-[10px] font-black tracking-widest uppercase border border-white/30 shadow-sm mb-4">
+                                            Tổng Thu Nhập Dự Kiến
+                                        </div>
+                                        <div className="text-4xl lg:text-5xl font-black text-white font-money tracking-tight drop-shadow-md">
+                                            {fmt(totalIncome)} <span className="text-xl text-blue-200 ml-1">₫</span>
+                                        </div>
+                                        {tyLeThuNhapSoVoiDoanhThu > 0 && (
+                                            <div className="mt-4 flex justify-center">
+                                                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/10 border border-white/20 text-white text-[11px] font-data font-semibold uppercase tracking-widest">
+                                                    <i className="fas fa-chart-pie opacity-80"></i> Thu Nhập / Doanh Thu: <span className="text-yellow-300 font-bold">{tyLeThuNhapSoVoiDoanhThu.toFixed(2)}%</span>
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {/* ================= THANH TỔNG THU NHẬP DÀNH RIÊNG CHO MOBILE ================= */}
+                    <div className="xl:hidden fixed bottom-0 left-0 w-full bg-gradient-to-r from-blue-700 to-blue-900 border-t border-blue-600 p-4 z-50 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,122,194,0.3)]">
+                        <div className="flex justify-between items-center max-w-xl mx-auto px-2">
+                            <div className="flex flex-col cursor-pointer" onClick={() => document.getElementById('bang-luong-chi-tiet').scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+                                <span className="text-blue-200 font-bold text-[10px] tracking-widest uppercase mb-1">Tổng thu nhập <span className="lowercase font-normal opacity-80">(Chạm xem chi tiết)</span> <i className="fas fa-hand-pointer ml-1"></i></span>
+                                <div className="flex items-end gap-2">
+                                    <span className="text-2xl font-black text-white font-money leading-none">{fmt(totalIncome)}</span>
+                                    {tyLeThuNhapSoVoiDoanhThu > 0 && (
+                                        <span className="text-yellow-300 text-[11px] font-data font-bold mb-0.5">({tyLeThuNhapSoVoiDoanhThu.toFixed(1)}%)</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shadow-lg border border-white/30 backdrop-blur-md" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                                <i className="fas fa-chevron-up text-white text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
