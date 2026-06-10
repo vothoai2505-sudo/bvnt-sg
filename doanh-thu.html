@@ -1,631 +1,1619 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bảo Việt Nhân thọ Sài Gòn | Trung Tâm Phân Tích</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--blue:#007AC2;--blue2:#0096D6;--gold:#D4B271;--bg:#FAFBFC;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--border:#E8ECF0}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui,sans-serif}
-body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảo Việt Nhân thọ Sài Gòn | Trung Tâm Phân Tích</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #007ac2;
+        --blue2: #0096d6;
+        --gold: #d4b271;
+        --bg: #fafbfc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: #e8ecf0;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      body {
+        background: var(--bg);
+        background-image:
+          radial-gradient(at 0% 0%, hsla(212, 100%, 94%, 1) 0, transparent 50%),
+          radial-gradient(
+            at 50% 0%,
+            hsla(202, 100%, 92%, 1) 0,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 0%,
+            hsla(220, 100%, 95%, 1) 0,
+            transparent 50%
+          );
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+      }
 
-/* Glass Navbar */
-.glass-nav{background:rgba(255,255,255,0.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(0,0,0,0.04)}
+      /* Glass Navbar */
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      }
 
-/* Premium Cards */
-.s-card{background:var(--card);border-radius:24px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,0.02);transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
-.s-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -12px rgba(0,0,0,0.08)}
+      /* Premium Cards */
+      .s-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .s-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 48px -12px rgba(0, 122, 194, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+      }
 
-/* Gradient text */
-.grad{background:linear-gradient(135deg,var(--blue),var(--blue2));-webkit-background-clip:text;color:transparent}
+      /* Progress Bar */
+      .kpi-progress-bg {
+        background: rgba(0, 0, 0, 0.06);
+        height: 6px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 8px;
+        width: 100%;
+      }
+      .kpi-progress-bar {
+        background: linear-gradient(90deg, #10b981, #059669);
+        height: 100%;
+        border-radius: 4px;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .kpi-progress-bar.over {
+        background: linear-gradient(90deg, #d4b271, #f59e0b);
+      }
 
-/* Inputs */
-.s-input{background:#F1F5F9;border:1.5px solid transparent;border-radius:14px;padding:12px 16px;font-size:13px;font-weight:500;color:var(--text);outline:none;width:100%;transition:all 0.25s}
-.s-input:focus{background:#fff;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,122,194,0.08)}
-.s-input:hover:not(:focus){background:#EDF2F7}
+      /* Gradient text */
+      .grad {
+        background: linear-gradient(135deg, var(--blue), var(--blue2));
+        -webkit-background-clip: text;
+        color: transparent;
+      }
 
-/* Tabs */
-.tab-wrap{display:inline-flex;background:rgba(0,0,0,0.04);padding:5px;border-radius:16px;gap:4px}
-.s-tab{padding:10px 28px;font-size:13px;font-weight:700;color:var(--muted);border-radius:12px;cursor:pointer;border:none;background:transparent;transition:all 0.25s;letter-spacing:-0.01em}
-.s-tab.on{background:#fff;color:var(--blue);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+      /* Inputs */
+      .s-input {
+        background: #f1f5f9;
+        border: 1.5px solid transparent;
+        border-radius: 14px;
+        padding: 12px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        outline: none;
+        width: 100%;
+        transition: all 0.25s;
+      }
+      .s-input:focus {
+        background: #fff;
+        border-color: var(--blue);
+        box-shadow: 0 0 0 4px rgba(0, 122, 194, 0.08);
+      }
+      .s-input:hover:not(:focus) {
+        background: #edf2f7;
+      }
 
-/* KPI */
-.kv{font-size:36px;font-weight:900;letter-spacing:-0.04em;line-height:1}
-.kv-sm{font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1}
-.kv-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+      /* Tabs */
+      .tab-wrap {
+        display: inline-flex;
+        background: rgba(0, 0, 0, 0.04);
+        padding: 5px;
+        border-radius: 16px;
+        gap: 4px;
+      }
+      .s-tab {
+        padding: 10px 28px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+        border-radius: 12px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        transition: all 0.25s;
+        letter-spacing: -0.01em;
+      }
+      .s-tab.on {
+        background: #fff;
+        color: var(--blue);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
 
-/* Trend badges */
-.trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px}
-.trend.up{color:#059669;background:#D1FAE5}
-.trend.down{color:#DC2626;background:#FEE2E2}
-.trend.neutral{color:#64748B;background:#F1F5F9}
+      /* KPI */
+      .kv {
+        font-size: 36px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+      .kv-sm {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .kv-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
 
-/* Status */
-.st{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:0.01em}
-.st::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.st-green{background:#ECFDF5;color:#059669}.st-green::before{background:#059669}
-.st-yellow{background:#FFFBEB;color:#B45309}.st-yellow::before{background:#D97706}
-.st-orange{background:#FFF7ED;color:#C2410C}.st-orange::before{background:#EA580C}
-.st-blue{background:#EFF6FF;color:#1D4ED8}.st-blue::before{background:#3B82F6}
+      /* Trend badges */
+      .trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 8px;
+      }
+      .trend.up {
+        color: #059669;
+        background: #d1fae5;
+      }
+      .trend.down {
+        color: #dc2626;
+        background: #fee2e2;
+      }
+      .trend.neutral {
+        color: #64748b;
+        background: #f1f5f9;
+      }
 
-/* Table */
-table{width:100%;border-collapse:separate;border-spacing:0}
-th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);padding:16px 18px;border-bottom:1px solid var(--border);background:#FAFBFC}
-th:first-child{border-top-left-radius:16px}th:last-child{border-top-right-radius:16px}
-td{padding:16px 18px;font-size:13px;font-weight:500;border-bottom:1px solid #F5F5F7}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#F8FAFC}
-tbody tr:nth-child(even) td{background:#FDFDFE}
-tbody tr:nth-child(even):hover td{background:#F5F7FA}
+      /* Status */
+      .st {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 99px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+      .st::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .st-green {
+        background: #ecfdf5;
+        color: #059669;
+      }
+      .st-green::before {
+        background: #059669;
+      }
+      .st-yellow {
+        background: #fffbeb;
+        color: #b45309;
+      }
+      .st-yellow::before {
+        background: #d97706;
+      }
+      .st-orange {
+        background: #fff7ed;
+        color: #c2410c;
+      }
+      .st-orange::before {
+        background: #ea580c;
+      }
+      .st-blue {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+      .st-blue::before {
+        background: #3b82f6;
+      }
 
-/* Hero */
-.hero-glass{background:rgba(255,255,255,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.6);border-radius:24px}
+      /* Table */
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      th {
+        text-align: left;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border);
+        background: #fafbfc;
+      }
+      th:first-child {
+        border-top-left-radius: 16px;
+      }
+      th:last-child {
+        border-top-right-radius: 16px;
+      }
+      td {
+        padding: 16px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        border-bottom: 1px solid #f5f5f7;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover td {
+        background: #f8fafc;
+      }
+      tbody tr:nth-child(even) td {
+        background: #fdfdfe;
+      }
+      tbody tr:nth-child(even):hover td {
+        background: #f5f7fa;
+      }
 
-/* Pulse */
-.pulse-dot{width:8px;height:8px;border-radius:50%;background:#10B981;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.5)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
+      /* Hero */
+      .hero-glass {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 24px;
+      }
 
-/* Auth */
-#auth-overlay{position:fixed;inset:0;background:rgba(250,251,252,0.92);backdrop-filter:blur(12px);z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity 0.5s}
-#app-content{display:none;opacity:0;transition:opacity 0.5s}
+      /* Pulse */
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+        }
+      }
 
-/* Smooth appear */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{animation:fadeUp 0.5s ease-out both}
-.fade-up-d1{animation-delay:0.1s}.fade-up-d2{animation-delay:0.2s}.fade-up-d3{animation-delay:0.3s}.fade-up-d4{animation-delay:0.4s}
+      /* Auth */
+      #auth-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(250, 251, 252, 0.92);
+        backdrop-filter: blur(12px);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s;
+      }
+      #app-content {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
 
-/* Progress ring */
-.ring-bg{fill:none;stroke:#E8ECF0;stroke-width:4}
-.ring-fg{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 0.8s ease}
+      /* Smooth appear */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .fade-up {
+        animation: fadeUp 0.5s ease-out both;
+      }
+      .fade-up-d1 {
+        animation-delay: 0.1s;
+      }
+      .fade-up-d2 {
+        animation-delay: 0.2s;
+      }
+      .fade-up-d3 {
+        animation-delay: 0.3s;
+      }
+      .fade-up-d4 {
+        animation-delay: 0.4s;
+      }
 
-@media(max-width:768px){.kv{font-size:28px}.kv-sm{font-size:22px}}
-</style>
-</head>
-<body>
+      /* Progress ring */
+      .ring-bg {
+        fill: none;
+        stroke: #e8ecf0;
+        stroke-width: 4;
+      }
+      .ring-fg {
+        fill: none;
+        stroke-width: 4;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.8s ease;
+      }
 
-<!-- AUTH -->
-<div id="auth-overlay">
-<div class="s-card p-10 w-[92%] max-w-[420px] text-center" style="border-radius:32px">
-<div class="mx-auto mb-6">
-<img src="logo.png" alt="BV" class="h-20 mx-auto object-contain drop-shadow rounded-2xl" style="background:#0F172A;padding:12px">
-</div>
-<h1 class="text-2xl font-extrabold mb-1 tracking-tight">Bảo Việt Nhân thọ <span style="color:#D4B271">Sài Gòn</span></h1>
-<p class="text-[10px] font-bold text-[#007AC2] mb-8 tracking-[0.3em] uppercase">Trung Tâm Phân Tích Dữ Liệu</p>
-<input type="password" id="pw" placeholder="Nhập mã truy cập..." class="s-input text-center text-lg tracking-widest mb-4 py-4" onkeypress="event.key==='Enter'&&doLogin()">
-<p id="auth-err" class="text-red-500 text-xs mb-4 hidden font-bold">Mã truy cập không hợp lệ.</p>
-<button onclick="doLogin()" class="w-full py-4 rounded-2xl font-bold text-sm text-white cursor-pointer border-none transition-all hover:shadow-lg" style="background:linear-gradient(135deg,#007AC2,#0096D6)">Truy Cập Hệ Thống →</button>
-</div>
-</div>
+      @media (max-width: 768px) {
+        .kv {
+          font-size: 28px;
+        }
+        .kv-sm {
+          font-size: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- AUTH -->
+    <div id="auth-overlay">
+      <div
+        class="s-card p-10 w-[92%] max-w-[420px] text-center"
+        style="border-radius: 32px"
+      >
+        <div class="mx-auto mb-6">
+          <img
+            src="logo.png"
+            alt="BV"
+            class="h-20 mx-auto object-contain drop-shadow rounded-2xl"
+            style="background: #0f172a; padding: 12px"
+          />
+        </div>
+        <h1 class="text-2xl font-extrabold mb-1 tracking-tight">
+          Bảo Việt Nhân thọ <span style="color: #d4b271">Sài Gòn</span>
+        </h1>
+        <p
+          class="text-[10px] font-bold text-[#007AC2] mb-8 tracking-[0.3em] uppercase"
+        >
+          Trung Tâm Phân Tích Dữ Liệu
+        </p>
+        <input
+          type="password"
+          id="pw"
+          placeholder="Nhập mã truy cập..."
+          class="s-input text-center text-lg tracking-widest mb-4 py-4"
+          onkeypress="event.key === 'Enter' && doLogin()"
+        />
+        <p id="auth-err" class="text-red-500 text-xs mb-4 hidden font-bold">
+          Mã truy cập không hợp lệ.
+        </p>
+        <button
+          onclick="doLogin()"
+          class="w-full py-4 rounded-2xl font-bold text-sm text-white cursor-pointer border-none transition-all hover:shadow-lg"
+          style="background: linear-gradient(135deg, #007ac2, #0096d6)"
+        >
+          Truy Cập Hệ Thống →
+        </button>
+      </div>
+    </div>
 
-<!-- APP -->
-<div id="app-content">
+    <!-- APP -->
+    <div id="app-content">
+      <!-- Nav -->
+      <nav class="glass-nav sticky top-0 z-50">
+        <div
+          class="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              src="logo.png"
+              alt="Logo"
+              class="h-9 object-contain rounded-xl bg-slate-900 px-1.5 py-1.5"
+            />
+            <span
+              class="text-[15px] font-extrabold text-slate-900 tracking-tight hidden sm:inline"
+              >Bảo Việt Nhân thọ
+              <span class="text-[#007AC2]">Sài Gòn</span></span
+            >
+          </div>
+          <div class="flex items-center gap-4">
+            <div
+              class="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full"
+            >
+              <div class="pulse-dot"></div>
+              <span
+                class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider"
+                >Trực Tuyến</span
+              >
+            </div>
+            <button
+              onclick="location.reload()"
+              class="text-sm font-semibold text-slate-400 hover:text-slate-800 transition-colors bg-transparent border-none cursor-pointer"
+            >
+              Đăng xuất
+            </button>
+          </div>
+        </div>
+      </nav>
 
-<!-- Nav -->
-<nav class="glass-nav sticky top-0 z-50">
-<div class="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center">
-<div class="flex items-center gap-3">
-<img src="logo.png" alt="Logo" class="h-9 object-contain rounded-xl bg-slate-900 px-1.5 py-1.5">
-<span class="text-[15px] font-extrabold text-slate-900 tracking-tight hidden sm:inline">Bảo Việt Nhân thọ <span class="text-[#007AC2]">Sài Gòn</span></span>
-</div>
-<div class="flex items-center gap-4">
-<div class="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full">
-<div class="pulse-dot"></div>
-<span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">Trực Tuyến</span>
-</div>
-<button onclick="location.reload()" class="text-sm font-semibold text-slate-400 hover:text-slate-800 transition-colors bg-transparent border-none cursor-pointer">Đăng xuất</button>
-</div>
-</div>
-</nav>
+      <div class="max-w-[1440px] mx-auto px-6 py-10">
+        <!-- Header + Tabs -->
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 fade-up"
+        >
+          <div>
+            <h1
+              class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-2 flex items-center gap-4"
+            >
+              Tổng Quan <span class="grad">Hoạt Động</span>
+              <span
+                style="text-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15)"
+                class="text-4xl"
+                >🎯</span
+              >
+            </h1>
+            <p class="text-slate-500 font-medium text-[15px]">
+              Báo cáo đa chiều & Phân tích tăng trưởng doanh thu bảo hiểm
+            </p>
+          </div>
+          <div class="tab-wrap">
+            <button class="s-tab on" id="tabLK" onclick="switchTab('lk')">
+              📈 Doanh Thu Lũy Kế
+            </button>
+            <button class="s-tab" id="tabHT" onclick="switchTab('ht')">
+              📊 Tháng Hiện Tại
+            </button>
+          </div>
+        </div>
 
-<div class="max-w-[1440px] mx-auto px-6 py-10">
+        <!-- ==================== LŨY KẾ ==================== -->
+        <div id="viewLK">
+          <!-- Filters -->
+          <div class="s-card p-7 mb-8 fade-up fade-up-d1">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-5">
+              <div>
+                <label class="kv-label mb-2 block">Kỳ báo cáo</label>
+                <select id="flt-year" class="s-input" onchange="runLK()">
+                  <option value="2026">Năm 2026</option>
+                  <option value="2025">Năm 2025</option>
+                  <option value="2024">Năm 2024</option>
+                </select>
+              </div>
+              <div>
+                <label class="kv-label mb-2 block">Khung thời gian</label>
+                <select id="flt-period" class="s-input" onchange="runLK()">
+                  <option value="all">Cả năm (Lũy kế)</option>
+                  <optgroup label="Theo Quý">
+                    <option value="q1">Quý 1</option>
+                    <option value="q2">Quý 2</option>
+                    <option value="q3">Quý 3</option>
+                    <option value="q4">Quý 4</option>
+                  </optgroup>
+                  <optgroup label="Theo Tháng">
+                    <option value="1">Tháng 1</option>
+                    <option value="2">Tháng 2</option>
+                    <option value="3">Tháng 3</option>
+                    <option value="4">Tháng 4</option>
+                    <option value="5">Tháng 5</option>
+                    <option value="6">Tháng 6</option>
+                    <option value="7">Tháng 7</option>
+                    <option value="8">Tháng 8</option>
+                    <option value="9">Tháng 9</option>
+                    <option value="10">Tháng 10</option>
+                    <option value="11">Tháng 11</option>
+                    <option value="12">Tháng 12</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div>
+                <label class="kv-label mb-2 block">Góc nhìn</label>
+                <select id="flt-level" class="s-input" onchange="runLK(true)">
+                  <option value="company">Toàn Công Ty</option>
+                  <option value="phong">Phòng KD</option>
+                  <option value="ban">Ban</option>
+                  <option value="nhom">Nhóm</option>
+                  <option value="dl">Đại Lý (TVV)</option>
+                </select>
+              </div>
+              <div class="hidden" id="flt-spec-wrap">
+                <label class="kv-label mb-2 block" id="flt-spec-label"
+                  >Chọn (Giữ Ctrl/Cmd để chọn nhiều)</label
+                >
+                <select
+                  id="flt-spec"
+                  class="s-input"
+                  multiple
+                  size="4"
+                  onchange="runLK()"
+                >
+                  <option value="">-- Tất cả --</option>
+                </select>
+              </div>
+              <div class="md:col-span-1">
+                <label class="kv-label mb-2 block">Tìm kiếm</label>
+                <div class="relative">
+                  <svg
+                    class="w-4 h-4 absolute left-4 top-4 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <input
+                    type="text"
+                    id="flt-search"
+                    class="s-input pl-11"
+                    placeholder="Tên phòng, ban, TVV..."
+                    oninput="runLK()"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
-<!-- Header + Tabs -->
-<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 fade-up">
-<div>
-<h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-2">Tổng Quan <span class="grad">Hoạt Động</span></h1>
-<p class="text-slate-500 font-medium text-[15px]">Báo cáo đa chiều & Phân tích tăng trưởng doanh thu bảo hiểm</p>
-</div>
-<div class="tab-wrap">
-<button class="s-tab on" id="tabLK" onclick="switchTab('lk')">📈 Doanh Thu Lũy Kế</button>
-<button class="s-tab" id="tabHT" onclick="switchTab('ht')">📊 Tháng Hiện Tại</button>
-</div>
-</div>
+          <!-- KPI Cards -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+          >
+            <div
+              class="s-card p-7 relative overflow-hidden fade-up fade-up-d1"
+              style="
+                background: linear-gradient(
+                  145deg,
+                  rgba(255, 255, 255, 0.9),
+                  rgba(240, 249, 255, 0.8)
+                );
+              "
+            >
+              <div
+                class="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-blue-100 blur-2xl"
+              ></div>
+              <div class="relative z-10">
+                <div class="kv-label">Doanh Thu AFYP</div>
+                <div
+                  class="kv mt-2 mb-1"
+                  style="color: var(--blue)"
+                  id="kpi-afyp"
+                >
+                  0.0
+                </div>
+                <div class="text-[11px] font-bold text-slate-500 mb-2">
+                  Mục tiêu:
+                  <span id="kpi-target" class="text-slate-700">0.0</span>
+                  <span class="text-[9px] font-semibold">Tr</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span
+                    class="text-xs text-slate-500 font-semibold"
+                    id="kpi-pct-text"
+                    >Đạt 0% KH</span
+                  >
+                  <div id="yoy-afyp" class="trend neutral">--</div>
+                </div>
+                <div class="kpi-progress-bg">
+                  <div
+                    class="kpi-progress-bar"
+                    id="kpi-progress"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="s-card p-7 fade-up fade-up-d2">
+              <div class="kv-label">Tổng Hợp Đồng</div>
+              <div class="kv mt-3 mb-2" id="kpi-hd">0</div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-semibold"
+                  >HĐ phát hành</span
+                >
+                <div id="yoy-hd" class="trend neutral">--</div>
+              </div>
+            </div>
+            <div class="s-card p-7 fade-up fade-up-d3">
+              <div class="kv-label">Độ Lớn / HĐ</div>
+              <div class="kv mt-3 mb-2" id="kpi-dolon">0.0</div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-semibold"
+                  >Triệu VNĐ / HĐ</span
+                >
+                <div id="yoy-dolon" class="trend neutral">--</div>
+              </div>
+            </div>
+            <div
+              class="s-card p-7 fade-up fade-up-d4"
+              style="
+                background: linear-gradient(135deg, #0f172a, #1e293b);
+                border: none;
+              "
+            >
+              <div class="kv-label" style="color: #94a3b8">Lượt Hoạt Động</div>
+              <div class="kv mt-3 mb-2 text-white" id="kpi-lhd">0</div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-400" id="kpi-lhdc"
+                  >0 Lượt Chuẩn</span
+                >
+                <div
+                  id="yoy-lhd"
+                  class="trend neutral"
+                  style="background: rgba(255, 255, 255, 0.1); color: #fff"
+                >
+                  --
+                </div>
+              </div>
+            </div>
+          </div>
 
-<!-- ==================== LŨY KẾ ==================== -->
-<div id="viewLK">
+          <!-- Charts -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="s-card p-7 lg:col-span-2 fade-up">
+              <div class="flex justify-between items-center mb-6">
+                <div>
+                  <h3 class="text-base font-bold text-slate-900">
+                    Biến Động AFYP Qua Các Tháng
+                  </h3>
+                  <p class="text-xs text-slate-400 mt-1">
+                    So sánh đường xu hướng cùng kỳ (YoY)
+                  </p>
+                </div>
+              </div>
+              <div class="h-[300px]"><canvas id="chart-main"></canvas></div>
+            </div>
+            <div class="s-card p-7 fade-up">
+              <h3 class="text-base font-bold text-slate-900 mb-6">
+                Năng Suất vs Lượt HĐ
+              </h3>
+              <div class="h-[300px]"><canvas id="chart-radar"></canvas></div>
+            </div>
+          </div>
 
-<!-- Filters -->
-<div class="s-card p-7 mb-8 fade-up fade-up-d1">
-<div class="grid grid-cols-1 md:grid-cols-5 gap-5">
-<div>
-<label class="kv-label mb-2 block">Kỳ báo cáo</label>
-<select id="flt-year" class="s-input" onchange="runLK()">
-<option value="2026">Năm 2026</option><option value="2025">Năm 2025</option><option value="2024">Năm 2024</option>
-</select>
-</div>
-<div>
-<label class="kv-label mb-2 block">Khung thời gian</label>
-<select id="flt-period" class="s-input" onchange="runLK()">
-<option value="all">Cả năm (Lũy kế)</option>
-<optgroup label="Theo Quý"><option value="q1">Quý 1</option><option value="q2">Quý 2</option><option value="q3">Quý 3</option><option value="q4">Quý 4</option></optgroup>
-<optgroup label="Theo Tháng"><option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option><option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option><option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option><option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option></optgroup>
-</select>
-</div>
-<div>
-<label class="kv-label mb-2 block">Góc nhìn</label>
-<select id="flt-level" class="s-input" onchange="runLK(true)">
-<option value="company">Toàn Công Ty</option><option value="phong">Phòng KD</option><option value="ban">Ban</option><option value="nhom">Nhóm</option><option value="dl">Đại Lý (TVV)</option>
-</select>
-</div>
-<div class="hidden" id="flt-spec-wrap">
-<label class="kv-label mb-2 block" id="flt-spec-label">Chọn (Giữ Ctrl/Cmd để chọn nhiều)</label>
-<select id="flt-spec" class="s-input" multiple size="4" onchange="runLK()"><option value="">-- Tất cả --</option></select>
-</div>
-<div class="md:col-span-1">
-<label class="kv-label mb-2 block">Tìm kiếm</label>
-<div class="relative">
-<svg class="w-4 h-4 absolute left-4 top-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-<input type="text" id="flt-search" class="s-input pl-11" placeholder="Tên phòng, ban, TVV..." oninput="runLK()">
-</div>
-</div>
-</div>
-</div>
+          <!-- Data Grid -->
+          <div class="s-card overflow-hidden mb-10 fade-up">
+            <div
+              class="p-7 border-b border-slate-100 flex justify-between items-center"
+            >
+              <div>
+                <h3 class="text-base font-bold text-slate-900" id="grid-title">
+                  Bảng Xếp Hạng
+                </h3>
+                <p class="text-xs text-slate-400 mt-1" id="grid-sub">
+                  Phân tích đa chiều
+                </p>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table>
+                <thead id="grid-head"></thead>
+                <tbody id="grid-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-<!-- KPI Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-<div class="s-card p-7 relative overflow-hidden fade-up fade-up-d1">
-<div class="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-blue-50 blur-2xl"></div>
-<div class="relative z-10">
-<div class="kv-label">Doanh Thu AFYP</div>
-<div class="kv mt-3 mb-2" style="color:var(--blue)" id="kpi-afyp">0.0</div>
-<div class="flex items-center justify-between">
-<span class="text-xs text-slate-500 font-semibold">Triệu VNĐ</span>
-<div id="yoy-afyp" class="trend neutral">--</div>
-</div>
-</div>
-</div>
-<div class="s-card p-7 fade-up fade-up-d2">
-<div class="kv-label">Tổng Hợp Đồng</div>
-<div class="kv mt-3 mb-2" id="kpi-hd">0</div>
-<div class="flex items-center justify-between">
-<span class="text-xs text-slate-500 font-semibold">HĐ phát hành</span>
-<div id="yoy-hd" class="trend neutral">--</div>
-</div>
-</div>
-<div class="s-card p-7 fade-up fade-up-d3">
-<div class="kv-label">Độ Lớn / HĐ</div>
-<div class="kv mt-3 mb-2" id="kpi-dolon">0.0</div>
-<div class="flex items-center justify-between">
-<span class="text-xs text-slate-500 font-semibold">Triệu VNĐ / HĐ</span>
-<div id="yoy-dolon" class="trend neutral">--</div>
-</div>
-</div>
-<div class="s-card p-7 fade-up fade-up-d4" style="background:linear-gradient(135deg,#0F172A,#1E293B);border:none">
-<div class="kv-label" style="color:#94A3B8">Lượt Hoạt Động</div>
-<div class="kv mt-3 mb-2 text-white" id="kpi-lhd">0</div>
-<div class="flex items-center justify-between">
-<span class="text-xs font-bold text-emerald-400" id="kpi-lhdc">0 Lượt Chuẩn</span>
-<div id="yoy-lhd" class="trend neutral" style="background:rgba(255,255,255,0.1);color:#fff">--</div>
-</div>
-</div>
-</div>
+        <!-- ==================== THÁNG HIỆN TẠI (BC02) ==================== -->
+        <div id="viewHT" class="hidden">
+          <!-- Hero with Family Image -->
+          <div
+            class="s-card overflow-hidden mb-8 fade-up"
+            style="
+              border: none;
+              background: linear-gradient(135deg, #f0f9ff, #e0f2fe, #f0f9ff);
+            "
+          >
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+              <div class="relative">
+                <img
+                  src="3d_family.png"
+                  alt="Gia đình Bảo Việt"
+                  class="w-full h-full object-cover"
+                  style="min-height: 280px; max-height: 380px"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/80 hidden lg:block"
+                ></div>
+              </div>
+              <div class="p-8 md:p-10 flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="pulse-dot"></div>
+                  <h2
+                    class="text-2xl font-black tracking-tight text-slate-900"
+                    id="ht-title"
+                  >
+                    Dữ Liệu Trực Tiếp
+                  </h2>
+                </div>
+                <p class="text-sm text-slate-500 font-medium mb-6">
+                  Dữ liệu ước tính BC02 — Cập nhật lần cuối:
+                  <span class="font-bold text-slate-700" id="ht-time">--</span>
+                </p>
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="hero-glass p-5">
+                    <div
+                      class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2"
+                    >
+                      Dự Kiến AFYP
+                    </div>
+                    <div
+                      class="text-3xl font-black"
+                      style="color: var(--blue)"
+                      id="ht-big-afyp"
+                    >
+                      0.0
+                    </div>
+                    <div
+                      class="text-xs text-slate-400 font-semibold mt-1"
+                      id="ht-pct-text"
+                    >
+                      Mục tiêu: -- | Đạt --%
+                    </div>
+                  </div>
+                  <div class="hero-glass p-5">
+                    <div
+                      class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2"
+                    >
+                      Tỷ Lệ Duyệt
+                    </div>
+                    <div
+                      class="text-3xl font-black text-emerald-600"
+                      id="ht-big-rate"
+                    >
+                      0%
+                    </div>
+                    <div class="text-xs text-slate-400 font-semibold mt-1">
+                      Có hiệu lực / Tổng
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-<!-- Charts -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-<div class="s-card p-7 lg:col-span-2 fade-up">
-<div class="flex justify-between items-center mb-6">
-<div>
-<h3 class="text-base font-bold text-slate-900">Biến Động AFYP Qua Các Tháng</h3>
-<p class="text-xs text-slate-400 mt-1">So sánh đường xu hướng cùng kỳ (YoY)</p>
-</div>
-</div>
-<div class="h-[300px]"><canvas id="chart-main"></canvas></div>
-</div>
-<div class="s-card p-7 fade-up">
-<h3 class="text-base font-bold text-slate-900 mb-6">Năng Suất vs Lượt HĐ</h3>
-<div class="h-[300px]"><canvas id="chart-radar"></canvas></div>
-</div>
-</div>
+          <!-- HT KPI Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-5 mb-8">
+            <div class="s-card p-6 fade-up fade-up-d1">
+              <div class="kv-label">Tổng Hợp Đồng</div>
+              <div class="kv-sm mt-3 mb-1" id="ht-k-hd">0</div>
+              <div class="text-[10px] text-slate-400 font-bold">
+                Đã nhập hệ thống
+              </div>
+            </div>
+            <div
+              class="s-card p-6 fade-up fade-up-d2"
+              style="border-top: 4px solid #10b981"
+            >
+              <div class="kv-label">Có Hiệu Lực</div>
+              <div class="kv-sm mt-3 mb-1 text-emerald-600" id="ht-k-hl">0</div>
+              <div class="text-[10px] text-slate-400 font-bold">
+                Sẵn sàng tính lương
+              </div>
+            </div>
+            <div
+              class="s-card p-6 fade-up fade-up-d3"
+              style="border-top: 4px solid #f59e0b"
+            >
+              <div class="kv-label">Chờ / Đang ĐGRR</div>
+              <div class="kv-sm mt-3 mb-1 text-amber-500" id="ht-k-dg">0</div>
+              <div class="text-[10px] text-slate-400 font-bold">
+                Cần theo dõi
+              </div>
+            </div>
+            <div class="s-card p-6 fade-up fade-up-d4">
+              <div class="kv-label">Lượt HĐ Chuẩn</div>
+              <div class="kv-sm mt-3 mb-1" id="ht-k-lhdc">0</div>
+              <div class="text-[10px] text-slate-400 font-bold">
+                Đạt IP ≥ 12 Tr
+              </div>
+            </div>
+            <div class="s-card p-6 fade-up">
+              <div class="kv-label">Độ Lớn B/Q</div>
+              <div class="kv-sm mt-3 mb-1" id="ht-k-dl">0.0</div>
+              <div class="text-[10px] text-slate-400 font-bold">
+                Triệu / Hợp đồng
+              </div>
+            </div>
+          </div>
 
-<!-- Data Grid -->
-<div class="s-card overflow-hidden mb-10 fade-up">
-<div class="p-7 border-b border-slate-100 flex justify-between items-center">
-<div>
-<h3 class="text-base font-bold text-slate-900" id="grid-title">Bảng Xếp Hạng</h3>
-<p class="text-xs text-slate-400 mt-1" id="grid-sub">Phân tích đa chiều</p>
-</div>
-</div>
-<div class="overflow-x-auto"><table><thead id="grid-head"></thead><tbody id="grid-body"></tbody></table></div>
-</div>
-</div>
+          <!-- HT Charts -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="s-card p-7 lg:col-span-2 fade-up">
+              <h3 class="text-base font-bold text-slate-900 mb-1">
+                AFYP Theo Phòng / Ban
+              </h3>
+              <p class="text-xs text-slate-400 mb-5">
+                Phân bổ doanh thu ước tính theo đơn vị
+              </p>
+              <div class="h-[280px]"><canvas id="chart-ht-bar"></canvas></div>
+            </div>
+            <div class="s-card p-7 fade-up">
+              <h3 class="text-base font-bold text-slate-900 mb-1">
+                Tình Trạng Hồ Sơ
+              </h3>
+              <p class="text-xs text-slate-400 mb-5">
+                Phân bổ theo trạng thái duyệt
+              </p>
+              <div class="h-[280px]"><canvas id="chart-ht-donut"></canvas></div>
+            </div>
+          </div>
 
-<!-- ==================== THÁNG HIỆN TẠI (BC02) ==================== -->
-<div id="viewHT" class="hidden">
+          <!-- HT Detail Table -->
+          <div class="s-card overflow-hidden mb-10 fade-up">
+            <div
+              class="p-7 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4"
+            >
+              <div class="flex items-center gap-4 flex-wrap w-full md:w-auto">
+                <select
+                  id="ht-flt-level"
+                  class="s-input w-auto min-w-[150px]"
+                  onchange="initHTSpec()"
+                >
+                  <option value="all">Toàn Công Ty</option>
+                  <option value="phong">Phòng KD</option>
+                  <option value="ban">Ban</option>
+                  <option value="nhom">Nhóm</option>
+                </select>
+                <div id="ht-flt-spec-wrap" class="hidden">
+                  <select
+                    id="ht-flt-spec"
+                    class="s-input w-auto min-w-[180px]"
+                    multiple
+                    size="1"
+                    style="height: 45px"
+                    onchange="runHT()"
+                  ></select>
+                  <div class="text-[9px] text-slate-400 mt-1">
+                    Giữ Ctrl/Cmd để chọn nhiều
+                  </div>
+                </div>
+              </div>
+              <div class="relative flex-1 md:flex-none md:min-w-[280px]">
+                <svg
+                  class="w-4 h-4 absolute left-4 top-3.5 text-slate-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  id="ht-search"
+                  class="s-input pl-11 w-full"
+                  placeholder="Tìm tên BMBH, TVV, Ban..."
+                  oninput="runHT()"
+                />
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="w-12">#</th>
+                    <th>Đại Lý (TVV)</th>
+                    <th>Phòng / Ban</th>
+                    <th>Bên Mua BH</th>
+                    <th>Tình Trạng</th>
+                    <th>Ngày Thu</th>
+                    <th class="text-right">AFYP (Tr)</th>
+                  </tr>
+                </thead>
+                <tbody id="ht-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<!-- Hero with Family Image -->
-<div class="s-card overflow-hidden mb-8 fade-up" style="border:none;background:linear-gradient(135deg,#F0F9FF,#E0F2FE,#F0F9FF)">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
-<div class="relative">
-<img src="3d_family.png" alt="Gia đình Bảo Việt" class="w-full h-full object-cover" style="min-height:280px;max-height:380px">
-<div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/80 hidden lg:block"></div>
-</div>
-<div class="p-8 md:p-10 flex flex-col justify-center">
-<div class="flex items-center gap-3 mb-4">
-<div class="pulse-dot"></div>
-<h2 class="text-2xl font-black tracking-tight text-slate-900" id="ht-title">Dữ Liệu Trực Tiếp</h2>
-</div>
-<p class="text-sm text-slate-500 font-medium mb-6">Dữ liệu ước tính BC02 — Cập nhật lần cuối: <span class="font-bold text-slate-700" id="ht-time">--</span></p>
-<div class="grid grid-cols-2 gap-6">
-<div class="hero-glass p-5">
-<div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Dự Kiến AFYP</div>
-<div class="text-3xl font-black" style="color:var(--blue)" id="ht-big-afyp">0.0</div>
-<div class="text-xs text-slate-400 font-semibold mt-1">Triệu VNĐ</div>
-</div>
-<div class="hero-glass p-5">
-<div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Tỷ Lệ Duyệt</div>
-<div class="text-3xl font-black text-emerald-600" id="ht-big-rate">0%</div>
-<div class="text-xs text-slate-400 font-semibold mt-1">Có hiệu lực / Tổng</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+      <!-- Footer -->
+      <footer class="border-t border-slate-100 bg-white/60 py-8 mt-4">
+        <div
+          class="max-w-[1440px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3"
+        >
+          <p class="text-xs text-slate-400 font-medium">
+            © 2026 Bảo Việt Nhân thọ Sài Gòn — Hệ thống nội bộ
+          </p>
+          <p class="text-xs text-slate-300 font-medium">
+            Powered by BV Analytics Engine v2.0
+          </p>
+        </div>
+      </footer>
+    </div>
 
-<!-- HT KPI Cards -->
-<div class="grid grid-cols-2 md:grid-cols-5 gap-5 mb-8">
-<div class="s-card p-6 fade-up fade-up-d1">
-<div class="kv-label">Tổng Hợp Đồng</div>
-<div class="kv-sm mt-3 mb-1" id="ht-k-hd">0</div>
-<div class="text-[10px] text-slate-400 font-bold">Đã nhập hệ thống</div>
-</div>
-<div class="s-card p-6 fade-up fade-up-d2" style="border-top:4px solid #10B981">
-<div class="kv-label">Có Hiệu Lực</div>
-<div class="kv-sm mt-3 mb-1 text-emerald-600" id="ht-k-hl">0</div>
-<div class="text-[10px] text-slate-400 font-bold">Sẵn sàng tính lương</div>
-</div>
-<div class="s-card p-6 fade-up fade-up-d3" style="border-top:4px solid #F59E0B">
-<div class="kv-label">Chờ / Đang ĐGRR</div>
-<div class="kv-sm mt-3 mb-1 text-amber-500" id="ht-k-dg">0</div>
-<div class="text-[10px] text-slate-400 font-bold">Cần theo dõi</div>
-</div>
-<div class="s-card p-6 fade-up fade-up-d4">
-<div class="kv-label">Lượt HĐ Chuẩn</div>
-<div class="kv-sm mt-3 mb-1" id="ht-k-lhdc">0</div>
-<div class="text-[10px] text-slate-400 font-bold">Đạt IP ≥ 12 Tr</div>
-</div>
-<div class="s-card p-6 fade-up">
-<div class="kv-label">Độ Lớn B/Q</div>
-<div class="kv-sm mt-3 mb-1" id="ht-k-dl">0.0</div>
-<div class="text-[10px] text-slate-400 font-bold">Triệu / Hợp đồng</div>
-</div>
-</div>
+    <script>
+      // ===== Core Data =====
+      let DATA = [],
+        FLT = {},
+        BC02 = [],
+        KH_DATA = [];
+      let charts = {};
 
-<!-- HT Charts -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-<div class="s-card p-7 lg:col-span-2 fade-up">
-<h3 class="text-base font-bold text-slate-900 mb-1">AFYP Theo Phòng / Ban</h3>
-<p class="text-xs text-slate-400 mb-5">Phân bổ doanh thu ước tính theo đơn vị</p>
-<div class="h-[280px]"><canvas id="chart-ht-bar"></canvas></div>
-</div>
-<div class="s-card p-7 fade-up">
-<h3 class="text-base font-bold text-slate-900 mb-1">Tình Trạng Hồ Sơ</h3>
-<p class="text-xs text-slate-400 mb-5">Phân bổ theo trạng thái duyệt</p>
-<div class="h-[280px]"><canvas id="chart-ht-donut"></canvas></div>
-</div>
-</div>
+      function doLogin() {
+        if (document.getElementById("pw").value === "103ty") {
+          document.getElementById("auth-overlay").style.opacity = 0;
+          setTimeout(() => {
+            document.getElementById("auth-overlay").style.display = "none";
+            document.getElementById("app-content").style.display = "block";
+            setTimeout(
+              () => (document.getElementById("app-content").style.opacity = 1),
+              50,
+            );
+            boot();
+          }, 400);
+        } else {
+          document.getElementById("auth-err").classList.remove("hidden");
+        }
+      }
 
-<!-- HT Detail Table -->
-<div class="s-card overflow-hidden mb-10 fade-up">
-<div class="p-7 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
-<div class="flex items-center gap-4 flex-wrap w-full md:w-auto">
-<select id="ht-flt-level" class="s-input w-auto min-w-[150px]" onchange="initHTSpec()">
-<option value="all">Toàn Công Ty</option><option value="phong">Phòng KD</option><option value="ban">Ban</option><option value="nhom">Nhóm</option>
-</select>
-<div id="ht-flt-spec-wrap" class="hidden">
-<select id="ht-flt-spec" class="s-input w-auto min-w-[180px]" multiple size="1" style="height:45px" onchange="runHT()"></select>
-<div class="text-[9px] text-slate-400 mt-1">Giữ Ctrl/Cmd để chọn nhiều</div>
-</div>
-</div>
-<div class="relative flex-1 md:flex-none md:min-w-[280px]">
-<svg class="w-4 h-4 absolute left-4 top-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-<input type="text" id="ht-search" class="s-input pl-11 w-full" placeholder="Tìm tên BMBH, TVV, Ban..." oninput="runHT()">
-</div>
-</div>
-<div class="overflow-x-auto">
-<table>
-<thead><tr><th class="w-12">#</th><th>Đại Lý (TVV)</th><th>Phòng / Ban</th><th>Bên Mua BH</th><th>Tình Trạng</th><th>Ngày Thu</th><th class="text-right">AFYP (Tr)</th></tr></thead>
-<tbody id="ht-tbody"></tbody>
-</table>
-</div>
-</div>
-</div>
+      function switchTab(t) {
+        document.getElementById("tabLK").className =
+          t === "lk" ? "s-tab on" : "s-tab";
+        document.getElementById("tabHT").className =
+          t === "ht" ? "s-tab on" : "s-tab";
+        document.getElementById("viewLK").style.display =
+          t === "lk" ? "block" : "none";
+        document.getElementById("viewHT").style.display =
+          t === "ht" ? "block" : "none";
+        if (t === "ht") runHT();
+      }
 
-</div>
+      async function boot() {
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = "#94A3B8";
+        try {
+          let [r1, r2, r3] = await Promise.all([
+            fetch("data/all_contracts.json"),
+            fetch("data/bc02_current.json"),
+            fetch("data/kh_2026.json"),
+          ]);
+          let d1 = await r1.json();
+          DATA = d1.records;
+          FLT = d1.filters;
+          let d2 = await r2.json();
+          BC02 = d2;
+          let d3 = await r3.json();
+          KH_DATA = d3;
+          initFilters();
+          runLK();
+        } catch (e) {
+          console.error(e);
+          alert("Lỗi tải dữ liệu");
+        }
+      }
 
-<!-- Footer -->
-<footer class="border-t border-slate-100 bg-white/60 py-8 mt-4">
-<div class="max-w-[1440px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
-<p class="text-xs text-slate-400 font-medium">© 2026 Bảo Việt Nhân thọ Sài Gòn — Hệ thống nội bộ</p>
-<p class="text-xs text-slate-300 font-medium">Powered by BV Analytics Engine v2.0</p>
-</div>
-</footer>
-</div>
+      // Helper for multi-select
+      function getMultiValues(selectId) {
+        let sel = document.getElementById(selectId);
+        if (!sel) return [];
+        let opts = sel.selectedOptions;
+        let res = [];
+        for (let i = 0; i < opts.length; i++) {
+          if (opts[i].value) res.push(opts[i].value);
+        }
+        return res;
+      }
 
-<script>
-// ===== Core Data =====
-let DATA=[], FLT={}, BC02=[];
-let charts={};
+      // Plan calculation helper
+      function calcKHTarget(period, selected_specs, level) {
+        if (!KH_DATA || KH_DATA.length === 0) return 0;
 
-function doLogin(){if(document.getElementById('pw').value==='103ty'){document.getElementById('auth-overlay').style.opacity=0;setTimeout(()=>{document.getElementById('auth-overlay').style.display='none';document.getElementById('app-content').style.display='block';setTimeout(()=>document.getElementById('app-content').style.opacity=1,50);boot()},400)}else{document.getElementById('auth-err').classList.remove('hidden')}}
+        // Filter rows based on level and selected specs
+        let rows = KH_DATA;
 
-function switchTab(t){
-document.getElementById('tabLK').className=t==='lk'?'s-tab on':'s-tab';
-document.getElementById('tabHT').className=t==='ht'?'s-tab on':'s-tab';
-document.getElementById('viewLK').style.display=t==='lk'?'block':'none';
-document.getElementById('viewHT').style.display=t==='ht'?'block':'none';
-if(t==='ht') runHT();
-}
+        // In plan data, check company total first
+        if (
+          level === "company" ||
+          !selected_specs ||
+          selected_specs.length === 0
+        ) {
+          rows = KH_DATA.filter(
+            (x) =>
+              x.p === "Công ty" || x.p === "Ca'ng ty" || x.total === 5000.0,
+          ); // Hard fallback for encoding issues
+        } else {
+          if (level === "phong")
+            rows = KH_DATA.filter((x) => selected_specs.includes(x.p));
+          else if (level === "ban")
+            rows = KH_DATA.filter((x) => selected_specs.includes(x.b));
+          else if (level === "nhom")
+            rows = KH_DATA.filter((x) => selected_specs.includes(x.n));
+          else if (level === "dl") return 0; // KH_DATA is usually only down to Nhom
+        }
 
-async function boot(){
-Chart.defaults.font.family="'Inter', sans-serif";
-Chart.defaults.color="#94A3B8";
-try{
-let [r1,r2]=await Promise.all([fetch('data/all_contracts.json'),fetch('data/bc02_current.json')]);
-let d1=await r1.json(); DATA=d1.records; FLT=d1.filters;
-let d2=await r2.json(); BC02=d2;
-initFilters(); runLK();
-}catch(e){console.error(e);alert('Lỗi tải dữ liệu')}
-}
-
-// Helper for multi-select
-function getMultiValues(selectId) {
-    let sel = document.getElementById(selectId);
-    if(!sel) return [];
-    let opts = sel.selectedOptions;
-    let res = [];
-    for(let i=0; i<opts.length; i++){
-        if(opts[i].value) res.push(opts[i].value);
-    }
-    return res;
-}
-
-// ===== LŨY KẾ =====
-function initFilters(){
-let yel=document.getElementById('flt-year');
-yel.innerHTML=FLT.years.sort((a,b)=>b-a).map(y=>`<option value="${y}">Năm ${y}</option>`).join('');
-}
-
-function calcKPI(recs){
-let afyp=0; let ips={};
-recs.forEach(r=>{
-    afyp+=r.v;
-    let k=`${r.d}_${r.m||99}`;
-    ips[k]=(ips[k]||0)+(r.i||r.v);
-});
-let lhd=Object.keys(ips).length;
-let lhdc=Object.values(ips).filter(v=>v>=12).length;
-let hd=recs.length;
-return {afyp, hd, lhd, lhdc, dolon: hd?afyp/hd:0, ns: lhd?hd/lhd:0};
-}
-
-function getYoY(currKPI, prevRecs){
-if(!prevRecs||prevRecs.length===0) return {afyp:0,hd:0,dolon:0,lhd:0};
-let prevKPI=calcKPI(prevRecs);
-let calc=(c,p)=>p>0?((c-p)/p)*100:0;
-return {afyp:calc(currKPI.afyp,prevKPI.afyp),hd:calc(currKPI.hd,prevKPI.hd),dolon:calc(currKPI.dolon,prevKPI.dolon),lhd:calc(currKPI.lhd,prevKPI.lhd)};
-}
-
-function renderTrend(elId, val){
-let el=document.getElementById(elId);
-if(val===0||Math.abs(val)<0.1){el.className='trend neutral';el.innerHTML='--'}
-else if(val>0){el.className='trend up';el.innerHTML=`+${val.toFixed(1)}% ↑`}
-else{el.className='trend down';el.innerHTML=`${val.toFixed(1)}% ↓`}
-}
-
-function runLK(resetSpec=false){
-let y=parseInt(document.getElementById('flt-year').value);
-let p=document.getElementById('flt-period').value;
-let l=document.getElementById('flt-level').value;
-let s=document.getElementById('flt-search').value.toLowerCase();
-let spWrap=document.getElementById('flt-spec-wrap');
-let spSel=document.getElementById('flt-spec');
-
-if(resetSpec){
-    if(l==='company'||l==='dl'){spWrap.classList.add('hidden');spSel.innerHTML='<option value="">-- Tất cả --</option>'}
-    else{
-        spWrap.classList.remove('hidden');
-        let arr=l==='phong'?FLT.phongs:l==='ban'?FLT.bans:FLT.nhoms;
-        document.getElementById('flt-spec-label').innerText=`Chọn ${l}`;
-        spSel.innerHTML='<option value="">-- Tất cả --</option>'+arr.map(x=>`<option value="${x}">${x}</option>`).join('');
-    }
-}
-let spec = getMultiValues('flt-spec');
-
-let filterData=(yr)=>{
-    let r=DATA.filter(x=>x.y===yr);
-    if(p==='q1')r=r.filter(x=>x.m>=1&&x.m<=3);else if(p==='q2')r=r.filter(x=>x.m>=4&&x.m<=6);else if(p==='q3')r=r.filter(x=>x.m>=7&&x.m<=9);else if(p==='q4')r=r.filter(x=>x.m>=10&&x.m<=12);else if(p!=='all')r=r.filter(x=>x.m===parseInt(p));
-    if(s)r=r.filter(x=>(x.p||'').toLowerCase().includes(s)||(x.b||'').toLowerCase().includes(s)||(x.n||'').toLowerCase().includes(s)||(x.d||'').toLowerCase().includes(s));
-    if(spec.length > 0){
-        if(l==='phong') r=r.filter(x=>spec.includes(x.p));
-        else if(l==='ban') r=r.filter(x=>spec.includes(x.b));
-        else if(l==='nhom') r=r.filter(x=>spec.includes(x.n));
-    }
-    return r;
-};
-
-let currRecs=filterData(y);
-let prevRecs=filterData(y-1);
-let currKPI=calcKPI(currRecs);
-let yoy=getYoY(currKPI, prevRecs);
-
-document.getElementById('kpi-afyp').innerText=currKPI.afyp.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
-document.getElementById('kpi-hd').innerText=currKPI.hd.toLocaleString('vi-VN');
-document.getElementById('kpi-dolon').innerText=currKPI.dolon.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
-document.getElementById('kpi-lhd').innerText=currKPI.lhd.toLocaleString('vi-VN');
-document.getElementById('kpi-lhdc').innerText=`${currKPI.lhdc.toLocaleString('vi-VN')} Lượt Chuẩn (IP≥12)`;
-
-renderTrend('yoy-afyp', yoy.afyp);
-renderTrend('yoy-hd', yoy.hd);
-renderTrend('yoy-dolon', yoy.dolon);
-renderTrend('yoy-lhd', yoy.lhd);
-
-drawMainChart(currRecs, prevRecs, y);
-drawRadarChart(currRecs);
-
-// Grid
-let g={};
-if(l==='company') g={'Toàn Công Ty':currRecs};
-else currRecs.forEach(r=>{let k=(l==='phong'?r.p:l==='ban'?r.b:l==='nhom'?r.n:r.d)||'(Khác)';(g[k]=g[k]||[]).push(r)});
-
-let rows=Object.entries(g).map(([n,items])=>{let x=calcKPI(items);return{n,...x}}).sort((a,b)=>b.afyp-a.afyp);
-
-document.getElementById('grid-sub').innerText=`${rows.length} kết quả tìm thấy`;
-document.getElementById('grid-head').innerHTML=`<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">AFYP (Tr)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
-document.getElementById('grid-body').innerHTML=rows.slice(0,100).map((r,i)=>`<tr>
-    <td class="text-slate-400 font-bold">${i+1}</td>
-    <td class="font-bold text-slate-800">${r.n}</td>
-    <td class="text-right font-black ${i<3?'text-[#007AC2]':''}">${r.afyp.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
-    <td class="text-right font-semibold">${r.hd}</td>
-    <td class="text-right">${r.dolon.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
-    <td class="text-right"><b>${r.lhd}</b> <span class="text-[10px] text-emerald-600 block">${r.lhdc} chuẩn</span></td>
-    <td class="text-right font-semibold">${r.ns.toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
-</tr>`).join('');
-}
-
-function drawMainChart(curr, prev, year){
-let getM=(arr)=>{let d={};arr.forEach(r=>{if(r.m)d[r.m]=(d[r.m]||0)+r.v});return Array.from({length:12},(_,i)=>d[i+1]||0)};
-let cD=getM(curr), pD=getM(prev);
-let ctx=document.getElementById('chart-main').getContext('2d');
-if(charts.main) charts.main.destroy();
-let grad=ctx.createLinearGradient(0,0,0,400);
-grad.addColorStop(0,'rgba(0,122,194,0.15)');grad.addColorStop(1,'rgba(0,122,194,0)');
-charts.main=new Chart(ctx,{
-    type:'line',
-    data:{labels:['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],datasets:[
-        {label:`Năm ${year}`,data:cD,borderColor:'#007AC2',backgroundColor:grad,fill:true,tension:0.4,borderWidth:3,pointRadius:5,pointBackgroundColor:'#FFF',pointBorderColor:'#007AC2',pointBorderWidth:2.5,pointHoverRadius:7},
-        {label:`Năm ${year-1}`,data:pD,borderColor:'#CBD5E1',borderDash:[6,4],fill:false,tension:0.4,borderWidth:2,pointRadius:0}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'end',labels:{usePointStyle:true,boxWidth:8,font:{weight:'600'}}}},scales:{x:{grid:{display:false},ticks:{font:{weight:'600'}}},y:{grid:{color:'#F1F5F9',drawBorder:false},beginAtZero:true}}}
-});
-}
-
-function drawRadarChart(recs){
-let g={};recs.forEach(r=>{let k=r.p||'Khác';(g[k]=g[k]||[]).push(r)});
-let d=Object.entries(g).map(([n,items])=>{let k=calcKPI(items);return{n,a:k.afyp,ns:k.ns}}).sort((a,b)=>b.a-a.a).slice(0,6);
-if(charts.radar) charts.radar.destroy();
-charts.radar=new Chart(document.getElementById('chart-radar'),{
-    type:'bar',
-    data:{labels:d.map(x=>x.n.length>18?x.n.slice(0,17)+'…':x.n),datasets:[
-        {type:'bar',label:'AFYP (Tr)',data:d.map(x=>x.a),backgroundColor:'rgba(0,122,194,0.12)',borderColor:'#007AC2',borderWidth:2,borderRadius:8,yAxisID:'y'},
-        {type:'line',label:'Năng Suất',data:d.map(x=>x.ns),borderColor:'#D4B271',borderWidth:2.5,pointBackgroundColor:'#D4B271',pointRadius:4,tension:0.3,yAxisID:'y1'}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{weight:'600'}}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{type:'linear',position:'left',display:false},y1:{type:'linear',position:'right',display:false}}}
-});
-}
-
-// ===== THÁNG HIỆN TẠI =====
-function initHTSpec() {
-    let l = document.getElementById('ht-flt-level').value;
-    let spWrap = document.getElementById('ht-flt-spec-wrap');
-    let spSel = document.getElementById('ht-flt-spec');
-    
-    if(l === 'all') {
-        spWrap.classList.add('hidden');
-        spSel.innerHTML = '';
-    } else {
-        spWrap.classList.remove('hidden');
-        let vals = new Set();
-        BC02.records.forEach(r => {
-            let v = l==='phong' ? r.p : l==='ban' ? r.b : r.n;
-            if(v) vals.add(v);
+        let target = 0;
+        rows.forEach((r) => {
+          if (period === "all") {
+            target += r.total || 0;
+          } else if (period.startsWith("q")) {
+            let q = parseInt(period[1]);
+            let start = (q - 1) * 3 + 1;
+            for (let i = start; i <= start + 2; i++) target += r["m" + i] || 0;
+          } else {
+            let m = parseInt(period);
+            if (m >= 1 && m <= 12) target += r["m" + m] || 0;
+          }
         });
-        spSel.innerHTML = [...vals].sort().map(x => `<option value="${x}">${x}</option>`).join('');
-    }
-    runHT();
-}
+        return target;
+      }
 
-function runHT(){
-if(!BC02.records)return;
-document.getElementById('ht-title').innerText=BC02.month_label||'Theo Dõi';
-document.getElementById('ht-time').innerText=BC02.updated||'';
+      // ===== LŨY KẾ =====
+      function initFilters() {
+        let yel = document.getElementById("flt-year");
+        yel.innerHTML = FLT.years
+          .sort((a, b) => b - a)
+          .map((y) => `<option value="${y}">Năm ${y}</option>`)
+          .join("");
+      }
 
-let q=document.getElementById('ht-search').value.toLowerCase();
-let l=document.getElementById('ht-flt-level').value;
-let spec=getMultiValues('ht-flt-spec');
+      function calcKPI(recs) {
+        let afyp = 0;
+        let ips = {};
+        recs.forEach((r) => {
+          afyp += r.v;
+          let k = `${r.d}_${r.m || 99}`;
+          ips[k] = (ips[k] || 0) + (r.i || r.v);
+        });
+        let lhd = Object.keys(ips).length;
+        let lhdc = Object.values(ips).filter((v) => v >= 12).length;
+        let hd = recs.length;
+        return {
+          afyp,
+          hd,
+          lhd,
+          lhdc,
+          dolon: hd ? afyp / hd : 0,
+          ns: lhd ? hd / lhd : 0,
+        };
+      }
 
-let r=BC02.records.filter(x=>!q||(x.d||'').toLowerCase().includes(q)||(x.b||'').toLowerCase().includes(q)||(x.bmbh||'').toLowerCase().includes(q)||(x.p||'').toLowerCase().includes(q)||(x.n||'').toLowerCase().includes(q));
+      function getYoY(currKPI, prevRecs) {
+        if (!prevRecs || prevRecs.length === 0)
+          return { afyp: 0, hd: 0, dolon: 0, lhd: 0 };
+        let prevKPI = calcKPI(prevRecs);
+        let calc = (c, p) => (p > 0 ? ((c - p) / p) * 100 : 0);
+        return {
+          afyp: calc(currKPI.afyp, prevKPI.afyp),
+          hd: calc(currKPI.hd, prevKPI.hd),
+          dolon: calc(currKPI.dolon, prevKPI.dolon),
+          lhd: calc(currKPI.lhd, prevKPI.lhd),
+        };
+      }
 
-if(spec.length > 0) {
-    if(l==='phong') r=r.filter(x=>spec.includes(x.p));
-    else if(l==='ban') r=r.filter(x=>spec.includes(x.b));
-    else if(l==='nhom') r=r.filter(x=>spec.includes(x.n));
-}
+      function renderTrend(elId, val) {
+        let el = document.getElementById(elId);
+        if (val === 0 || Math.abs(val) < 0.1) {
+          el.className = "trend neutral";
+          el.innerHTML = "--";
+        } else if (val > 0) {
+          el.className = "trend up";
+          el.innerHTML = `+${val.toFixed(1)}% ↑`;
+        } else {
+          el.className = "trend down";
+          el.innerHTML = `${val.toFixed(1)}% ↓`;
+        }
+      }
 
-let k=calcKPI(r);
-document.getElementById('ht-big-afyp').innerText=k.afyp.toLocaleString('vi-VN',{minimumFractionDigits:2});
-let hl=r.filter(x=>(x.tt||'').toLowerCase().includes('hiệu lực')).length;
-let dg=r.filter(x=>{let t=(x.tt||'').toLowerCase();return t.includes('chờ')||t.includes('đang')}).length;
-document.getElementById('ht-big-rate').innerText=r.length?Math.round((hl/r.length)*100)+'%':'0%';
+      function runLK(resetSpec = false) {
+        let y = parseInt(document.getElementById("flt-year").value);
+        let p = document.getElementById("flt-period").value;
+        let l = document.getElementById("flt-level").value;
+        let s = document.getElementById("flt-search").value.toLowerCase();
+        let spWrap = document.getElementById("flt-spec-wrap");
+        let spSel = document.getElementById("flt-spec");
 
-document.getElementById('ht-k-hd').innerText=k.hd;
-document.getElementById('ht-k-hl').innerText=hl;
-document.getElementById('ht-k-dg').innerText=dg;
-document.getElementById('ht-k-lhdc').innerText=k.lhdc;
-document.getElementById('ht-k-dl').innerText=k.dolon.toLocaleString('vi-VN',{minimumFractionDigits:1});
-// Note: Count label was removed from header, so no need to update it here.
+        if (resetSpec) {
+          if (l === "company" || l === "dl") {
+            spWrap.classList.add("hidden");
+            spSel.innerHTML = '<option value="">-- Tất cả --</option>';
+          } else {
+            spWrap.classList.remove("hidden");
+            let arr =
+              l === "phong" ? FLT.phongs : l === "ban" ? FLT.bans : FLT.nhoms;
+            document.getElementById("flt-spec-label").innerText = `Chọn ${l}`;
+            spSel.innerHTML =
+              '<option value="">-- Tất cả --</option>' +
+              arr.map((x) => `<option value="${x}">${x}</option>`).join("");
+          }
+        }
+        let spec = getMultiValues("flt-spec");
 
-// Status badge helper
-function stBadge(tt){
-let t=(tt||'').toLowerCase();
-if(t.includes('hiệu lực'))return`<span class="st st-green">Có hiệu lực</span>`;
-if(t.includes('chờ'))return`<span class="st st-yellow">Chờ ĐGRR</span>`;
-if(t.includes('đang'))return`<span class="st st-orange">Đang ĐGRR</span>`;
-if(t.includes('cnbh'))return`<span class="st st-blue">${tt}</span>`;
-return`<span class="st" style="background:#F1F5F9;color:#64748B">${tt||'—'}</span>`;
-}
+        let filterData = (yr) => {
+          let r = DATA.filter((x) => x.y === yr);
+          if (p === "q1") r = r.filter((x) => x.m >= 1 && x.m <= 3);
+          else if (p === "q2") r = r.filter((x) => x.m >= 4 && x.m <= 6);
+          else if (p === "q3") r = r.filter((x) => x.m >= 7 && x.m <= 9);
+          else if (p === "q4") r = r.filter((x) => x.m >= 10 && x.m <= 12);
+          else if (p !== "all") r = r.filter((x) => x.m === parseInt(p));
+          if (s)
+            r = r.filter(
+              (x) =>
+                (x.p || "").toLowerCase().includes(s) ||
+                (x.b || "").toLowerCase().includes(s) ||
+                (x.n || "").toLowerCase().includes(s) ||
+                (x.d || "").toLowerCase().includes(s),
+            );
+          if (spec.length > 0) {
+            if (l === "phong") r = r.filter((x) => spec.includes(x.p));
+            else if (l === "ban") r = r.filter((x) => spec.includes(x.b));
+            else if (l === "nhom") r = r.filter((x) => spec.includes(x.n));
+          }
+          return r;
+        };
 
-document.getElementById('ht-tbody').innerHTML=r.sort((a,b)=>b.v-a.v).map((x,i)=>`<tr>
-    <td class="text-slate-400 font-bold">${i+1}</td>
-    <td class="font-bold text-slate-800">${x.d||'—'}</td>
-    <td class="font-medium text-slate-600">${x.b||'—'} <span class="block text-[10px] text-slate-400">${x.p||''}</span></td>
-    <td class="text-xs text-slate-600">${x.bmbh||'—'}</td>
+        let currRecs = filterData(y);
+        let prevRecs = filterData(y - 1);
+        let currKPI = calcKPI(currRecs);
+        let yoy = getYoY(currKPI, prevRecs);
+        let targetKPI = calcKHTarget(p, spec, l);
+
+        document.getElementById("kpi-afyp").innerText =
+          currKPI.afyp.toLocaleString("vi-VN", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          });
+        document.getElementById("kpi-target").innerText =
+          targetKPI.toLocaleString("vi-VN", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          });
+        document.getElementById("kpi-hd").innerText =
+          currKPI.hd.toLocaleString("vi-VN");
+        document.getElementById("kpi-dolon").innerText =
+          currKPI.dolon.toLocaleString("vi-VN", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          });
+        document.getElementById("kpi-lhd").innerText =
+          currKPI.lhd.toLocaleString("vi-VN");
+        document.getElementById("kpi-lhdc").innerText =
+          `${currKPI.lhdc.toLocaleString("vi-VN")} Lượt Chuẩn (IP≥12)`;
+
+        let pct = targetKPI > 0 ? (currKPI.afyp / targetKPI) * 100 : 0;
+        let pctEl = document.getElementById("kpi-pct-text");
+        pctEl.innerText = `Đạt ${pct.toFixed(1)}% KH`;
+        if (pct >= 100) pctEl.className = "text-xs font-bold text-emerald-600";
+        else pctEl.className = "text-xs font-bold text-slate-500";
+
+        let progBar = document.getElementById("kpi-progress");
+        progBar.style.width = Math.min(pct, 100) + "%";
+        if (pct >= 100) progBar.classList.add("over");
+        else progBar.classList.remove("over");
+
+        renderTrend("yoy-afyp", yoy.afyp);
+        renderTrend("yoy-hd", yoy.hd);
+        renderTrend("yoy-dolon", yoy.dolon);
+        renderTrend("yoy-lhd", yoy.lhd);
+
+        drawMainChart(currRecs, prevRecs, y);
+        drawRadarChart(currRecs);
+
+        // Grid
+        let g = {};
+        if (l === "company") g = { "Toàn Công Ty": currRecs };
+        else
+          currRecs.forEach((r) => {
+            let k =
+              (l === "phong"
+                ? r.p
+                : l === "ban"
+                  ? r.b
+                  : l === "nhom"
+                    ? r.n
+                    : r.d) || "(Khác)";
+            (g[k] = g[k] || []).push(r);
+          });
+
+        let rows = Object.entries(g)
+          .map(([n, items]) => {
+            let x = calcKPI(items);
+            return { n, ...x };
+          })
+          .sort((a, b) => b.afyp - a.afyp);
+
+        document.getElementById("grid-sub").innerText =
+          `${rows.length} kết quả tìm thấy`;
+        document.getElementById("grid-head").innerHTML =
+          `<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">AFYP (Tr)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
+        document.getElementById("grid-body").innerHTML = rows
+          .slice(0, 100)
+          .map(
+            (r, i) => `<tr>
+    <td class="text-slate-400 font-bold">${i + 1}</td>
+    <td class="font-bold text-slate-800">${r.n}</td>
+    <td class="text-right font-black ${i < 3 ? "text-[#007AC2]" : ""}">${r.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
+    <td class="text-right font-semibold">${r.hd}</td>
+    <td class="text-right">${r.dolon.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
+    <td class="text-right"><b>${r.lhd}</b> <span class="text-[10px] text-emerald-600 block">${r.lhdc} chuẩn</span></td>
+    <td class="text-right font-semibold">${r.ns.toLocaleString("vi-VN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+</tr>`,
+          )
+          .join("");
+      }
+
+      function drawMainChart(curr, prev, year) {
+        let getM = (arr) => {
+          let d = {};
+          arr.forEach((r) => {
+            if (r.m) d[r.m] = (d[r.m] || 0) + r.v;
+          });
+          return Array.from({ length: 12 }, (_, i) => d[i + 1] || 0);
+        };
+        let cD = getM(curr),
+          pD = getM(prev);
+        let ctx = document.getElementById("chart-main").getContext("2d");
+        if (charts.main) charts.main.destroy();
+        let grad = ctx.createLinearGradient(0, 0, 0, 400);
+        grad.addColorStop(0, "rgba(0,122,194,0.15)");
+        grad.addColorStop(1, "rgba(0,122,194,0)");
+        charts.main = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              "T1",
+              "T2",
+              "T3",
+              "T4",
+              "T5",
+              "T6",
+              "T7",
+              "T8",
+              "T9",
+              "T10",
+              "T11",
+              "T12",
+            ],
+            datasets: [
+              {
+                label: `Năm ${year}`,
+                data: cD,
+                borderColor: "#007AC2",
+                backgroundColor: grad,
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: "#FFF",
+                pointBorderColor: "#007AC2",
+                pointBorderWidth: 2.5,
+                pointHoverRadius: 7,
+              },
+              {
+                label: `Năm ${year - 1}`,
+                data: pD,
+                borderColor: "#CBD5E1",
+                borderDash: [6, 4],
+                fill: false,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: {
+                position: "top",
+                align: "end",
+                labels: {
+                  usePointStyle: true,
+                  boxWidth: 8,
+                  font: { weight: "600" },
+                },
+              },
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { font: { weight: "600" } },
+              },
+              y: {
+                grid: { color: "#F1F5F9", drawBorder: false },
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+
+      function drawRadarChart(recs) {
+        let g = {};
+        recs.forEach((r) => {
+          let k = r.p || "Khác";
+          (g[k] = g[k] || []).push(r);
+        });
+        let d = Object.entries(g)
+          .map(([n, items]) => {
+            let k = calcKPI(items);
+            return { n, a: k.afyp, ns: k.ns };
+          })
+          .sort((a, b) => b.a - a.a)
+          .slice(0, 6);
+        if (charts.radar) charts.radar.destroy();
+        charts.radar = new Chart(document.getElementById("chart-radar"), {
+          type: "bar",
+          data: {
+            labels: d.map((x) =>
+              x.n.length > 18 ? x.n.slice(0, 17) + "…" : x.n,
+            ),
+            datasets: [
+              {
+                type: "bar",
+                label: "AFYP (Tr)",
+                data: d.map((x) => x.a),
+                backgroundColor: "rgba(0,122,194,0.12)",
+                borderColor: "#007AC2",
+                borderWidth: 2,
+                borderRadius: 8,
+                yAxisID: "y",
+              },
+              {
+                type: "line",
+                label: "Năng Suất",
+                data: d.map((x) => x.ns),
+                borderColor: "#D4B271",
+                borderWidth: 2.5,
+                pointBackgroundColor: "#D4B271",
+                pointRadius: 4,
+                tension: 0.3,
+                yAxisID: "y1",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: { usePointStyle: true, font: { weight: "600" } },
+              },
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+              y: { type: "linear", position: "left", display: false },
+              y1: { type: "linear", position: "right", display: false },
+            },
+          },
+        });
+      }
+
+      // ===== THÁNG HIỆN TẠI =====
+      function initHTSpec() {
+        let l = document.getElementById("ht-flt-level").value;
+        let spWrap = document.getElementById("ht-flt-spec-wrap");
+        let spSel = document.getElementById("ht-flt-spec");
+
+        if (l === "all") {
+          spWrap.classList.add("hidden");
+          spSel.innerHTML = "";
+        } else {
+          spWrap.classList.remove("hidden");
+          let vals = new Set();
+          BC02.records.forEach((r) => {
+            let v = l === "phong" ? r.p : l === "ban" ? r.b : r.n;
+            if (v) vals.add(v);
+          });
+          spSel.innerHTML = [...vals]
+            .sort()
+            .map((x) => `<option value="${x}">${x}</option>`)
+            .join("");
+        }
+        runHT();
+      }
+
+      function runHT() {
+        if (!BC02.records) return;
+        document.getElementById("ht-title").innerText =
+          BC02.month_label || "Theo Dõi";
+        document.getElementById("ht-time").innerText = BC02.updated || "";
+
+        let q = document.getElementById("ht-search").value.toLowerCase();
+        let l = document.getElementById("ht-flt-level").value;
+        let spec = getMultiValues("ht-flt-spec");
+
+        let r = BC02.records.filter(
+          (x) =>
+            !q ||
+            (x.d || "").toLowerCase().includes(q) ||
+            (x.b || "").toLowerCase().includes(q) ||
+            (x.bmbh || "").toLowerCase().includes(q) ||
+            (x.p || "").toLowerCase().includes(q) ||
+            (x.n || "").toLowerCase().includes(q),
+        );
+
+        if (spec.length > 0) {
+          if (l === "phong") r = r.filter((x) => spec.includes(x.p));
+          else if (l === "ban") r = r.filter((x) => spec.includes(x.b));
+          else if (l === "nhom") r = r.filter((x) => spec.includes(x.n));
+        }
+
+        let k = calcKPI(r);
+        let targetHT = calcKHTarget("6", spec, l); // BC02 is always Month 6 currently
+        document.getElementById("ht-big-afyp").innerText =
+          k.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 2 });
+        let pctHT = targetHT > 0 ? (k.afyp / targetHT) * 100 : 0;
+        document.getElementById("ht-pct-text").innerHTML =
+          `Mục tiêu: <span class="text-slate-800">${targetHT.toLocaleString("vi-VN")}</span> Tr | Đạt <span class="${pctHT >= 100 ? "text-emerald-600" : "text-blue-600"}">${pctHT.toFixed(1)}%</span>`;
+
+        let hl = r.filter((x) =>
+          (x.tt || "").toLowerCase().includes("hiệu lực"),
+        ).length;
+        let dg = r.filter((x) => {
+          let t = (x.tt || "").toLowerCase();
+          return t.includes("chờ") || t.includes("đang");
+        }).length;
+        document.getElementById("ht-big-rate").innerText = r.length
+          ? Math.round((hl / r.length) * 100) + "%"
+          : "0%";
+
+        document.getElementById("ht-k-hd").innerText = k.hd;
+        document.getElementById("ht-k-hl").innerText = hl;
+        document.getElementById("ht-k-dg").innerText = dg;
+        document.getElementById("ht-k-lhdc").innerText = k.lhdc;
+        document.getElementById("ht-k-dl").innerText = k.dolon.toLocaleString(
+          "vi-VN",
+          { minimumFractionDigits: 1 },
+        );
+        // Note: Count label was removed from header, so no need to update it here.
+
+        // Status badge helper
+        function stBadge(tt) {
+          let t = (tt || "").toLowerCase();
+          if (t.includes("hiệu lực"))
+            return `<span class="st st-green">Có hiệu lực</span>`;
+          if (t.includes("chờ"))
+            return `<span class="st st-yellow">Chờ ĐGRR</span>`;
+          if (t.includes("đang"))
+            return `<span class="st st-orange">Đang ĐGRR</span>`;
+          if (t.includes("cnbh"))
+            return `<span class="st st-blue">${tt}</span>`;
+          return `<span class="st" style="background:#F1F5F9;color:#64748B">${tt || "—"}</span>`;
+        }
+
+        document.getElementById("ht-tbody").innerHTML = r
+          .sort((a, b) => b.v - a.v)
+          .map(
+            (x, i) => `<tr>
+    <td class="text-slate-400 font-bold">${i + 1}</td>
+    <td class="font-bold text-slate-800">${x.d || "—"}</td>
+    <td class="font-medium text-slate-600">${x.b || "—"} <span class="block text-[10px] text-slate-400">${x.p || ""}</span></td>
+    <td class="text-xs text-slate-600">${x.bmbh || "—"}</td>
     <td>${stBadge(x.tt)}</td>
-    <td class="text-xs text-slate-500">${x.nt||'—'}</td>
-    <td class="text-right font-black ${i<3?'text-[#007AC2]':''}">${x.v.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
-</tr>`).join('');
+    <td class="text-xs text-slate-500">${x.nt || "—"}</td>
+    <td class="text-right font-black ${i < 3 ? "text-[#007AC2]" : ""}">${x.v.toLocaleString("vi-VN", { minimumFractionDigits: 1 })}</td>
+</tr>`,
+          )
+          .join("");
 
-// Draw HT charts
-drawHTBar(r);
-drawHTDonut(r);
-}
+        // Draw HT charts
+        drawHTBar(r);
+        drawHTDonut(r);
+      }
 
-function drawHTBar(recs){
-let g={};recs.forEach(r=>{let k=r.b||'(Khác)';g[k]=(g[k]||0)+r.v});
-let arr=Object.entries(g).sort((a,b)=>b[1]-a[1]);
-if(charts.htBar) charts.htBar.destroy();
-charts.htBar=new Chart(document.getElementById('chart-ht-bar'),{
-    type:'bar',
-    data:{labels:arr.map(x=>x[0].length>20?x[0].slice(0,19)+'…':x[0]),datasets:[{label:'AFYP (Tr)',data:arr.map(x=>Math.round(x[1]*10)/10),backgroundColor:'rgba(0,122,194,0.15)',borderColor:'#007AC2',borderWidth:2,borderRadius:8}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#F1F5F9',drawBorder:false},ticks:{font:{size:10}}},y:{grid:{display:false},ticks:{font:{size:11,weight:'600'}}}}}
-});
-}
+      function drawHTBar(recs) {
+        let g = {};
+        recs.forEach((r) => {
+          let k = r.b || "(Khác)";
+          g[k] = (g[k] || 0) + r.v;
+        });
+        let arr = Object.entries(g).sort((a, b) => b[1] - a[1]);
+        if (charts.htBar) charts.htBar.destroy();
+        charts.htBar = new Chart(document.getElementById("chart-ht-bar"), {
+          type: "bar",
+          data: {
+            labels: arr.map((x) =>
+              x[0].length > 20 ? x[0].slice(0, 19) + "…" : x[0],
+            ),
+            datasets: [
+              {
+                label: "AFYP (Tr)",
+                data: arr.map((x) => Math.round(x[1] * 10) / 10),
+                backgroundColor: "rgba(0,122,194,0.15)",
+                borderColor: "#007AC2",
+                borderWidth: 2,
+                borderRadius: 8,
+              },
+            ],
+          },
+          options: {
+            indexAxis: "y",
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                grid: { color: "#F1F5F9", drawBorder: false },
+                ticks: { font: { size: 10 } },
+              },
+              y: {
+                grid: { display: false },
+                ticks: { font: { size: 11, weight: "600" } },
+              },
+            },
+          },
+        });
+      }
 
-function drawHTDonut(recs){
-let hl=recs.filter(x=>(x.tt||'').toLowerCase().includes('hiệu lực')).length;
-let cho=recs.filter(x=>(x.tt||'').toLowerCase().includes('chờ')).length;
-let dang=recs.filter(x=>(x.tt||'').toLowerCase().includes('đang')).length;
-let cnbh=recs.filter(x=>(x.tt||'').toLowerCase().includes('cnbh')).length;
-let other=recs.length-hl-cho-dang-cnbh;
-if(charts.htDonut) charts.htDonut.destroy();
-charts.htDonut=new Chart(document.getElementById('chart-ht-donut'),{
-    type:'doughnut',
-    data:{labels:['Có hiệu lực','Chờ ĐGRR','Đang ĐGRR','CNBH','Khác'],datasets:[{data:[hl,cho,dang,cnbh,other],backgroundColor:['#10B981','#F59E0B','#F97316','#3B82F6','#CBD5E1'],borderWidth:0,hoverOffset:6}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14,font:{size:11,weight:'600'}}}}}
-});
-}
-</script>
-</body>
+      function drawHTDonut(recs) {
+        let hl = recs.filter((x) =>
+          (x.tt || "").toLowerCase().includes("hiệu lực"),
+        ).length;
+        let cho = recs.filter((x) =>
+          (x.tt || "").toLowerCase().includes("chờ"),
+        ).length;
+        let dang = recs.filter((x) =>
+          (x.tt || "").toLowerCase().includes("đang"),
+        ).length;
+        let cnbh = recs.filter((x) =>
+          (x.tt || "").toLowerCase().includes("cnbh"),
+        ).length;
+        let other = recs.length - hl - cho - dang - cnbh;
+        if (charts.htDonut) charts.htDonut.destroy();
+        charts.htDonut = new Chart(document.getElementById("chart-ht-donut"), {
+          type: "doughnut",
+          data: {
+            labels: ["Có hiệu lực", "Chờ ĐGRR", "Đang ĐGRR", "CNBH", "Khác"],
+            datasets: [
+              {
+                data: [hl, cho, dang, cnbh, other],
+                backgroundColor: [
+                  "#10B981",
+                  "#F59E0B",
+                  "#F97316",
+                  "#3B82F6",
+                  "#CBD5E1",
+                ],
+                borderWidth: 0,
+                hoverOffset: 6,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "68%",
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  usePointStyle: true,
+                  padding: 14,
+                  font: { size: 11, weight: "600" },
+                },
+              },
+            },
+          },
+        });
+      }
+    </script>
+  </body>
 </html>
