@@ -15,11 +15,11 @@
         --blue: #007ac2;
         --blue2: #0096d6;
         --gold: #d4b271;
-        --bg: #fafbfc;
+        --bg: #E8F0FE;
         --card: #ffffff;
-        --text: #0f172a;
+        --text: #222222;
         --muted: #64748b;
-        --border: #e8ecf0;
+        --border: #B3D4FF;
       }
       * {
         box-sizing: border-box;
@@ -30,13 +30,13 @@
       body {
         background: var(--bg);
         background-image:
-          radial-gradient(at 0% 0%, hsla(212, 100%, 94%, 1) 0, transparent 50%),
-          radial-gradient(
+          
+          /* removed */(
             at 50% 0%,
             hsla(202, 100%, 92%, 1) 0,
             transparent 50%
           ),
-          radial-gradient(
+          /* removed */(
             at 100% 0%,
             hsla(220, 100%, 95%, 1) 0,
             transparent 50%
@@ -370,7 +370,26 @@
           font-size: 22px;
         }
       }
-    </style>
+    
+      .top-header { background: #37465B; border-bottom: 1px solid #1A2530; }
+      .s-card { background: #ffffff; border-radius: 12px; border: 1px solid #B3D4FF; box-shadow: 0 1px 2px rgba(0,0,0,0.03); backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .s-card:hover { transform: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #B3D4FF; }
+      .kpi-card { background: #F0F7FF !important; border-radius: 12px; border: 1px solid #B3D4FF; padding: 24px; display: flex; flex-direction: column; }
+      .s-input { background: #F0F4F8; border: 1px solid #CBD5E1; border-radius: 999px; }
+      select.s-input { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px; }
+      select.s-input[multiple] { background-image: none; border-radius: 8px; }
+      .s-input:focus { border-color: #007AC2; box-shadow: 0 0 0 2px rgba(0, 122, 194, 0.1); background: #ffffff; }
+      .tab-wrap { background: #FFFFFF; padding: 4px; border-radius: 999px; border: 1px solid #CBD5E1; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+      .s-tab { border-radius: 999px; font-weight: 600; padding: 8px 24px; }
+      .s-tab.on { background: #F0F7FF; color: #005A9E; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #B3D4FF; }
+      .glass-nav { display: none; }
+      .hero-glass { background: #fff; border: 1px solid #e2e8f0; }
+      .kv { font-size: 28px; color: #111827; }
+      .kpi-progress-bar { background: #007AC2; }
+      .kpi-progress-bg { background: rgba(0,0,0,0.08); height: 4px; border-radius: 2px; }
+      /* Force flat text */
+      .grad { background: none; -webkit-background-clip: unset; color: inherit; }
+</style>
   </head>
   <body>
     <!-- AUTH -->
@@ -407,7 +426,7 @@
         </p>
         <button
           onclick="doLogin()"
-          class="w-full py-4 rounded-2xl font-bold text-sm text-white cursor-pointer border-none transition-all hover:shadow-lg"
+          class="w-full py-4 rounded-2xl font-bold text-sm text-slate-900 cursor-pointer border-none transition-all hover:shadow-lg"
           style="background: linear-gradient(135deg, #007ac2, #0096d6)"
         >
           Truy Cập Hệ Thống →
@@ -418,47 +437,18 @@
     <!-- APP -->
     <div id="app-content">
       <!-- Nav -->
-      <nav class="glass-nav sticky top-0 z-50">
-        <div
-          class="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center"
-        >
-          <div class="flex items-center gap-3">
-            <img
-              src="logo.png"
-              alt="Logo"
-              class="h-9 object-contain rounded-xl bg-slate-900 px-1.5 py-1.5"
-            />
-            <span
-              class="text-[15px] font-extrabold text-slate-900 tracking-tight hidden sm:inline"
-              >Bảo Việt Nhân thọ
-              <span class="text-[#007AC2]">Sài Gòn</span></span
-            >
-          </div>
-          <div class="flex items-center gap-4">
-            <div
-              class="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full"
-            >
-              <div class="pulse-dot"></div>
-              <span
-                class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider"
-                >Trực Tuyến</span
-              >
-            </div>
-            <button
-              onclick="location.reload()"
-              class="text-sm font-semibold text-slate-400 hover:text-slate-800 transition-colors bg-transparent border-none cursor-pointer"
-            >
-              Đăng xuất
-            </button>
-          </div>
+      
+      <div class="top-header">
+        <div class="max-w-[1440px] mx-auto px-6 py-4 flex flex-col md:flex-row md:items-center justify-between">
+          <h1 class="text-xl md:text-2xl font-bold tracking-tight text-slate-900 m-0">Tổng Quan Hoạt Động</h1>
+          <button onclick="location.reload()" class="text-xs font-semibold text-slate-300 hover:text-slate-900 transition-colors bg-transparent border-none cursor-pointer mt-3 md:mt-0">Đăng xuất</button>
         </div>
-      </nav>
+      </div>
+
 
       <div class="max-w-[1440px] mx-auto px-6 py-10">
         <!-- Header + Tabs -->
-        <div
-          class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 fade-up"
-        >
+        <div class="mb-6 fade-up">
           <div>
             <h1
               class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-2 flex items-center gap-4"
@@ -580,7 +570,7 @@
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
           >
             <div
-              class="s-card p-7 relative overflow-hidden fade-up fade-up-d1"
+              class="kpi-card fade-up fade-up-d1"
               style="
                 background: linear-gradient(
                   145deg,
@@ -623,7 +613,7 @@
                 </div>
               </div>
             </div>
-            <div class="s-card p-7 fade-up fade-up-d2">
+            <div class="kpi-card fade-up fade-up-d2">
               <div class="kv-label">Tổng Hợp Đồng</div>
               <div class="kv mt-3 mb-2" id="kpi-hd">0</div>
               <div class="flex items-center justify-between">
@@ -633,7 +623,7 @@
                 <div id="yoy-hd" class="trend neutral">--</div>
               </div>
             </div>
-            <div class="s-card p-7 fade-up fade-up-d3">
+            <div class="kpi-card fade-up fade-up-d3">
               <div class="kv-label">Độ Lớn / HĐ</div>
               <div class="kv mt-3 mb-2" id="kpi-dolon">0.0</div>
               <div class="flex items-center justify-between">
@@ -644,14 +634,11 @@
               </div>
             </div>
             <div
-              class="s-card p-7 fade-up fade-up-d4"
-              style="
-                background: linear-gradient(135deg, #0f172a, #1e293b);
-                border: none;
-              "
+              class="kpi-card fade-up fade-up-d4"
+              
             >
-              <div class="kv-label" style="color: #94a3b8">Lượt Hoạt Động</div>
-              <div class="kv mt-3 mb-2 text-white" id="kpi-lhd">0</div>
+              <div class="kv-label" style="color: var(--muted)">Lượt Hoạt Động</div>
+              <div class="kv mt-3 mb-2 text-slate-900" id="kpi-lhd">0</div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-emerald-400" id="kpi-lhdc"
                   >0 Lượt Chuẩn</span
@@ -659,7 +646,7 @@
                 <div
                   id="yoy-lhd"
                   class="trend neutral"
-                  style="background: rgba(255, 255, 255, 0.1); color: #fff"
+                  
                 >
                   --
                 </div>
@@ -793,7 +780,7 @@
 
           <!-- HT KPI Cards -->
           <div class="grid grid-cols-2 md:grid-cols-5 gap-5 mb-8">
-            <div class="s-card p-6 fade-up fade-up-d1">
+            <div class="kpi-card fade-up fade-up-d1">
               <div class="kv-label">Tổng Hợp Đồng</div>
               <div class="kv-sm mt-3 mb-1" id="ht-k-hd">0</div>
               <div class="text-[10px] text-slate-400 font-bold">
@@ -801,8 +788,8 @@
               </div>
             </div>
             <div
-              class="s-card p-6 fade-up fade-up-d2"
-              style="border-top: 4px solid #10b981"
+              class="kpi-card fade-up fade-up-d2"
+              
             >
               <div class="kv-label">Có Hiệu Lực</div>
               <div class="kv-sm mt-3 mb-1 text-emerald-600" id="ht-k-hl">0</div>
@@ -811,8 +798,8 @@
               </div>
             </div>
             <div
-              class="s-card p-6 fade-up fade-up-d3"
-              style="border-top: 4px solid #f59e0b"
+              class="kpi-card fade-up fade-up-d3"
+              
             >
               <div class="kv-label">Chờ / Đang ĐGRR</div>
               <div class="kv-sm mt-3 mb-1 text-amber-500" id="ht-k-dg">0</div>
@@ -820,14 +807,14 @@
                 Cần theo dõi
               </div>
             </div>
-            <div class="s-card p-6 fade-up fade-up-d4">
+            <div class="kpi-card fade-up fade-up-d4">
               <div class="kv-label">Lượt HĐ Chuẩn</div>
               <div class="kv-sm mt-3 mb-1" id="ht-k-lhdc">0</div>
               <div class="text-[10px] text-slate-400 font-bold">
                 Đạt IP ≥ 12 Tr
               </div>
             </div>
-            <div class="s-card p-6 fade-up">
+            <div class="kpi-card fade-up">
               <div class="kv-label">Độ Lớn B/Q</div>
               <div class="kv-sm mt-3 mb-1" id="ht-k-dl">0.0</div>
               <div class="text-[10px] text-slate-400 font-bold">
