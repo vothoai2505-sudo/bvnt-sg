@@ -422,18 +422,19 @@ function sendMessage() {
     fetchAIResponse();
 }
 
+// Thay bằng free public API của Google (hoặc prompt AI server-side)
+// Để hoạt động ngay trên Frontend mà không cần backend rắc rối, ta dùng một server mock thông minh
 async function fetchAIResponse() {
-    setTimeout(() => {
-        const typing = document.getElementById('typingMsg');
-        if(typing) typing.remove();
-        
-        let p = customerProfile;
-        let reply = "";
-        
-        // Dynamic Contextual Mock Logic
-        if(messageCount === 0) {
+    let p = customerProfile;
+    
+    if(messageCount === 0) {
+        setTimeout(() => {
+            const typing = document.getElementById('typingMsg');
+            if(typing) typing.remove();
+            
             let intro = `Chào bạn. `;
             let ctx = `Tôi làm ${p.job.toLowerCase()}, hiện tại ${p.marital.toLowerCase()}. Sức khỏe thì ${p.health.toLowerCase()}. `;
+            let reply = "";
             
             if(p.personality.includes('định kiến')) {
                 intro = `Chào bạn. Nói thẳng nhé, tôi không có thiện cảm với bảo hiểm đâu. Thấy mạng báo lừa đảo nhiều, mua thì dễ đòi tiền thì khó. `;
@@ -449,31 +450,57 @@ async function fetchAIResponse() {
             } else {
                 reply = `Chào bạn. Mình làm ${p.job.toLowerCase()}, ${p.marital.toLowerCase()}. Sức khỏe ${p.health.toLowerCase()}. Đang muốn tìm hiểu gói bảo hiểm phù hợp, tư vấn giúp mình nhé.`;
             }
-        } 
-        else if(messageCount === 1) {
-            if(p.health.includes('bệnh nền') || p.health.includes('nằm viện')) {
-                reply = "Với tiền sử bệnh của tôi như vậy, Bảo Việt có bị loại trừ bảo vệ hay tăng phí gì không bạn?";
-            } else if (p.marital.includes('có con')) {
-                reply = "Tôi ưu tiên gói nào bảo vệ được cho cả con cái nữa. Chi phí khoảng bao nhiêu 1 năm là hợp lý với nhà tôi?";
-            } else if (p.personality.includes('Kỹ tính')) {
-                reply = "Thế còn quy định rút tiền trước hạn thì sao? Bị phạt bao nhiêu % trong 3 năm đầu?";
-            } else if (p.personality.includes('không có tiền')) {
-                reply = "Gói rẻ nhất bên em 1 năm đóng bao nhiêu? Đóng phí tháng được không hay bắt buộc đóng năm?";
-            } else {
-                reply = "Bạn nói rõ hơn phần quyền lợi nằm viện giúp mình được không? Ngày được bao nhiêu tiền?";
-            }
-        }
-        else {
-            if(p.personality.includes('định kiến')) {
-                reply = "Cũng hợp lý, nhưng hợp đồng mấy chục trang toàn thuật ngữ pháp lý, tôi đọc không hiểu sao dám ký?";
-            } else {
-                reply = "Cảm ơn bạn đã giải thích. Thông tin bạn cung cấp khá chi tiết rồi, để tôi cân nhắc thêm và trao đổi lại với người nhà nhé.";
-            }
-        }
+            
+            addBotMessage(reply);
+            chatHistory.push({ role: "assistant", content: reply });
+        }, 1200);
+        return;
+    }
+
+    // Call open-source proxy AI for real conversational follow-up
+    try {
+        const typing = document.getElementById('typingMsg');
         
-        addBotMessage(reply);
-        chatHistory.push({ role: "assistant", content: reply });
-    }, 1200);
+        // System Prompt to force the AI to stay in character
+        let systemPrompt = `Bạn là một vị khách hàng đang nói chuyện với một Tư Vấn Viên Bảo Hiểm Nhân Thọ của Bảo Việt Nhân Thọ. 
+        Tình trạng của bạn: Giới tính ${p.gender}, Độ tuổi ${p.age}, Tình trạng hôn nhân: ${p.marital}, Nghề nghiệp: ${p.job}, Sức khỏe: ${p.health}, Tính cách: ${p.personality}.
+        Nhiệm vụ: 
+        1. CHỈ đóng vai khách hàng. Tuyệt đối không xưng là AI hay trợ lý.
+        2. TRẢ LỜI ĐÚNG VÀ BÁM SÁT câu hỏi của người tư vấn ở tin nhắn cuối cùng.
+        3. Phản hồi ngắn gọn 1-3 câu, giọng điệu tự nhiên, chân thật của khách hàng. Không nói dài dòng giải thích.
+        4. Thể hiện đúng tính cách đã chọn (ví dụ: nếu kỹ tính thì phải hỏi cặn kẽ dòng tiền, nếu định kiến thì cãi lại...).`;
+
+        let messages = [{ role: "system", content: systemPrompt }, ...chatHistory];
+
+        // Lời gọi dùng miễn phí (Free public proxy for testing, e.g. pollinations.ai)
+        // Đây là giải pháp tạm để không dính CORS và không lộ API key.
+        const response = await fetch('https://text.pollinations.ai/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                messages: messages,
+                model: 'openai', 
+                seed: Math.floor(Math.random() * 1000)
+            })
+        });
+
+        if (!response.ok) throw new Error('API Error');
+        
+        let textResult = await response.text();
+        
+        if(typing) typing.remove();
+        addBotMessage(textResult);
+        chatHistory.push({ role: "assistant", content: textResult });
+    } catch (err) {
+        console.error(err);
+        const typing = document.getElementById('typingMsg');
+        if(typing) typing.remove();
+        
+        // Fallback if API fails
+        let fallback = "Mạng tôi đang hơi chậm, ý bạn là sao? Bạn giải thích cụ thể điểm đó thêm được không?";
+        addBotMessage(fallback);
+        chatHistory.push({ role: "assistant", content: fallback });
+    }
 }
 
 function endSimulation() {
