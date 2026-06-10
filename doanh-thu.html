@@ -377,6 +377,25 @@
       .kpi-progress-bg { background: rgba(0,0,0,0.08); height: 4px; border-radius: 2px; }
       /* Force flat text */
       .grad { background: none; -webkit-background-clip: unset; color: inherit; }
+
+      .top-header { background: #37465B; border-bottom: 1px solid #1A2530; }
+      .s-card { background: #ffffff; border-radius: 12px; border: 1px solid #B3D4FF; box-shadow: 0 1px 2px rgba(0,0,0,0.03); backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .s-card:hover { transform: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #B3D4FF; }
+      .kpi-card { background: #F0F7FF !important; border-radius: 12px; border: 1px solid #B3D4FF; padding: 24px; display: flex; flex-direction: column; }
+      .s-input { background: #F0F4F8; border: 1px solid #CBD5E1; border-radius: 999px; }
+      select.s-input { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px; }
+      select.s-input[multiple] { background-image: none; border-radius: 8px; }
+      .s-input:focus { border-color: #007AC2; box-shadow: 0 0 0 2px rgba(0, 122, 194, 0.1); background: #ffffff; }
+      .tab-wrap { background: #FFFFFF; padding: 4px; border-radius: 999px; border: 1px solid #CBD5E1; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+      .s-tab { border-radius: 999px; font-weight: 600; padding: 8px 24px; }
+      .s-tab.on { background: #F0F7FF; color: #005A9E; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #B3D4FF; }
+      .glass-nav { display: none; }
+      .hero-glass { background: #fff; border: 1px solid #e2e8f0; }
+      .kv { font-size: 28px; color: #111827; }
+      .kpi-progress-bar { background: #007AC2; }
+      .kpi-progress-bg { background: rgba(0,0,0,0.08); height: 4px; border-radius: 2px; }
+      /* Force flat text */
+      .grad { background: none; -webkit-background-clip: unset; color: inherit; }
 </style>
   </head>
   <body>
@@ -962,18 +981,18 @@
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.color = "#94A3B8";
         try {
-          let [r1, r2, r3] = await Promise.all([
+          let [r1, r2] = await Promise.all([
             fetch("data/all_contracts.json"),
             fetch("data/bc02_current.json"),
-            fetch("data/kh_2026.json"),
+            
           ]);
           let d1 = await r1.json();
           DATA = d1.records;
           FLT = d1.filters;
           let d2 = await r2.json();
           BC02 = d2;
-          let d3 = await r3.json();
-          KH_DATA = d3;
+          
+          
           initFilters();
           runLK();
         } catch (e) {
