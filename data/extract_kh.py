@@ -31,14 +31,14 @@ for i in range(3, len(df)):
     
     # Check if total is valid
     try:
-        total = float(str(row[7]).replace(',','').strip())
+        total = float(str(row[7]).replace(',','').strip()) * 1000
     except:
         continue
         
     months = []
     for m in range(8, 20):
         try:
-            val = float(str(row[m]).replace(',','').strip())
+            val = float(str(row[m]).replace(',','').strip()) * 1000
         except:
             val = 0.0
         months.append(val)
