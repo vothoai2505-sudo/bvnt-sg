@@ -457,50 +457,55 @@ async function fetchAIResponse() {
         return;
     }
 
-    // Call open-source proxy AI for real conversational follow-up
-    try {
-        const typing = document.getElementById('typingMsg');
-        
-        // System Prompt to force the AI to stay in character
-        let systemPrompt = `Bạn là một vị khách hàng đang nói chuyện với một Tư Vấn Viên Bảo Hiểm Nhân Thọ của Bảo Việt Nhân Thọ. 
-        Tình trạng của bạn: Giới tính ${p.gender}, Độ tuổi ${p.age}, Tình trạng hôn nhân: ${p.marital}, Nghề nghiệp: ${p.job}, Sức khỏe: ${p.health}, Tính cách: ${p.personality}.
-        Nhiệm vụ: 
-        1. CHỈ đóng vai khách hàng. Tuyệt đối không xưng là AI hay trợ lý.
-        2. TRẢ LỜI ĐÚNG VÀ BÁM SÁT câu hỏi của người tư vấn ở tin nhắn cuối cùng.
-        3. Phản hồi ngắn gọn 1-3 câu, giọng điệu tự nhiên, chân thật của khách hàng. Không nói dài dòng giải thích.
-        4. Thể hiện đúng tính cách đã chọn (ví dụ: nếu kỹ tính thì phải hỏi cặn kẽ dòng tiền, nếu định kiến thì cãi lại...).`;
-
-        let messages = [{ role: "system", content: systemPrompt }, ...chatHistory];
-
-        // Lời gọi dùng miễn phí (Free public proxy for testing, e.g. pollinations.ai)
-        // Đây là giải pháp tạm để không dính CORS và không lộ API key.
-        const response = await fetch('https://text.pollinations.ai/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                messages: messages,
-                model: 'openai', 
-                seed: Math.floor(Math.random() * 1000)
-            })
-        });
-
-        if (!response.ok) throw new Error('API Error');
-        
-        let textResult = await response.text();
-        
-        if(typing) typing.remove();
-        addBotMessage(textResult);
-        chatHistory.push({ role: "assistant", content: textResult });
-    } catch (err) {
-        console.error(err);
+    // Since public APIs block frontend requests (403), we implement a robust NLP-like keyword matcher
+    // that analyzes the LAST user message and profile context to reply intelligently.
+    setTimeout(() => {
         const typing = document.getElementById('typingMsg');
         if(typing) typing.remove();
         
-        // Fallback if API fails
-        let fallback = "Mạng tôi đang hơi chậm, ý bạn là sao? Bạn giải thích cụ thể điểm đó thêm được không?";
-        addBotMessage(fallback);
-        chatHistory.push({ role: "assistant", content: fallback });
-    }
+        let lastUserMsg = chatHistory[chatHistory.length - 1].content.toLowerCase();
+        let reply = "";
+        
+        // --- KEYWORD ANALYSIS ---
+        let isAskingNeeds = lastUserMsg.includes('tích lũy') || lastUserMsg.includes('bảo vệ') || lastUserMsg.includes('ưu tiên') || lastUserMsg.includes('mục tiêu') || lastUserMsg.includes('nhu cầu');
+        let isAskingHealth = lastUserMsg.includes('khám') || lastUserMsg.includes('bệnh viện') || lastUserMsg.includes('sức khỏe') || lastUserMsg.includes('tiểu sử');
+        let isExplainingProduct = lastUserMsg.includes('an tâm') || lastUserMsg.includes('hoạch định') || lastUserMsg.includes('an khang') || lastUserMsg.includes('an lộc') || lastUserMsg.includes('sản phẩm') || lastUserMsg.includes('gói');
+        let isExplainingCost = lastUserMsg.includes('phí') || lastUserMsg.includes('đóng') || lastUserMsg.includes('lãi suất') || lastUserMsg.includes('trừ') || lastUserMsg.includes('tiền');
+        let isProbing = lastUserMsg.includes('biết gì') || lastUserMsg.includes('hiểu') || lastUserMsg.includes('đã từng');
+        
+        // --- RESPONSE GENERATION ---
+        if(isProbing && !isAskingNeeds) {
+            if(p.personality.includes('định kiến')) reply = "Tôi chỉ biết người ta nói mua thì dễ rút thì khó thôi. Hợp đồng toàn gài chữ mập mờ.";
+            else reply = "Tôi chưa rành lắm, mới nghe loáng thoáng nên mới nhờ bạn tư vấn kỹ đây.";
+        }
+        else if (isAskingNeeds) {
+            if(p.age.includes('45') || p.job.includes('Kinh doanh')) reply = "Tôi muốn ưu tiên tích lũy sinh lời và phòng ngừa bệnh hiểm nghèo, bảo vệ vốn. Bạn có gói nào cân bằng được hai cái đó không?";
+            else if(p.marital.includes('có con')) reply = "Tôi quan tâm bảo vệ sức khỏe cho cả gia đình, đặc biệt là quyền lợi y tế cho cháu nhà tôi. Tích lũy thì có cũng được.";
+            else reply = "Tôi còn trẻ nên muốn một gói vừa có thẻ chăm sóc sức khỏe, vừa tích lũy một phần tiền cho tương lai.";
+        }
+        else if (isAskingHealth) {
+            if(p.health.includes('bệnh nền')) reply = "Thì tôi bị dạ dày và huyết áp hơi cao. Nếu mua thì công ty bạn có bắt đi khám hay từ chối bệnh này không?";
+            else if(p.health.includes('phẫu thuật')) reply = "Năm ngoái tôi có mổ ruột thừa rồi. Giờ sức khỏe bình thường. Vậy có được mua bình thường không?";
+            else reply = "Hiện tại sức khỏe tôi rất tốt, không bệnh tật gì nghiêm trọng cả.";
+        }
+        else if (isExplainingProduct) {
+            if(p.personality.includes('Kỹ tính')) reply = "Bạn nói tên gói An Tâm Hoạch Định thì hay đấy, nhưng tôi cần bạn liệt kê rõ: Tôi phải đóng bao nhiêu năm, và rút được bao nhiêu?";
+            else reply = "Gói này nghe có vẻ hợp lý. Quyền lợi nằm viện được chi trả cụ thể là bao nhiêu tiền một ngày vậy bạn?";
+        }
+        else if (isExplainingCost) {
+            if(p.personality.includes('không có tiền')) reply = "Mức phí đó hơi cao so với thu nhập hiện tại của tôi. Có gói nào tầm 10-12 triệu một năm không?";
+            else reply = "Vậy tính ra dòng tiền cũng ổn. Nhưng tôi muốn hỏi rõ là lỡ kẹt tiền, ngưng đóng 1 năm thì hợp đồng có bị mất hiệu lực ngay không?";
+        }
+        else {
+            // Generic context fallbacks
+            if(p.personality.includes('Kỹ tính')) reply = "Ý bạn cụ thể là sao? Tôi cần những con số rõ ràng chứ đừng tư vấn chung chung.";
+            else if(p.personality.includes('so sánh')) reply = "Bên Dai-ichi họ tư vấn thẻ sức khỏe rất tốt, bên bạn thẻ sức khỏe có gì nổi bật hơn không?";
+            else reply = "Bạn nói rõ hơn xíu được không, thuật ngữ bảo hiểm tôi không rành lắm.";
+        }
+        
+        addBotMessage(reply);
+        chatHistory.push({ role: "assistant", content: reply });
+    }, 1000);
 }
 
 function endSimulation() {
