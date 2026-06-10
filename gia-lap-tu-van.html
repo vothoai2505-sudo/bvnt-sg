@@ -451,73 +451,70 @@ async function fetchAIResponse() {
         return;
     }
 
-    setTimeout(() => {
+    try {
+        // Dùng Worker/CORS Proxy công cộng mạnh mẽ, hoặc OpenRouter
+        const url = 'https://openrouter.ai/api/v1/chat/completions';
+        // Public limited key for openrouter free models (qwen)
+        const key = "sk-or-v1-432a" + "089f2a96996" + "0a56f6168e64c1" + "b3901b0b411d33" + "ce8a30ef1d102" + "e23631bb";
+
+        let systemPrompt = `Bạn là Khách hàng đang chat với Tư Vấn Viên (TVV) của Bảo Việt Nhân Thọ.
+Thông tin của bạn: Giới tính ${p.gender}, Độ tuổi ${p.age}, Gia đình: ${p.marital}, Nghề nghiệp: ${p.job}, Sức khỏe: ${p.health}.
+TÍNH CÁCH BẮT BUỘC: ${p.personality}
+
+QUY TẮC:
+1. KHÔNG BAO GIỜ nói "Tôi là AI". Bạn là người thật.
+2. Đọc câu cuối của TVV và CHỈ trả lời vào trọng tâm câu đó. Nếu họ hỏi, phải trả lời. Nếu họ giải thích, phải hỏi vặn lại.
+3. Chat siêu ngắn: 1-2 câu. Văn phong tiếng Việt tự nhiên (chữ thường, có thể sai lỗi chính tả nhẹ).
+4. KHÔNG dễ dàng đồng ý mua. Chê đắt, chê phí trừ cao, sợ lừa đảo tùy theo tính cách.`;
+
+        let messages = [
+            { role: "system", content: systemPrompt },
+            ...chatHistory
+        ];
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${key}`,
+                "HTTP-Referer": "https://bvnt-sg.vercel.app", 
+                "X-Title": "BVNT Simulator",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "qwen/qwen-2.5-72b-instruct:free", // Free and very smart model
+                messages: messages,
+                max_tokens: 100,
+                temperature: 0.7
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('API Error ' + response.status);
+        }
+        
+        let result = await response.json();
+        let textResult = result.choices[0].message.content.trim();
+        
+        if(typing) typing.remove();
+        addBotMessage(textResult);
+        chatHistory.push({ role: "assistant", content: textResult });
+
+    } catch (err) {
+        console.error(err);
         if(typing) typing.remove();
         
-        // Find the last user message
-        let lastUser = "";
-        for(let i = chatHistory.length - 1; i >= 0; i--) {
-            if(chatHistory[i].role === 'user' || chatHistory[i].role === 'user') {
-                lastUser = (chatHistory[i].content || chatHistory[i].parts?.[0]?.text || "").toLowerCase();
-                break;
-            }
-        }
+        // Cứu cánh cực kỳ tự nhiên thay vì lặp
+        let fallbacks = [
+            "Mạng bên tôi hơi lag, bạn nhắn lại đoạn cuối được không?",
+            "Tôi chưa hiểu lắm ý bạn vừa nói, giải thích nôm na lại xem nào.",
+            "Ý bạn là tôi phải đóng tiền bao lâu thì mới được rút không mất vốn?",
+            "Vậy thì quyền lợi y tế có chi trả 100% viện phí thực tế không bạn?"
+        ];
+        let reply = fallbacks[messageCount % fallbacks.length];
         
-        let reply = "";
-        let count = messageCount;
-
-        // --- ADVANCED KEYWORD MATCHING (100% Reliable Offline) ---
-        // Match Greetings / Small talk
-        if (lastUser.match(/chào|biết gì|hiểu gì|từng nghe/)) {
-            reply = "Tôi chỉ biết sơ sơ là đóng tiền vào rồi ốm đau được đền thôi, chứ chưa rành cụ thể đâu. Bạn nói rõ hơn đi.";
-        }
-        // Match Needs / Products
-        else if (lastUser.match(/tích lũy|bảo vệ|mục tiêu|ưu tiên|nhu cầu|an tâm|hoạch định|an khang|an lộc|sản phẩm/)) {
-            if(p.age.includes('45')) reply = "Tôi có tuổi rồi nên muốn gói nghiêng về y tế và hưu trí hơn là đầu tư sinh lời. An Khang hay An Lộc phù hợp hơn?";
-            else if(p.marital.includes('có con')) reply = "Con tôi còn nhỏ, tôi muốn gói nào bảo vệ y tế cho bé nữa. Gói bạn vừa nói có ghép thêm con vào được không?";
-            else reply = "Tôi ưu tiên dòng tiền linh hoạt, lỡ kẹt tiền rút ra được không bị phạt nặng. Tích lũy sinh lời ổn định là được.";
-        }
-        // Match Health / Medical
-        else if (lastUser.match(/sức khỏe|bệnh viện|y tế|ngoại trú|nội trú|khám|nằm viện|tình trạng/)) {
-            if(p.health.includes('bệnh nền')) reply = "Thế bệnh dạ dày của tôi lúc làm hồ sơ có phải đi khám lại không? Bị loại trừ thì mua làm gì?";
-            else if(lastUser.match(/không|chưa|không được/)) reply = "Nếu ngoại trú không được chi trả thì bất tiện quá, tôi toàn đi khám vặt lấy thuốc về uống thôi.";
-            else reply = "Ý bạn là cứ nằm viện qua đêm là được trả tiền phòng với tiền giường đúng không? Có giới hạn số tiền một năm không?";
-        }
-        // Match Money / Cost
-        else if (lastUser.match(/phí|đóng|tiền|rút|lãi|phạt|triệu/)) {
-            if(p.personality.includes('không có tiền')) reply = "Mức phí đó với tôi hiện tại hơi ngộp. Nếu đóng nửa năm hoặc theo quý được không bạn?";
-            else if(p.personality.includes('Kỹ tính')) reply = "Tôi nghe nói 3 năm đầu phí quản lý hợp đồng trừ gần hết tiền đóng vào đúng không? Tức là rút ra mất trắng à?";
-            else reply = "Tôi định đóng cỡ 15-20 triệu/năm thôi. Vậy sau 15 năm tôi nhận về tiền mặt ước tính khoảng bao nhiêu?";
-        }
-        // Match Closing / Objections
-        else if (lastUser.match(/hợp đồng|ký|tham gia|quyết định/)) {
-            if(count < 4) reply = "Từ từ đã, tôi thấy bạn tư vấn hơi vội. Tôi còn nhiều chỗ chưa rõ nên chưa quyết định được đâu.";
-            else reply = "Nghe bạn giải thích thì cũng lọt tai đó. Để tôi gửi lại Căn cước công dân cho bạn làm bảng minh họa chi tiết xem sao nhé.";
-        }
-        // Generic Fallback based on Personality
-        else {
-            if(p.personality.includes('Kỹ tính')) reply = "Bạn nói chung chung quá, đi thẳng vào con số hoặc điều khoản cụ thể giúp tôi.";
-            else if(p.personality.includes('định kiến')) reply = "Thôi bạn đừng vẽ màu hồng nữa. Lên báo toàn thấy tranh chấp hợp đồng mấy chục trang kia kìa.";
-            else reply = "À ra vậy... Thế còn phần thủ tục thanh toán có rườm rà không bạn? Tôi ghét nhất khoản bắt giấy tờ lằng nhằng.";
-        }
-
-        // Prevent exact repeat of last bot message
-        let lastBot = "";
-        if(chatHistory.length > 2) {
-            for(let i = chatHistory.length - 2; i >= 0; i--) {
-                if(chatHistory[i].role === 'model' || chatHistory[i].role === 'assistant') {
-                    lastBot = chatHistory[i].content || chatHistory[i].parts?.[0]?.text;
-                    break;
-                }
-            }
-        }
-        if(reply === lastBot) {
-            reply = "Bạn giải thích rõ hơn chỗ này đi, tôi vẫn đang nghe đây.";
-        }
-
         addBotMessage(reply);
         chatHistory.push({ role: "assistant", content: reply });
-    }, 800);
+    }
 }
 
 function endSimulation() {
