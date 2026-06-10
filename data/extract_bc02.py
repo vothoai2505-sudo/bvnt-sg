@@ -4,11 +4,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 path = r"C:\Users\Lenovo\.openclaw\workspace\baoviet-saigon\data\BC02_T6_2026.xlsx"
 
-# Read file - pandas auto-detects header row
 df = pd.read_excel(path, sheet_name=0)
-
-# Column names are already Vietnamese: TÊN PHÒNG, TÊN BAN, etc.
-# No need for iloc[0]/iloc[1:] trick
 
 def safe_str(val):
     if pd.isna(val): return ''
@@ -36,6 +32,7 @@ for _, row in df.iterrows():
         'nt': safe_str(row.get('NGÀY THU', '')),
         'np': safe_str(row.get('NGÀY PHÁT HÀNH', '')),
         'bmbh': safe_str(row.get('BÊN MUA BẢO HIỂM (BMBH)', '')),
+        'sp': safe_str(row.get('SẢN PHẨM CHÍNH', '')),
         'v': round(afyp / 1000000, 2),
         'ip_tr': round(ip / 1000000, 2),
         'stbh_tr': round(stbh / 1000000, 2),
@@ -55,9 +52,8 @@ print(f"  Chờ/Đang ĐGRR: {cho_dgrr}")
 print(f"  Tổng AFYP: {total_afyp:.1f} Triệu VNĐ")
 print(f"  Số TVV: {unique_dl}")
 
-# Get date range
 dates = [r['nt'] for r in records if r['nt']]
-print(f"  Ngày thu: {min(dates) if dates else 'N/A'} → {max(dates) if dates else 'N/A'}")
+print(f"  Ngày thu: {min(dates) if dates else 'N/A'} đến {max(dates) if dates else 'N/A'}")
 
 now = datetime.datetime.now().strftime('%d/%m/%Y %H:%M')
 
