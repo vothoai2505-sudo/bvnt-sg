@@ -805,19 +805,22 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
       var slideIndex = swiper.realIndex; // 0 for first, 1 for second
       var text1 = document.getElementById('slider-text-1');
       var text2 = document.getElementById('slider-text-2');
+      var text3 = document.getElementById('slider-text-3');
       
-      if (slideIndex === 0) {
+      if(text1) { text1.style.opacity = '0'; text1.style.zIndex = '0'; }
+      if(text2) { text2.style.opacity = '0'; text2.style.zIndex = '0'; }
+      if(text3) { text3.style.opacity = '0'; text3.style.zIndex = '0'; }
+      
+      if (slideIndex === 0 && text1) {
         text1.style.opacity = '1';
         text1.style.zIndex = '10';
-        text2.style.opacity = '0';
-        text2.style.zIndex = '0';
-      } else {
-        text1.style.opacity = '0';
-        text1.style.zIndex = '0';
+      } else if (slideIndex === 1 && text2) {
         text2.style.opacity = '1';
         text2.style.zIndex = '10';
-      }
-    });
+      } else if (slideIndex === 2 && text3) {
+        text3.style.opacity = '1';
+        text3.style.zIndex = '10';
+      }});
   });
 </script>
 
