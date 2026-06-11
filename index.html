@@ -1,236 +1,236 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bảo Việt Nhân thọ Sài Gòn | 30 Năm Kiến Tạo Bình An</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root {
-    --p-blue: #007AC2;
-    --s-blue: #0096D6;
-    --gold: #D4B271;
-    --bg-light: #F8FAFC;
-    --text-main: #0F172A;
-    --text-muted: #64748B;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-
-/* Gradients */
-.grad-text-blue { background: linear-gradient(135deg, var(--p-blue), var(--s-blue)); -webkit-background-clip: text; color: transparent; }
-.grad-text-gold { background: linear-gradient(135deg, #B8860B, #D4B271); -webkit-background-clip: text; color: transparent; }
-.bg-grad-blue { background: linear-gradient(135deg, var(--p-blue), var(--s-blue)); }
-
-/* Navbar */
-.nav-glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-
-/* Hero Section */
-.hero-bg {
-    position: relative;
-    background: #FFFFFF;
-    overflow: hidden;
-}
-.hero-pattern {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(0, 122, 194, 0.05) 2px, transparent 2px);
-    background-size: 30px 30px;
-    z-index: 0;
-}
-
-/* Product Cards */
-.product-card {
-    background: #FFFFFF;
-    border: 1px solid rgba(0,0,0,0.04);
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01);
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0,122,194,0.1), 0 10px 10px -5px rgba(0,122,194,0.04);
-    border-color: rgba(0,122,194,0.2);
-}
-.product-icon-wrap {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, rgba(0,122,194,0.1), rgba(0,150,214,0.1));
-    color: var(--p-blue);
-}
-.product-card:hover .product-icon-wrap {
-    background: linear-gradient(135deg, var(--p-blue), var(--s-blue));
-    color: #FFF;
-}
-
-/* Buttons */
-.btn-primary {
-    background: linear-gradient(135deg, var(--p-blue), var(--s-blue));
-    color: #FFF;
-    font-weight: 700;
-    padding: 12px 28px;
-    border-radius: 12px;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 14px rgba(0,122,194,0.3);
-}
-.btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(0,122,194,0.4);
-    transform: translateY(-2px);
-}
-.btn-outline {
-    background: transparent;
-    color: var(--p-blue);
-    font-weight: 600;
-    padding: 10px 24px;
-    border-radius: 10px;
-    border: 2px solid var(--p-blue);
-    transition: all 0.3s;
-}
-.btn-outline:hover {
-    background: rgba(0,122,194,0.05);
-}
-
-.year-text { font-size: 80px; font-weight: 900; line-height: 1; letter-spacing: -0.05em; }
-@media(min-width: 768px) { .year-text { font-size: 120px; } }
-</style>
-</head>
-<body>
-
-<!-- Navigation -->
-<nav class="nav-glass fixed w-full top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <div class="flex items-center gap-4">
-            <img src="logo.png" alt="Bảo Việt Nhân Thọ" class="h-10 md:h-12 object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(87%) saturate(1612%) hue-rotate(180deg) brightness(87%) contrast(102%);">
-            <span class="text-lg md:text-xl font-extrabold tracking-wide uppercase bg-gradient-to-r from-[#D4B271] via-[#FFF] to-[#C8A046] bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(212,178,113,0.5)] border-l-2 border-[#D4B271] pl-4 leading-none" style="font-family: 'Georgia', 'Inter', sans-serif; filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.8));">BẢO VIỆT NHÂN THỌ SÀI GÒN</span>
-        </div>
-        <div class="hidden md:flex items-center gap-8 font-semibold text-sm text-slate-600">
-            <a href="#gioi-thieu" class="hover:text-[#007AC2] transition-colors">Giới thiệu</a>
-            <a href="#san-pham" class="hover:text-[#007AC2] transition-colors">Sản phẩm</a>
-            <a href="https://www.facebook.com/BaoVietNhanThoSaiGon" target="_blank" class="hover:text-[#007AC2] transition-colors flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                Fanpage
-            </a>
-            
-            <a href="gia-lap-tu-van.html" class="hover:text-[#007AC2] font-bold text-[#D4B271] transition-colors flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                Giả Lập Tư Vấn
-            </a>
-            <a href="gia-lap-thu-nhap.html" class="hover:text-[#007AC2] font-bold text-[#0096D6] transition-colors flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Giả Lập Thu Nhập
-            </a>
-            <a href="doanh-thu.html" class="btn-primary py-2.5 px-5 shadow-none text-sm">Trung Tâm Quản Trị Doanh Thu</a>
-        </div>
-    </div>
-</nav>
-
-<!-- Hero Section (Light Theme, 30 Years) -->
-<section id="gioi-thieu" class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28">
-    <div class="hero-pattern"></div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
-        
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-bold text-xs uppercase tracking-widest mb-8">
-            <svg class="w-4 h-4 text-[#D4B271]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            Kỷ Niệm 30 Năm (1996 - 2026)
-        </div>
-
-        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Hành Trình Kiến Tạo <br class="hidden md:block">
-            <span class="grad-text-blue">Bình An & Thịnh Vượng</span>
-        </h1>
-        
-        <div class="flex items-center justify-center gap-8 my-10">
-            <img src="co_bv.png" alt="Cờ Bảo Việt Nhân Thọ" class="h-32 md:h-48 object-contain drop-shadow-xl">
-            <img src="logo_30_nam.png" alt="30 Năm Bảo Việt Nhân Thọ" class="h-32 md:h-48 object-contain drop-shadow-xl">
-        </div>
-
-        <p class="max-w-2xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed mb-10">
-            Tự hào là doanh nghiệp bảo hiểm nhân thọ đầu tiên tại Việt Nam. Xuyên suốt 3 thập kỷ, Bảo Việt Nhân thọ Sài Gòn không ngừng đổi mới để bảo vệ hàng triệu gia đình Việt.
-        </p>
-
-        <div class="mt-8 mb-8 flex justify-center">
-            <img src="baoviet_team.jpg" alt="Đội ngũ quyết tâm" class="w-full max-w-4xl object-contain drop-shadow-2xl rounded-2xl border-4 border-white/50 shadow-[0_20px_50px_rgba(0,122,194,0.15)]">
-        </div>
-<a href="#san-pham" class="btn-primary text-lg px-8 py-4">
-            Khám Phá Sản Phẩm
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-        </a>
-    </div>
-</section>
-
-<!-- Products Section -->
-<section id="san-pham" class="py-20 bg-slate-50 border-t border-slate-200">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
-            <div class="flex justify-center mb-6">
-    <img src="3d_shield.png" alt="Bảo vệ toàn diện" class="h-24 md:h-32 object-contain drop-shadow-lg">
-</div>
-<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Giải Pháp Tài Chính Toàn Diện</h2>
-            <p class="text-slate-500 max-w-2xl mx-auto">Thiết kế chuyên biệt cho từng giai đoạn cuộc đời, giúp bạn tự tin hoạch định tương lai, bảo vệ trọn vẹn gia đình và bản thân.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Product 1 -->
-            <div class="product-card p-8">
-                <div class="product-icon-wrap">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">An Khang Như Ý</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-6">Sản phẩm Bảo hiểm liên kết chung - Giải pháp bảo vệ sức khỏe toàn diện trước rủi ro bệnh lý nghiêm trọng (đặc biệt là ung thư) và chăm sóc y tế chuyên sâu.</p>
-                <ul class="mb-8 space-y-3">
-                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Bảo vệ tài chính trước Bệnh lý nghiêm trọng và Ung thư</li>
-                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quyền lợi Thưởng duy trì hợp đồng và Thưởng đặc biệt</li>
-                </ul>
-                <a href="https://www.baovietnhantho.com.vn/san-pham/bao-ve/bao-hiem-lien-ket-chung-an-khang-nhu-y" class="text-[#007AC2] font-bold text-sm hover:underline flex items-center gap-1">Tìm hiểu chi tiết <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="product-card p-8 border-t-4 border-t-[#D4B271]">
-                <div class="product-icon-wrap" style="background: linear-gradient(135deg, rgba(212,178,113,0.1), rgba(200,160,70,0.1)); color: #B8860B;">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">An Tâm Hoạch Định</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-6">Sản phẩm Bảo hiểm liên kết chung - Tích lũy hiệu quả với lãi suất đầu tư thực tế từ Quỹ liên kết chung, kết hợp quyền lợi bảo vệ toàn diện trước tử vong/TTTBVV.</p>
-                <ul class="mb-8 space-y-3">
-                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Hưởng Lãi suất đầu tư và Lãi suất cam kết tối thiểu</li>
-                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Linh hoạt đóng phí, rút tiền và gia tăng Giá trị Tài khoản</li>
-                </ul>
-                <a href="https://www.baovietnhantho.com.vn/san-pham/tich-luy/bao-hiem-lien-ket-chung-an-tam-hoach-dinh" class="text-[#007AC2] font-bold text-sm hover:underline flex items-center gap-1">Tìm hiểu chi tiết <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="product-card p-8">
-                <div class="product-icon-wrap">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">An Lộc Vững Bền</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-6">Sản phẩm Bảo hiểm hỗn hợp - Tích lũy tài chính định kỳ làm quỹ hưu trí vững chắc, bảo vệ trọn đời kết hợp quyền lợi nhận tiền mặt hấp dẫn định kỳ 5 năm.</p>
-                <ul class="mb-8 space-y-3">
-                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Nhận Quyền lợi Định kỳ mỗi 5 năm (Tối đa 20% STBH)</li>
-                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quyền lợi Đáo hạn bằng 100% STBH gia tăng và Bảo tức</li>
-                </ul>
-                <a href="https://www.baovietnhantho.com.vn/san-pham/tich-luy/san-pham-bao-hiem-hon-hop-an-loc-vung-ben" class="text-[#007AC2] font-bold text-sm hover:underline flex items-center gap-1">Tìm hiểu chi tiết <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-            </div>
-        </div>
-    </div>
-</section>
-
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bảo Việt Nhân thọ Sài Gòn | 30 Năm Kiến Tạo Bình An</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --p-blue: #007AC2;
+    --s-blue: #0096D6;
+    --gold: #D4B271;
+    --bg-light: #F8FAFC;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* Gradients */
+.grad-text-blue { background: linear-gradient(135deg, var(--p-blue), var(--s-blue)); -webkit-background-clip: text; color: transparent; }
+.grad-text-gold { background: linear-gradient(135deg, #B8860B, #D4B271); -webkit-background-clip: text; color: transparent; }
+.bg-grad-blue { background: linear-gradient(135deg, var(--p-blue), var(--s-blue)); }
+
+/* Navbar */
+.nav-glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+/* Hero Section */
+.hero-bg {
+    position: relative;
+    background: #FFFFFF;
+    overflow: hidden;
+}
+.hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0, 122, 194, 0.05) 2px, transparent 2px);
+    background-size: 30px 30px;
+    z-index: 0;
+}
+
+/* Product Cards */
+.product-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0,122,194,0.1), 0 10px 10px -5px rgba(0,122,194,0.04);
+    border-color: rgba(0,122,194,0.2);
+}
+.product-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, rgba(0,122,194,0.1), rgba(0,150,214,0.1));
+    color: var(--p-blue);
+}
+.product-card:hover .product-icon-wrap {
+    background: linear-gradient(135deg, var(--p-blue), var(--s-blue));
+    color: #FFF;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--p-blue), var(--s-blue));
+    color: #FFF;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 12px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(0,122,194,0.3);
+}
+.btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(0,122,194,0.4);
+    transform: translateY(-2px);
+}
+.btn-outline {
+    background: transparent;
+    color: var(--p-blue);
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: 2px solid var(--p-blue);
+    transition: all 0.3s;
+}
+.btn-outline:hover {
+    background: rgba(0,122,194,0.05);
+}
+
+.year-text { font-size: 80px; font-weight: 900; line-height: 1; letter-spacing: -0.05em; }
+@media(min-width: 768px) { .year-text { font-size: 120px; } }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav-glass fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <img src="logo.png" alt="Bảo Việt Nhân Thọ" class="h-10 md:h-12 object-contain" style="filter: brightness(0) saturate(100%) invert(32%) sepia(87%) saturate(1612%) hue-rotate(180deg) brightness(87%) contrast(102%);">
+            <span class="text-lg md:text-xl font-extrabold tracking-wide uppercase bg-gradient-to-r from-[#D4B271] via-[#FFF] to-[#C8A046] bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(212,178,113,0.5)] border-l-2 border-[#D4B271] pl-4 leading-none" style="font-family: 'Georgia', 'Inter', sans-serif; filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.8));">BẢO VIỆT NHÂN THỌ SÀI GÒN</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8 font-semibold text-sm text-slate-600">
+            <a href="#gioi-thieu" class="hover:text-[#007AC2] transition-colors">Giới thiệu</a>
+            <a href="#san-pham" class="hover:text-[#007AC2] transition-colors">Sản phẩm</a>
+            <a href="https://www.facebook.com/BaoVietNhanThoSaiGon" target="_blank" class="hover:text-[#007AC2] transition-colors flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Fanpage
+            </a>
+            
+            <a href="gia-lap-tu-van.html" class="hover:text-[#007AC2] font-bold text-[#D4B271] transition-colors flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                Giả Lập Tư Vấn
+            </a>
+            <a href="gia-lap-thu-nhap.html" class="hover:text-[#007AC2] font-bold text-[#0096D6] transition-colors flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Giả Lập Thu Nhập
+            </a>
+            <a href="doanh-thu.html" class="btn-primary py-2.5 px-5 shadow-none text-sm">Trung Tâm Quản Trị Doanh Thu</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section (Light Theme, 30 Years) -->
+<section id="gioi-thieu" class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="hero-pattern"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-bold text-xs uppercase tracking-widest mb-8">
+            <svg class="w-4 h-4 text-[#D4B271]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            Kỷ Niệm 30 Năm (1996 - 2026)
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+            Hành Trình Kiến Tạo <br class="hidden md:block">
+            <span class="grad-text-blue">Bình An & Thịnh Vượng</span>
+        </h1>
+        
+        <div class="flex items-center justify-center gap-8 my-10">
+            <img src="co_bv.png" alt="Cờ Bảo Việt Nhân Thọ" class="h-32 md:h-48 object-contain drop-shadow-xl">
+            <img src="logo_30_nam.png" alt="30 Năm Bảo Việt Nhân Thọ" class="h-32 md:h-48 object-contain drop-shadow-xl">
+        </div>
+
+        <p class="max-w-2xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed mb-10">
+            Tự hào là doanh nghiệp bảo hiểm nhân thọ đầu tiên tại Việt Nam. Xuyên suốt 3 thập kỷ, Bảo Việt Nhân thọ Sài Gòn không ngừng đổi mới để bảo vệ hàng triệu gia đình Việt.
+        </p>
+
+        <div class="mt-8 mb-8 flex justify-center">
+            <img src="baoviet_team.jpg" alt="Đội ngũ quyết tâm" class="w-full max-w-4xl object-contain drop-shadow-2xl rounded-2xl border-4 border-white/50 shadow-[0_20px_50px_rgba(0,122,194,0.15)]">
+        </div>
+<a href="#san-pham" class="btn-primary text-lg px-8 py-4">
+            Khám Phá Sản Phẩm
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section id="san-pham" class="py-20 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <div class="flex justify-center mb-6">
+    <img src="3d_shield.png" alt="Bảo vệ toàn diện" class="h-24 md:h-32 object-contain drop-shadow-lg">
+</div>
+<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Giải Pháp Tài Chính Toàn Diện</h2>
+            <p class="text-slate-500 max-w-2xl mx-auto">Thiết kế chuyên biệt cho từng giai đoạn cuộc đời, giúp bạn tự tin hoạch định tương lai, bảo vệ trọn vẹn gia đình và bản thân.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="product-card p-8">
+                <div class="product-icon-wrap">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">An Khang Như Ý</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Sản phẩm Bảo hiểm liên kết chung - Giải pháp bảo vệ sức khỏe toàn diện trước rủi ro bệnh lý nghiêm trọng (đặc biệt là ung thư) và chăm sóc y tế chuyên sâu.</p>
+                <ul class="mb-8 space-y-3">
+                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Bảo vệ tài chính trước Bệnh lý nghiêm trọng và Ung thư</li>
+                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quyền lợi Thưởng duy trì hợp đồng và Thưởng đặc biệt</li>
+                </ul>
+                <a href="https://www.baovietnhantho.com.vn/san-pham/bao-ve/bao-hiem-lien-ket-chung-an-khang-nhu-y" class="text-[#007AC2] font-bold text-sm hover:underline flex items-center gap-1">Tìm hiểu chi tiết <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card p-8 border-t-4 border-t-[#D4B271]">
+                <div class="product-icon-wrap" style="background: linear-gradient(135deg, rgba(212,178,113,0.1), rgba(200,160,70,0.1)); color: #B8860B;">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">An Tâm Hoạch Định</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Sản phẩm Bảo hiểm liên kết chung - Tích lũy hiệu quả với lãi suất đầu tư thực tế từ Quỹ liên kết chung, kết hợp quyền lợi bảo vệ toàn diện trước tử vong/TTTBVV.</p>
+                <ul class="mb-8 space-y-3">
+                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Hưởng Lãi suất đầu tư và Lãi suất cam kết tối thiểu</li>
+                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Linh hoạt đóng phí, rút tiền và gia tăng Giá trị Tài khoản</li>
+                </ul>
+                <a href="https://www.baovietnhantho.com.vn/san-pham/tich-luy/bao-hiem-lien-ket-chung-an-tam-hoach-dinh" class="text-[#007AC2] font-bold text-sm hover:underline flex items-center gap-1">Tìm hiểu chi tiết <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card p-8">
+                <div class="product-icon-wrap">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">An Lộc Vững Bền</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">Sản phẩm Bảo hiểm hỗn hợp - Tích lũy tài chính định kỳ làm quỹ hưu trí vững chắc, bảo vệ trọn đời kết hợp quyền lợi nhận tiền mặt hấp dẫn định kỳ 5 năm.</p>
+                <ul class="mb-8 space-y-3">
+                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Nhận Quyền lợi Định kỳ mỗi 5 năm (Tối đa 20% STBH)</li>
+                    <li class="flex items-start gap-2 text-sm text-slate-700 font-medium"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quyền lợi Đáo hạn bằng 100% STBH gia tăng và Bảo tức</li>
+                </ul>
+                <a href="https://www.baovietnhantho.com.vn/san-pham/tich-luy/san-pham-bao-hiem-hon-hop-an-loc-vung-ben" class="text-[#007AC2] font-bold text-sm hover:underline flex items-center gap-1">Tìm hiểu chi tiết <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Tools Section -->
 <section id="cong-cu" class="py-20 bg-white border-t border-slate-200">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">CA'ng C H- Tr ?c Lc</h2>
-            <p class="text-slate-500 max-w-2xl mx-auto">H th`ng cA'ng c chuyAn bit giAp nAng cao hiu qu qun tr< vA t vn cho `Ti ngc Bo Vit NhAn th?.</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Công Cụ Hỗ Trợ Đắc Lực</h2>
+            <p class="text-slate-500 max-w-2xl mx-auto">Hệ thống công cụ chuyên biệt giúp nâng cao hiệu quả quản trị và tư vấn cho Đội ngũ Bảo Việt Nhân thọ Sài Gòn.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -241,9 +241,9 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                     <div class="w-20 h-20 bg-blue-100 text-[#007AC2] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#007AC2] transition-colors">Trung TAm Doanh Thu</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Theo dAui vA phAn tA-ch ch% tiAu doanh thu thAng minh. C-p nh-t real-time, biu `" trc quan.</p>
-                    <span class="inline-flex items-center gap-2 text-[#007AC2] font-semibold text-sm">Truy c-p ngay <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#007AC2] transition-colors">Trung Tâm Doanh Thu</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Theo dõi và phân tích chỉ tiêu doanh thu thông minh. Cập nhật real-time, biểu đồ trực quan.</p>
+                    <span class="inline-flex items-center gap-2 text-[#007AC2] font-semibold text-sm">Truy cập ngay <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                 </div>
             </a>
 
@@ -254,9 +254,9 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                     <div class="w-20 h-20 bg-[#D4B271]/20 text-[#B8860B] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#B8860B] transition-colors">Gi L-p T Vn (AI)</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Tr lA? t vn AI thA'ng minh (Qwen-72B). X lA? tAnh hu`ng, gii `Ap th_c m_c khAch hAng.</p>
-                    <span class="inline-flex items-center gap-2 text-[#B8860B] font-semibold text-sm">Truy c-p ngay <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#B8860B] transition-colors">Giả Lập Tư Vấn (AI)</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Trợ lý tư vấn AI thông minh (Qwen-72B). Xử lý tình huống, giải đáp thắc mắc khách hàng.</p>
+                    <span class="inline-flex items-center gap-2 text-[#B8860B] font-semibold text-sm">Truy cập ngay <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                 </div>
             </a>
 
@@ -267,86 +267,86 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                     <div class="w-20 h-20 bg-[#0096D6]/20 text-[#0096D6] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#0096D6] transition-colors">Gi L-p Thu Nh-p</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">TA-nh toAn hoa h"ng, chA-nh sAch thYng cho t vn viAn. ?c m_c thu nh-p rAu rAng, d hiu.</p>
-                    <span class="inline-flex items-center gap-2 text-[#0096D6] font-semibold text-sm">Truy c-p ngay <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-[#0096D6] transition-colors">Giả Lập Thu Nhập</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">Tính toán hoa hồng, chính sách thưởng cho tư vấn viên. Ước mức thu nhập rõ ràng, dễ hiểu.</p>
+                    <span class="inline-flex items-center gap-2 text-[#0096D6] font-semibold text-sm">Truy cập ngay <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                 </div>
             </a>
         </div>
     </div>
 </section>
 
-<!-- Facebook Fanpage Section -->
-<section class="py-16 bg-white border-t border-slate-200">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 text-[#1877F2] mb-6 shadow-sm border border-blue-100">
-            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </div>
-        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">Kết Nối Với Chúng Tôi Trên Facebook</h2>
-        <p class="text-slate-500 max-w-xl mx-auto mb-8">Cập nhật nhanh nhất các thông tin sự kiện, chương trình thi đua kinh doanh và tin tức bảo hiểm mới nhất từ Bảo Việt Nhân thọ Sài Gòn.</p>
-        <a href="https://www.facebook.com/BaoVietNhanThoSaiGon" target="_blank" class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#1877F2] to-[#166FE5] shadow-md hover:shadow-lg">
-            <span>Ghé Thăm Fanpage Facebook</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-white border-t border-slate-200 py-12">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 pb-8 border-b border-slate-100">
-            <div>
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="co_bv.png" alt="Cờ Bảo Việt" class="h-10 object-contain rounded drop-shadow-md">
-                    <span class="text-base font-extrabold text-[#007AC2]">Bảo Việt Nhân thọ Sài Gòn</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">Đơn vị thành viên của Tổng Công ty Bảo Việt Nhân thọ, phục vụ và bảo vệ an bình thịnh vượng cho khách hàng tại địa bàn TP. Hồ Chí Minh.</p>
-            </div>
-            <div>
-                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Thông Tin Liên Hệ</h4>
-                <ul class="space-y-2.5 text-xs text-slate-600">
-                    <li class="flex items-start gap-2">
-                        <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <span><strong>Địa chỉ:</strong> 233 Đồng Khởi, Phường Sài Gòn, TP. HCM</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span><strong>Thời gian làm việc:</strong> 8h - 17h từ Thứ 2 đến Thứ 6 hàng tuần</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        <span><strong>Hotline hỗ trợ:</strong> 1900 558899</span>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Hệ Thống Trực Tuyến</h4>
-                <div class="flex flex-col gap-2">
-                    <a href="doanh-thu.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#007AC2] hover:text-[#0096D6] transition-colors mb-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                        Trung Tâm Quản Trị Doanh Thu
-                    </a>
-                    <a href="gia-lap-tu-van.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#D4B271] hover:text-[#C8A046] transition-colors mb-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                        Giả Lập Tư Vấn
-                    </a>
-                    <a href="gia-lap-thu-nhap.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#0096D6] hover:text-[#007AC2] transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Giả Lập Thu Nhập (Chính sách)
-                    </a>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-slate-200 mt-6 pt-6">
-            <p class="text-[11px] text-slate-500 font-semibold tracking-wider uppercase">© 2026 Tự hào 30 năm vươn tầm. Bản quyền thuộc Bảo Việt Nhân thọ.</p>
-            <div class="flex flex-col items-center gap-2 md:items-end">
-                <p class="text-xs text-slate-500 font-medium">Thiết kế & Phát triển bởi <span class="font-bold text-[#D4B271]">Võ Duy Thoại</span></p>
-                <img src="vo_duy_thoai_co_bv_blue.png" alt="Võ Duy Thoại" class="h-16 w-auto object-cover rounded-md shadow-sm border border-slate-200" />
-            </div>
-        </div>
-    </div>
-</footer>
-
-</body>
+<!-- Facebook Fanpage Section -->
+<section class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 text-[#1877F2] mb-6 shadow-sm border border-blue-100">
+            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">Kết Nối Với Chúng Tôi Trên Facebook</h2>
+        <p class="text-slate-500 max-w-xl mx-auto mb-8">Cập nhật nhanh nhất các thông tin sự kiện, chương trình thi đua kinh doanh và tin tức bảo hiểm mới nhất từ Bảo Việt Nhân thọ Sài Gòn.</p>
+        <a href="https://www.facebook.com/BaoVietNhanThoSaiGon" target="_blank" class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#1877F2] to-[#166FE5] shadow-md hover:shadow-lg">
+            <span>Ghé Thăm Fanpage Facebook</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-slate-200 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 pb-8 border-b border-slate-100">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="co_bv.png" alt="Cờ Bảo Việt" class="h-10 object-contain rounded drop-shadow-md">
+                    <span class="text-base font-extrabold text-[#007AC2]">Bảo Việt Nhân thọ Sài Gòn</span>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed">Đơn vị thành viên của Tổng Công ty Bảo Việt Nhân thọ, phục vụ và bảo vệ an bình thịnh vượng cho khách hàng tại địa bàn TP. Hồ Chí Minh.</p>
+            </div>
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Thông Tin Liên Hệ</h4>
+                <ul class="space-y-2.5 text-xs text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span><strong>Địa chỉ:</strong> 233 Đồng Khởi, Phường Sài Gòn, TP. HCM</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span><strong>Thời gian làm việc:</strong> 8h - 17h từ Thứ 2 đến Thứ 6 hàng tuần</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <span><strong>Hotline hỗ trợ:</strong> 1900 558899</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Hệ Thống Trực Tuyến</h4>
+                <div class="flex flex-col gap-2">
+                    <a href="doanh-thu.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#007AC2] hover:text-[#0096D6] transition-colors mb-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        Trung Tâm Quản Trị Doanh Thu
+                    </a>
+                    <a href="gia-lap-tu-van.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#D4B271] hover:text-[#C8A046] transition-colors mb-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                        Giả Lập Tư Vấn
+                    </a>
+                    <a href="gia-lap-thu-nhap.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#0096D6] hover:text-[#007AC2] transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Giả Lập Thu Nhập (Chính sách)
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-slate-200 mt-6 pt-6">
+            <p class="text-[11px] text-slate-500 font-semibold tracking-wider uppercase">© 2026 Tự hào 30 năm vươn tầm. Bản quyền thuộc Bảo Việt Nhân thọ.</p>
+            <div class="flex flex-col items-center gap-2 md:items-end">
+                <p class="text-xs text-slate-500 font-medium">Thiết kế & Phát triển bởi <span class="font-bold text-[#D4B271]">Võ Duy Thoại</span></p>
+                <img src="vo_duy_thoai_co_bv_blue.png" alt="Võ Duy Thoại" class="h-16 w-auto object-cover rounded-md shadow-sm border border-slate-200" />
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
 </html>
