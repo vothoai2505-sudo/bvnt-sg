@@ -840,12 +840,6 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
         
         renderer.setSize(container.clientWidth, container.clientHeight);
 
-            if (heroContainer) {
-                heroCamera.aspect = heroContainer.clientWidth / heroContainer.clientHeight;
-                heroCamera.updateProjectionMatrix();
-                heroRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
-            }
-
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
@@ -1049,12 +1043,6 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
             camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
-
-            if (heroContainer) {
-                heroCamera.aspect = heroContainer.clientWidth / heroContainer.clientHeight;
-                heroCamera.updateProjectionMatrix();
-                heroRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
-            }
 
         });
     });
