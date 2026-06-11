@@ -406,7 +406,7 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
             <div class="swiper-wrapper">
                 <!-- Slide 1: Market Share Infographic -->
                 <div class="swiper-slide relative group">
-                    <a href="https://doanhnghieptiepthi.vn/thi-truong-bao-hiem-nhan-tho-viet-nam-trong-giai-doan-tai-cau-truc-161260325220502657.htm" target="_blank" class="block w-full h-full">
+                    <a href="https://doanhnghieptiepthi.vn/thi-truong-bao-hiem-nhan-tho-viet-nam-trong-giai-doan-tai-cau-truc-161260325220502657.htm" target="_blank" class="block w-full h-full cursor-pointer">
                         <img src="poster_thi_phan_2025.png" alt="Bản đồ thị phần bảo hiểm nhân thọ Việt Nam 2025" class="w-full h-auto object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none"></div>
                         <div class="absolute bottom-4 right-6 text-white/90 text-xs font-medium tracking-wide pointer-events-none drop-shadow-md text-right">
@@ -414,6 +414,7 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                         </div>
                     </a>
                 </div>
+                
                 <!-- Slide 2: 30 Years Banner -->
                 <div class="swiper-slide relative group">
                     <img src="banner_30_nam.jpg" alt="3 Thập Kỷ Tự Hào Dẫn Đầu" class="w-full h-auto object-cover">
@@ -421,7 +422,7 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                 </div>
 
                 <!-- Slide 3: CSR Activities -->
-                <div class="swiper-slide relative group bg-gradient-to-br from-[#003a6c] to-[#007AC2] overflow-hidden">
+                <div class="swiper-slide relative group bg-gradient-to-br from-[#003a6c] to-[#007AC2] overflow-hidden flex flex-col md:flex-row h-full">
                     <a href="https://vietcetera.com/vn/bao-viet-nhan-tho-tich-cuc-hoat-dong-va-dong-gop-vi-cong-dong" target="_blank" class="flex flex-col md:flex-row w-full h-full block cursor-pointer">
                         <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center text-left z-10">
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white font-bold text-[10px] md:text-xs uppercase tracking-widest mb-4 w-max">
@@ -434,20 +435,21 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                                 Chương trình "Vì một Việt Nam tươi đẹp" của Bảo Việt Nhân Thọ tự hào đồng hành cùng thế hệ trẻ vươn tới tương lai. Hàng chục ngàn suất học bổng đã được trao đi, khẳng định sứ mệnh: gieo mầm tri thức, kiến tạo phồn vinh.
                             </p>
                         </div>
-                        <div class="md:w-1/2 relative h-48 md:h-full">
+                        <div class="md:w-1/2 relative min-h-[300px] md:h-full">
                             <img src="csr_new_3.jpg" alt="Lễ trao học bổng Vì Một Việt Nam Tươi Đẹp" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-transparent to-[#003a6c]"></div>
                         </div>
                     </a>
                 </div>
             </div>
-        </div>
+            
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
             <!-- Add Navigation -->
             <div class="swiper-button-next !text-[#007AC2] !bg-white/80 !w-12 !h-12 !rounded-full drop-shadow-md !right-4 hidden md:flex items-center justify-center after:!text-xl hover:!bg-white transition-colors"></div>
             <div class="swiper-button-prev !text-[#007AC2] !bg-white/80 !w-12 !h-12 !rounded-full drop-shadow-md !left-4 hidden md:flex items-center justify-center after:!text-xl hover:!bg-white transition-colors"></div>
         </div>
+
 <!-- Override Swiper default styles a bit -->
         <style>
             .swiper-pagination-bullet { background: #fff; opacity: 0.5; width: 10px; height: 10px; }
