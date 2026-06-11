@@ -208,6 +208,10 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
 </style>
 
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 </head>
 
 <body>
@@ -364,13 +368,39 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
         <p class="text-slate-500 max-w-3xl mx-auto mb-10 text-sm md:text-base leading-relaxed">
             Khẳng định vị thế dẫn đầu tuyệt đối với <strong class="text-slate-800">20.8%</strong> thị phần doanh thu phí khai thác mới. Nhìn chung, thị trường nhân thọ vẫn chủ yếu do các doanh nghiệp có vốn nước ngoài chi phối, Bảo Việt Life tự hào là doanh nghiệp nội địa vươn lên dẫn đầu, chiếm lĩnh hơn 1/5 toàn thị trường.
         </p>
-        <a href="https://doanhnghieptiepthi.vn/thi-truong-bao-hiem-nhan-tho-viet-nam-trong-giai-doan-tai-cau-truc-161260325220502657.htm" target="_blank" class="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,122,194,0.15)] border-4 border-white mx-auto max-w-5xl group block cursor-pointer">
-            <img src="poster_thi_phan_2025.png" alt="Bản đồ thị phần bảo hiểm nhân thọ Việt Nam 2025" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none"></div>
-            <div class="absolute bottom-4 right-6 text-white/90 text-xs font-medium tracking-wide pointer-events-none drop-shadow-md text-right">
-                *Nguồn: Thống kê thị phần doanh thu phí khai thác mới năm 2025.<br>Top 8 doanh nghiệp dẫn đầu chiếm hơn 80% toàn thị trường.
+        
+        <!-- Swiper -->
+        <div class="swiper mySwiper rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,122,194,0.15)] border-4 border-white mx-auto max-w-5xl">
+            <div class="swiper-wrapper">
+                <!-- Slide 1: Market Share Infographic -->
+                <div class="swiper-slide relative group">
+                    <a href="https://doanhnghieptiepthi.vn/thi-truong-bao-hiem-nhan-tho-viet-nam-trong-giai-doan-tai-cau-truc-161260325220502657.htm" target="_blank" class="block w-full h-full">
+                        <img src="poster_thi_phan_2025.png" alt="Bản đồ thị phần bảo hiểm nhân thọ Việt Nam 2025" class="w-full h-auto object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none"></div>
+                        <div class="absolute bottom-4 right-6 text-white/90 text-xs font-medium tracking-wide pointer-events-none drop-shadow-md text-right">
+                            *Nguồn: Thống kê thị phần doanh thu phí khai thác mới năm 2025.<br>Top 8 doanh nghiệp dẫn đầu chiếm hơn 80% toàn thị trường.
+                        </div>
+                    </a>
+                </div>
+                <!-- Slide 2: 30 Years Banner -->
+                <div class="swiper-slide relative group">
+                    <img src="banner_30_nam.jpg" alt="3 Thập Kỷ Tự Hào Dẫn Đầu" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent pointer-events-none"></div>
+                </div>
             </div>
-        </a>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next !text-[#007AC2] !bg-white/80 !w-12 !h-12 !rounded-full drop-shadow-md !right-4 hidden md:flex items-center justify-center after:!text-xl hover:!bg-white transition-colors"></div>
+            <div class="swiper-button-prev !text-[#007AC2] !bg-white/80 !w-12 !h-12 !rounded-full drop-shadow-md !left-4 hidden md:flex items-center justify-center after:!text-xl hover:!bg-white transition-colors"></div>
+        </div>
+        
+        <!-- Override Swiper default styles a bit -->
+        <style>
+            .swiper-pagination-bullet { background: #fff; opacity: 0.5; width: 10px; height: 10px; }
+            .swiper-pagination-bullet-active { background: #007AC2; opacity: 1; width: 24px; border-radius: 5px; transition: width 0.3s; }
+        </style>
+
     </div>
 </section>
 
@@ -686,6 +716,35 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 </footer>
 
 
+
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      loop: true,
+      effect: "fade",
+      fadeEffect: {
+        crossFade: true
+      }
+    });
+  });
+</script>
 
 </body>
 
