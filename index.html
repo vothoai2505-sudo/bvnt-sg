@@ -391,6 +391,14 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                 Hành trình <strong class="text-slate-800">3 Thập Kỷ Tự Hào</strong> đồng hành và bảo vệ hàng triệu gia đình Việt. Chúng tôi cam kết tiếp tục đổi mới, mang lại những giá trị thiết thực và sự an bình thịnh vượng cho mọi khách hàng trên khắp cả nước.
             </p>
         </div>
+
+        <div id="slider-text-3" class="absolute inset-0 w-full transition-opacity duration-500 opacity-0 z-0 pointer-events-none">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">Trách Nhiệm <span class="text-[#1877F2]">Vì Cộng Đồng</span></h2>
+            <p class="text-slate-500 max-w-3xl mx-auto mb-10 text-sm md:text-base leading-relaxed">
+                Hơn cả một doanh nghiệp bảo hiểm, chúng tôi tin rằng <strong class="text-slate-800">Phát triển bền vững</strong> là phải song hành cùng xã hội. Hàng chục ngàn phần quà, học bổng và các chương trình y tế miễn phí đã được trao đi trong suốt 18 năm qua.
+            </p>
+        </div>
+
     </div>
     
     <div class="max-w-7xl mx-auto px-6 text-center">
@@ -412,6 +420,29 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                     <img src="banner_30_nam.jpg" alt="3 Thập Kỷ Tự Hào Dẫn Đầu" class="w-full h-auto object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent pointer-events-none"></div>
                 </div>
+
+                <!-- Slide 3: CSR Activities -->
+                <div class="swiper-slide relative group bg-gradient-to-br from-[#003a6c] to-[#007AC2] overflow-hidden flex flex-col md:flex-row h-full">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center text-left z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white font-bold text-[10px] md:text-xs uppercase tracking-widest mb-4 w-max">
+                            Trách Nhiệm Cộng Đồng
+                        </div>
+                        <h3 class="text-xl md:text-3xl font-extrabold text-white mb-3 md:mb-4 leading-tight">
+                            Lan Tỏa Yêu Thương - Vì Một Việt Nam Tươi Đẹp
+                        </h3>
+                        <p class="text-blue-50 mb-6 text-xs md:text-sm line-clamp-3 md:line-clamp-none">
+                            Suốt 18 năm qua, Bảo Việt Nhân Thọ đã trao tặng gần 33.000 suất học bổng và tổ chức thăm khám sức khỏe miễn phí cho hàng chục ngàn người dân. Khẳng định triết lý phát triển bền vững phải song hành cùng sự phồn vinh của xã hội.
+                        </p>
+                        <a href="https://vietcetera.com/vn/bao-viet-nhan-tho-tich-cuc-hoat-dong-va-dong-gop-vi-cong-dong" target="_blank" class="inline-flex items-center gap-2 text-white font-bold hover:text-[#D4B271] transition-colors w-max text-sm">
+                            Đọc trên Vietcetera <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                    <div class="md:w-1/2 relative h-48 md:h-full">
+                        <img src="csr_image_1.jpg" alt="Hoạt động cộng đồng" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-transparent to-[#003a6c]"></div>
+                    </div>
+                </div>
+
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
@@ -628,58 +659,7 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 <!-- Footer -->
 
 
-<!-- Community & CSR Section -->
-<section id="cong-dong" class="py-20 bg-[#F8FAFC]">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col lg:flex-row gap-12 items-center">
-            <!-- Content -->
-            <div class="lg:w-1/2 order-2 lg:order-1">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-[#007AC2] font-bold text-xs uppercase tracking-widest mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    Trách Nhiệm Cộng Đồng
-                </div>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
-                    Lan Tỏa Yêu Thương - <br><span class="text-[#007AC2]">Vì Một Việt Nam Tươi Đẹp</span>
-                </h2>
-                <div class="prose prose-lg text-slate-600 mb-8">
-                    <p class="mb-4">
-                        Không chỉ là cánh chim đầu đàn dẫn dắt thị trường bảo hiểm nhân thọ Việt Nam, <strong>Bảo Việt Nhân Thọ</strong> luôn tâm niệm sự nghiệp phát triển bền vững của doanh nghiệp phải song hành chặt chẽ cùng sự phồn vinh của xã hội.
-                    </p>
-                    <p class="mb-4">
-                        Suốt 18 năm qua, chương trình <strong class="text-[#D4B271]">“Quỹ xe đạp chở ước mơ”</strong> đã trao tặng gần 33.000 suất học bổng và xe đạp cho những mầm non hiếu học trên mọi miền Tổ quốc. Trong hành trình gieo hạt tri thức, hàng ngàn học sinh xuất sắc, bao gồm cả Quán quân Đường Lên Đỉnh Olympia, đã nhận được sự đồng hành từ chúng tôi.
-                    </p>
-                    <p>
-                        Không dừng lại ở giáo dục, chiến dịch chăm sóc sức khỏe cộng đồng của Bảo Việt Nhân Thọ đã mang cơ hội thăm khám, tư vấn từ các bác sĩ đầu ngành đến với hàng chục ngàn người dân mỗi năm. Chúng tôi nỗ lực không ngừng nghỉ để kiến tạo giá trị, <em>trao niềm tin, nhận yêu thương</em>.
-                    </p>
-                </div>
-                <a href="https://vietcetera.com/vn/bao-viet-nhan-tho-tich-cuc-hoat-dong-va-dong-gop-vi-cong-dong" target="_blank" class="inline-flex items-center gap-2 text-[#007AC2] font-semibold hover:text-[#005a91] transition-colors group">
-                    Đọc bài viết trên Vietcetera
-                    <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
-            
-            <!-- Images Grid -->
-            <div class="lg:w-1/2 order-1 lg:order-2 grid grid-cols-2 gap-4 relative">
-                <div class="absolute -inset-4 bg-gradient-to-r from-blue-100 to-[#D4B271]/20 rounded-[2rem] transform -rotate-2 z-0 opacity-50"></div>
-                
-                <div class="relative z-10 pt-12">
-                    <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white transform hover:-translate-y-2 transition-transform duration-500">
-                        <img src="bvnt_cong_dong_1.jpg" alt="Hoạt động cộng đồng Bảo Việt Nhân Thọ" class="w-full h-auto object-cover">
-                    </div>
-                </div>
-                <div class="relative z-10">
-                    <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white transform hover:-translate-y-2 transition-transform duration-500 mb-4">
-                        <img src="bvnt_cong_dong_2.jpg" alt="Chăm sóc sức khỏe cộng đồng Bảo Việt" class="w-full h-auto object-cover">
-                    </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-xl border border-slate-100 transform hover:-translate-y-2 transition-transform duration-500">
-                        <div class="text-4xl font-black text-[#D4B271] mb-2">33.000+</div>
-                        <div class="text-sm font-semibold text-slate-600">Phần quà & Học bổng đã được trao đi trong 18 năm</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <footer class="bg-white border-t border-slate-200 py-12">
 
