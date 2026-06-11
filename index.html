@@ -283,6 +283,10 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
     <div class="hero-pattern"></div>
 
+    <!-- 3D Interactive Background (Giant Globe) -->
+    <div id="hero-three-container" class="absolute inset-0 z-0 opacity-40 pointer-events-none mix-blend-multiply" style="height: 120%; top: -10%;"></div>
+
+
     
 
 
@@ -835,6 +839,13 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         
         renderer.setSize(container.clientWidth, container.clientHeight);
+
+            if (heroContainer) {
+                heroCamera.aspect = heroContainer.clientWidth / heroContainer.clientHeight;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
+            }
+
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
@@ -947,7 +958,65 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
             isDragging = false;
         });
 
+        
+        // --- HERO BACKGROUND GIANT GLOBE ---
+        const heroContainer = document.getElementById('hero-three-container');
+        let heroScene, heroCamera, heroRenderer, heroGroup;
+        if (heroContainer) {
+            heroScene = new THREE.Scene();
+            heroCamera = new THREE.PerspectiveCamera(45, heroContainer.clientWidth / heroContainer.clientHeight, 0.1, 1000);
+            heroRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            heroRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
+            heroRenderer.setPixelRatio(window.devicePixelRatio);
+            heroContainer.appendChild(heroRenderer.domElement);
+            
+            // Giant Globe (Blue with Gold Network)
+            const heroGeo = new THREE.SphereGeometry(4, 64, 64);
+            const heroMat = new THREE.MeshPhysicalMaterial({
+                color: 0x007AC2, // Blue core
+                emissive: 0x002244,
+                emissiveIntensity: 0.5,
+                roughness: 0.3,
+                metalness: 0.6,
+                transparent: true,
+                opacity: 0.6
+            });
+            const heroMesh = new THREE.Mesh(heroGeo, heroMat);
+            
+            // Network lines around the giant globe
+            const heroNetGeo = new THREE.IcosahedronGeometry(4.2, 3);
+            const heroLineMat = new THREE.LineBasicMaterial({
+                color: 0xD4B271, // Gold lines
+                transparent: true,
+                opacity: 0.2
+            });
+            const heroEdgesGeo = new THREE.EdgesGeometry(heroNetGeo);
+            const heroLines = new THREE.LineSegments(heroEdgesGeo, heroLineMat);
+            
+            const heroPointsMat = new THREE.PointsMaterial({
+                color: 0xD4B271,
+                size: 0.05,
+                sizeAttenuation: true
+            });
+            const heroPoints = new THREE.Points(heroNetGeo, heroPointsMat);
+            
+            heroGroup = new THREE.Group();
+            heroGroup.add(heroMesh);
+            heroGroup.add(heroLines);
+            heroGroup.add(heroPoints);
+            
+            heroScene.add(heroGroup);
+            
+            const heroAmbient = new THREE.AmbientLight(0xffffff, 0.8);
+            heroScene.add(heroAmbient);
+            
+            heroCamera.position.z = 8;
+            heroCamera.position.x = 2; // Offset to the right
+        }
+
         // Animation Loop
+
         const animate = function () {
             requestAnimationFrame(animate);
             
@@ -964,6 +1033,13 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
             globeGroup.position.y = Math.sin(time) * 0.15;
             
             renderer.render(scene, camera);
+
+            if (heroContainer) {
+                heroGroup.rotation.y += 0.001;
+                heroGroup.rotation.x += 0.0005;
+                heroRenderer.render(heroScene, heroCamera);
+            }
+
         };
 
         animate();
@@ -973,6 +1049,13 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
             camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
+
+            if (heroContainer) {
+                heroCamera.aspect = heroContainer.clientWidth / heroContainer.clientHeight;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
+            }
+
         });
     });
 </script>
