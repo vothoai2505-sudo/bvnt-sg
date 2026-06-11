@@ -272,9 +272,9 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
 <!-- Hero Section (Light Theme, 30 Years) -->
 
-<section id="gioi-thieu" class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28 bg-[url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center bg-no-repeat relative">
+<section id="gioi-thieu" class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28">
 
-    <div class="absolute inset-0 bg-white/70 backdrop-blur-[2px] z-0"></div><div class="hero-pattern z-0"></div>
+    <div class="hero-pattern"></div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
 
@@ -319,7 +319,27 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
 
 
-        <div class="mt-8 mb-8 flex justify-center">
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 my-16 max-w-5xl mx-auto">
+            <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,122,194,0.08)] border border-blue-50 hover:-translate-y-1 transition-transform">
+                <div class="text-3xl font-extrabold text-[#007AC2] mb-1">30+</div>
+                <div class="text-sm font-semibold text-slate-500">Năm Phát Triển</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,122,194,0.08)] border border-blue-50 hover:-translate-y-1 transition-transform">
+                <div class="text-3xl font-extrabold text-[#D4B271] mb-1">5 Triệu+</div>
+                <div class="text-sm font-semibold text-slate-500">Khách Hàng</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,122,194,0.08)] border border-blue-50 hover:-translate-y-1 transition-transform">
+                <div class="text-3xl font-extrabold text-[#0096D6] mb-1">2.000+</div>
+                <div class="text-sm font-semibold text-slate-500">Tư Vấn Viên</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,122,194,0.08)] border border-blue-50 hover:-translate-y-1 transition-transform">
+                <div class="text-3xl font-extrabold text-[#1877F2] mb-1">Top 1</div>
+                <div class="text-sm font-semibold text-slate-500">Thị Phần VN</div>
+            </div>
+        </div>
+
+<div class="mt-8 mb-8 flex justify-center">
 
             <img src="baoviet_team.jpg" alt="Đội ngũ quyết tâm" class="w-full max-w-4xl object-contain drop-shadow-2xl rounded-2xl border-4 border-white/50 shadow-[0_20px_50px_rgba(0,122,194,0.15)]">
 
@@ -566,7 +586,7 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
                         <svg class="w-4 h-4 text-[#007AC2] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
 
-                        <span><strong>Địa chỉ:</strong> 233 Đồng Khởi, Phường Sài Gòn, TP. HCM</span>
+                        <span><strong>Địa chỉ:</strong> <a href="https://maps.app.goo.gl/9T2r7dJ3hBvFj5aU6" target="_blank" class="hover:text-[#007AC2] hover:underline transition-colors font-medium text-[#007AC2]">Tòa nhà Tài chính Bảo Việt, 233 Đồng Khởi, Quận 1, TP. HCM <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a></span>
 
                     </li>
 
