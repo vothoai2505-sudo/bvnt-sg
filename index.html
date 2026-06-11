@@ -212,6 +212,10 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+
+<!-- Spline 3D Viewer -->
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
+
 </head>
 
 <body>
@@ -279,6 +283,12 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 <section id="gioi-thieu" class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28">
 
     <div class="hero-pattern"></div>
+
+    <!-- 3D Interactive Background -->
+    <div class="absolute inset-0 z-0 opacity-80 pointer-events-auto mix-blend-multiply" style="height: 120%; top: -10%;">
+        <spline-viewer url="https://prod.spline.design/qBv9gB7e3Z0v3oH6/scene.splinecode"></spline-viewer>
+    </div>
+
 
     <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
 
@@ -431,11 +441,12 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
         <div class="text-center mb-16">
 
-            <div class="flex justify-center mb-6">
-
-    <img src="3d_shield.png" alt="Bảo vệ toàn diện" class="h-24 md:h-32 object-contain drop-shadow-lg">
-
+            
+<div class="flex justify-center mb-6 relative z-10 cursor-pointer h-40 w-full max-w-[300px] mx-auto hover:scale-110 transition-transform duration-500">
+    <!-- Interactive 3D Blue/Gold element -->
+    <spline-viewer url="https://prod.spline.design/5Fq1VqH3H8u4sM-u/scene.splinecode"></spline-viewer>
 </div>
+
 
 <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Giải Pháp Tài Chính Toàn Diện</h2>
 
@@ -778,6 +789,42 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
       }
     });
   });
+</script>
+
+
+<!-- Vanilla Tilt JS for 3D Parallax Depth -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Apply 3D tilt to Product Cards
+        VanillaTilt.init(document.querySelectorAll(".product-card"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            scale: 1.05,
+            perspective: 1000
+        });
+        
+        // Apply subtle 3D tilt to Tools
+        VanillaTilt.init(document.querySelectorAll("#cong-cu a.group"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.15,
+            scale: 1.02,
+            perspective: 1000
+        });
+        
+        // Apply 3D tilt to stats cards
+        VanillaTilt.init(document.querySelectorAll(".max-w-5xl > .bg-white.rounded-2xl"), {
+            max: 20,
+            speed: 300,
+            glare: true,
+            "max-glare": 0.3,
+            scale: 1.1
+        });
+    });
 </script>
 
 </body>
