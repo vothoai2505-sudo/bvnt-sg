@@ -821,6 +821,7 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 </script>
 
 
+
 <!-- Three.js for Custom 3D Objects -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -830,7 +831,6 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 
         // Scene setup
         const scene = new THREE.Scene();
-        // Make background transparent
         const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         
@@ -838,49 +838,63 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // Create an elegant, abstract "shield/gem" geometry representing protection & wealth
-        const geometry = new THREE.IcosahedronGeometry(2, 0);
-        
-        // Premium Gold/Blue Material
-        const material = new THREE.MeshPhysicalMaterial({
-            color: 0xD4B271, // Gold
-            emissive: 0x002244, // Dark blue core
-            roughness: 0.1,
-            metalness: 0.9,
-            reflectivity: 1,
+        // 1. The Core Golden Sphere
+        const sphereGeo = new THREE.SphereGeometry(1.8, 64, 64);
+        const sphereMat = new THREE.MeshPhysicalMaterial({
+            color: 0xD4B271, // Gold base
+            emissive: 0x8B6508, // Darker gold glow
+            emissiveIntensity: 0.2,
+            roughness: 0.2,
+            metalness: 0.8,
             clearcoat: 1.0,
-            clearcoatRoughness: 0.1,
-            wireframe: false
+            clearcoatRoughness: 0.1
+        });
+        const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+
+        // 2. The Network Lines (Wireframe Sphere slightly larger)
+        const netGeo = new THREE.IcosahedronGeometry(1.9, 2);
+        
+        // We can create points at the vertices to look like nodes
+        const pointsMat = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.1,
+            sizeAttenuation: true
+        });
+        const points = new THREE.Points(netGeo, pointsMat);
+
+        // And the connecting lines
+        const lineMat = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.6
         });
         
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
+        // Use edges geometry to get clean lines instead of triangles
+        const edgesGeo = new THREE.EdgesGeometry(netGeo);
+        const lines = new THREE.LineSegments(edgesGeo, lineMat);
 
-        // Add a secondary wireframe mesh around it for tech/modern vibe
-        const wireGeometry = new THREE.IcosahedronGeometry(2.2, 1);
-        const wireMaterial = new THREE.MeshBasicMaterial({
-            color: 0x007AC2, // Bao Viet Blue
-            wireframe: true,
-            transparent: true,
-            opacity: 0.3
-        });
-        const wireMesh = new THREE.Mesh(wireGeometry, wireMaterial);
-        scene.add(wireMesh);
-        // Flatten to make it look like a shield
-        mesh.scale.z = 0.4;
-        wireMesh.scale.z = 0.5;
-
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        // Create a group to rotate everything together
+        const globeGroup = new THREE.Group();
+        globeGroup.add(sphereMesh);
+        
+        // Create an inner group for the network so it can rotate independently
+        const networkGroup = new THREE.Group();
+        networkGroup.add(points);
+        networkGroup.add(lines);
+        
+        globeGroup.add(networkGroup);
+        scene.add(globeGroup);
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         
-        const dirLight1 = new THREE.DirectionalLight(0xffffff, 2);
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
         dirLight1.position.set(5, 5, 5);
         scene.add(dirLight1);
         
-        const dirLight2 = new THREE.DirectionalLight(0x007AC2, 3);
-        dirLight2.position.set(-5, -5, 5);
+        const dirLight2 = new THREE.DirectionalLight(0xfff0dd, 2);
+        dirLight2.position.set(-5, 2, 5);
         scene.add(dirLight2);
 
         camera.position.z = 6;
@@ -900,10 +914,8 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                     y: e.offsetY - previousMousePosition.y
                 };
                 
-                mesh.rotation.y += deltaMove.x * 0.01;
-                mesh.rotation.x += deltaMove.y * 0.01;
-                wireMesh.rotation.y += deltaMove.x * 0.01;
-                wireMesh.rotation.x += deltaMove.y * 0.01;
+                globeGroup.rotation.y += deltaMove.x * 0.01;
+                globeGroup.rotation.x += deltaMove.y * 0.01;
             }
             previousMousePosition = { x: e.offsetX, y: e.offsetY };
         });
@@ -925,10 +937,8 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
                     y: e.touches[0].clientY - previousMousePosition.y
                 };
                 
-                mesh.rotation.y += deltaMove.x * 0.01;
-                mesh.rotation.x += deltaMove.y * 0.01;
-                wireMesh.rotation.y += deltaMove.x * 0.01;
-                wireMesh.rotation.x += deltaMove.y * 0.01;
+                globeGroup.rotation.y += deltaMove.x * 0.01;
+                globeGroup.rotation.x += deltaMove.y * 0.01;
                 previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
             }
         }, {passive: true});
@@ -943,16 +953,15 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
             
             // Auto rotation when not dragging
             if (!isDragging) {
-                mesh.rotation.y += 0.005;
-                mesh.rotation.x += 0.002;
-                wireMesh.rotation.y -= 0.003;
-                wireMesh.rotation.x -= 0.001;
+                globeGroup.rotation.y += 0.003;
+                // Lines rotate slightly faster on a different axis to look cool
+                networkGroup.rotation.y += 0.001;
+                networkGroup.rotation.x += 0.0005;
             }
             
             // Gentle bobbing effect
             const time = Date.now() * 0.001;
-            mesh.position.y = Math.sin(time) * 0.2;
-            wireMesh.position.y = Math.sin(time) * 0.2;
+            globeGroup.position.y = Math.sin(time) * 0.15;
             
             renderer.render(scene, camera);
         };
