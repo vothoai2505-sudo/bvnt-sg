@@ -19,26 +19,33 @@ records = []
 for i in range(3, len(df)):
     row = df.iloc[i]
     if pd.isna(row[1]) and pd.isna(row[3]) and pd.isna(row[4]):
-        continue # Empty row
+        # Check if it's the total row (which has no names but has numbers)
+        try:
+            total_val = float(str(row[7]).replace(',','').strip())
+            phong = "Tổng Công Ty"
+            ban = ""
+            nhom = ""
+        except:
+            continue
+    else:
+        phong = str(row[1]).strip() if pd.notna(row[1]) else ""
+        ban = str(row[3]).strip() if pd.notna(row[3]) else ""
+        nhom = str(row[4]).strip() if pd.notna(row[4]) else ""
         
-    phong = str(row[1]).strip() if pd.notna(row[1]) else ""
-    ban = str(row[3]).strip() if pd.notna(row[3]) else ""
-    nhom = str(row[4]).strip() if pd.notna(row[4]) else ""
+        if phong == 'nan': phong = ""
+        if ban == 'nan': ban = ""
+        if nhom == 'nan': nhom = ""
     
-    if phong == 'nan': phong = ""
-    if ban == 'nan': ban = ""
-    if nhom == 'nan': nhom = ""
-    
-    # Check if total is valid
+    # Check if total is valid (values in file are already in Millions VNĐ, e.g. 65000 = 65 billion)
     try:
-        total = float(str(row[7]).replace(',','').strip()) * 1000
+        total = float(str(row[7]).replace(',','').strip())
     except:
         continue
         
     months = []
     for m in range(8, 20):
         try:
-            val = float(str(row[m]).replace(',','').strip()) * 1000
+            val = float(str(row[m]).replace(',','').strip())
         except:
             val = 0.0
         months.append(val)
