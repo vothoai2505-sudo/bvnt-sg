@@ -493,35 +493,251 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
       </p>
     </div>
 
+    
     <!-- Tab Switcher -->
-    <div class="flex justify-center mb-14">
-      <div class="inline-flex bg-white rounded-2xl p-1.5 shadow-lg border border-gray-100/80" style="backdrop-filter:blur(12px);">
-        <button id="tab-bvnt" onclick="switchNewsTab('bvnt')" class="news-tab-btn px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300" style="background:linear-gradient(135deg,#003a6c,#007AC2);color:#fff;box-shadow:0 4px 15px rgba(0,122,194,0.3);">
-          🏢 Tin Bảo Việt Nhân Thọ
+    <div class="flex flex-wrap justify-center mb-14 gap-2">
+      <div class="inline-flex flex-wrap bg-white rounded-2xl p-1.5 shadow-lg border border-gray-100/80" style="backdrop-filter:blur(12px);">
+        <button id="tab-bvnt" onclick="switchNewsTab('bvnt')" class="news-tab-btn px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300" style="background:linear-gradient(135deg,#003a6c,#007AC2);color:#fff;box-shadow:0 4px 15px rgba(0,122,194,0.3);">
+          🏢 Tin Bảo Việt
         </button>
-        <button id="tab-market" onclick="switchNewsTab('market')" class="news-tab-btn px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 text-gray-400 hover:text-gray-600">
-          📊 Tin Thị Trường BHNT
+        <button id="tab-market" onclick="switchNewsTab('market')" class="news-tab-btn px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 text-gray-400 hover:text-gray-600">
+          📊 Thị Trường BHNT
+        </button>
+        <button id="tab-economy" onclick="switchNewsTab('economy')" class="news-tab-btn px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 text-gray-400 hover:text-gray-600">
+          💰 Kinh tế - Tài chính
         </button>
       </div>
     </div>
 
+
+    
     <!-- ===== BVNT NEWS PANEL ===== -->
     <div id="panel-bvnt" class="news-panel">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
         <!-- Card 1 -->
-        <a href="https://baoviet.com.vn" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+        <a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxPb0s4bG83aGNTTTQzbFg1TTVBNHA4b1ZBa0FXZTd4cUg1cnNCMHJqQVZ3LXZ5c0t1RnV2WHREd1F6M0NoUjZ0eFpRZ0theWhMbDEtbmc5Ri1SaTE3SHpNMDJXelV6RmFObi1RV0FkbVQ2LUxvNW9EOTlhdUJldlEwWWhNTmUwVXNuamlGUGxSdnM5MkFOX3czRnhIaUV1Z2xtRV9GOElfSlpJNHdTX05uOFhoVzg2dlBNOTRzckNidmtCRjZ0TVE?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
           <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
           <div class="h-52 overflow-hidden relative">
             <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
             <div class="absolute top-4 left-4 z-20">
-              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Chuyển đổi số</span>
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">10/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Công ty Bảo Việt Ninh Bình trao hỗ trợ nhân đạo cho gia đình nạn nhân tai nạn giao thông tại xã Bình Minh - baoninhbinh.org.vn</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQbzR2eThlU25DOS1QYl84MmNQZmxQRW5PMkVXTkJBZkI1dUE4RmlCcmI0SkptV2k2cEk5Y1lDbF9rUEZYVjRmaThQbW5BdWdzSGFrU1dzZmNfYzYxT1V6N3dTWnY3UVlwa2hsSDhubVgzZEE3MkNzbjc1RHBoNHBXNzVTZWhNS2JCbmlVb2hQWXdrdTdNaEw5SEw3MHhYT2Z0WlYtU0VrM3ZmSG8xYnpF?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">12/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">VN-Index giảm gần 50 điểm, ghi nhận tuần điều chỉnh thứ tư liên tiếp - Vietnam+ (VietnamPlus)</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxPTTBVOUNIdjN6RWFJcFBubWx0MFgwaW4xTjUyMEhUN1dRYjVza2pBRjFXNjRMcEJaQzV1bmF0RDFWNWdUYmg5WG9OUElzNWV1ZkdVTmFzQWxuSmM4X0t0R01aNzVDa3dLMzJBaEl0MUoyY2dpbHFDZldKa29sYWR5M2llMEFFYTdOMFpROTdXSlBqa1Fpc24wTEtUcEE?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
             </div>
             <div class="absolute bottom-4 right-4 z-20">
               <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">14/06/2026</span>
             </div>
           </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Hơn 1 triệu tỷ đồng đầu tư của DN bảo hiểm đang ‘nằm’ ở đâu? - VietnamFinance</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 4 -->
+        <a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPUWJNX3MtVDRrRGk5ZUhmT0VROWtrTWptaUU5cFowamZlYXVKTUZ5RXM3N0F6U1ZZZ2JDX1dQN0tpcU05eWlRYzV3cEh2ODdwRmJQSVgzeEtZcEtoTFpsUEVmQmtDRVNXSzlic0JSNnNkWTFnWnFSaExLSGVORkhiUDVkdVVIZjBENm9iTkJZUDNmLVg1OFRYbFZpLVY1M2Z6Zl85SkxmRFlVaDZDU0RhVg?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">06/05/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Bảo Việt tạm gánh lỗ vì chi 320 tỷ đồng mua cổ phiếu FPT - Báo Dân trí</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 5 -->
+        <a href="https://news.google.com/rss/articles/CBMiigJBVV95cUxQU25wRTd5VGZ0azZIQmI3SVMtLU95bUhreGQ3cGRSUFVPVHlCTzZud21la3A2M0QwOVJBallvYUFKSi1wQU9pTDlmTWxFZ2dGMnhtSUlhT0Jwd1BkRWVTN1A5eG9BMnVGSEtoYzg0VndCQ3pEeGhYVndtQ1VJQXlfOWZKdG5jS1FrUm1lSDVjcTVVTFRsSy03RWNHOVlLeDRPSFEyd3dGNFJMUFItUkg4ZHFVUi1GbDVlSVBGeEdBTkRoUmtxRktDSURtUTBRQ3pDN3lZZzIzclkteXZpWEx2eEU4ZkE2RXB1Z0FUVlNRUGJqSU1XNFEwS2VYaWhEZ1ZNOE5HMG4zVnAtQQ?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">04/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Ông Đỗ Cao Bảo: Việt Nam đã chế tạo, xuất khẩu những cỗ máy khổng lồ khắp thế giới, vậy mà vẫn có người nói 'chúng ta không làm nổi con ốc vít' - CafeF</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 6 -->
+        <a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxQYW12TkRVX2ozMFZBUHNsX3hhbGpYY2RjcE85QjFBWWFveWI5RWNQdjRxajFBSUNvWlM3UktOUnBLYkc4cmVIVHhpZTlYQWVnQjIyMG1wZEhmS3RLOWRYSTJTNUZvLW9yWGduYTlCS3V1aU41bXJLd1NrVm5WcGczRml3c3Y4c241bmE5ZksxY3lUY3M3U1B0dkZDY3NlUWdIZXhFeVljaWstbW83eDJXRUV3ZmgtdmxSWHF3ckgteWZ0UnNhNjFoVkZaOXJzUkl3NnZGSmpR?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Nhân thọ</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">12/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Prudential Việt Nam: Bảo hiểm nhân thọ giúp tăng khả năng chống chịu và tạo nguồn vốn dài hạn cho phát triển bền vững - Vietnam.vn</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 7 -->
+        <a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxOZzFVaWota3FZNlNxeDF4SXp0cURheVRWdFJjcFp6LXBTRUdzSHFRNzhkVzJiMmFXVGdLSzJDTWxYeTlNeVhaQVBpSVFYNjMtalJEOXd2cGVEcHNNdm1oempMcXNfajNObTJKV3U3YmRVRzFFeEZMWnNNWE1BUUpuRUVoUG9sVmVLS05Fc0JzUDhMdnBUS1FMTy1Kdw?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tài chính</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">08/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Tập đoàn Bảo Việt chốt quyền ĐHĐCĐ thường niên 2026 - Chứng khoán DNSE</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 8 -->
+        <a href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxQMTEyRVNCRW9TQ1Z1Q2JMck9NNDNWLUcyV0pMRDJ3cjJrZ1VMb1RCbW5lT25zcVlkSXJ4bVlwMUQ2UFpmdnJ0QlZtZVFoSUV2SFNuV0F2b3l1WHpRNHNKYWZkUEFNZmZqOXFRNTdsa3dTc3h6LWU5UEw1UE1kUmJHbXEwUE5uRl9rdTZFX082Y0U2LWx0ZndmYkc5LXpxUVdWNzBNbUUwZjFRT0tjS2xpbjFvM2NOX3ZjUENoczlQYU9fWTdRZjcyetIBxAFBVV95cUxQQjA4Y0xEQjYtZER4SzdDNXBXdzNMTUtnbDBFQklhYXUzbXNRb3JEcm95ZFlONGJ6RUJNMzVudFhpM3VsSnZ3cHNjOVl4TlA3OGJobm9tX3FyX18tb3VqQzVoMEpTTTI0Mm8zRV9ma2RkNDJIVnBDN293Y0l6TmkyM1NEY2oteXRQaXRaZ2YtUlpFTnlHWjZOTXZfRXlqd0dEU05PcU45UEt4LUhuWmJsM21IcjRxY1cwZjBKYlhRbFFZM0Rl?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tài chính</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">28/05/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Chứng khoán Bảo Việt ra mắt chương trình “Tích điểm giao dịch - gia tăng đặc quyền” - Tin nhanh chứng khoán</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 9 -->
+        <a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPNFA1R2xCZGh3VEh3VHBGV1hPYVMycm80a291N2thdFRRT0lSRUdaMEJFektoeWJhTUNpNHNSZ2o2XzRpTkZMSDFGTk1aLXBlck9JY2lYbkdVb2dQYnl5OFRWMl9rMGFnMWFteWt3SzU1QS1LYjV1UW1Ic3NqMk9KbU1ZbHZfNkR3dVZMNUdMc1Nfa2NWcHlfZ3c1RklQMjduRVhtMlhuQWVmcjJJR0RodA?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">23/05/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Bảo hiểm Bảo Việt đồng hành kiến tạo hệ sinh thái tài chính - hàng hải hiện đại - Nhadautu.vn</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 10 -->
+        <a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxPb1cwVVlxbXladWtsNUdtb2JNQ01FQ05rMExKSTJfbjVIZjA0NWtKc1J4MnJrWktCemxEWkpWU0lHck1uWmtTcVBTNnI5bjhESWk5czBzZ2NBTFYxU0QxZFpmd2g4YWUtZzJnaEgzV3Z6eGV3VGJJTE00ZW9SeFR4LV9sOXBXVWx3TU0yVWFiYngtRmUtSGFYUGZGdUc0WXlwOUpaZW5jbXRHa2Q3UnlMNUcwUWlBN1ZMMldQUXRTQ1JpeFQx?oc=5" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tập đoàn</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">06/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">[Video] Giáo hội tổ chức Lễ tưởng niệm Bồ-tát Thích Quảng Đức tại tháp Đa Bảo - Việt Nam Quốc Tự - Giác Ngộ Online</h3>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
           <div class="p-6">
             <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Bảo Việt Nhân Thọ ra mắt ứng dụng e-Claim phiên bản mới</h3>
             <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">Trải nghiệm bồi thường siêu tốc bằng công nghệ OCR nhận diện và AI xử lý hồ sơ chỉ với 3 thao tác đơn giản, rút ngắn thời gian xuống còn 30 phút.</p>
@@ -581,26 +797,561 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
       </div>
     </div>
 
+    
     <!-- ===== MARKET NEWS PANEL ===== -->
     <div id="panel-market" class="news-panel" style="display:none;">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
         <!-- Market Card 1 -->
-        <div class="group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+        <a href="https://news.google.com/rss/articles/CBMi5AFBVV95cUxPWDg0b0Y1NVM4Z1M1d1JuUWlLYjFGd1VFLVMxVU5vRXhseGkwR0tOTTV5VXFCRUZKc05kYW56TmxQM1ZNWDlPcDBuSVI5RUZkNXJDUDVkaDRBajJ0cHlSUklEVEM3OWo3YTZkeHdQS0N1VnpHYlBlaTQ4OE44U3RoRGt0THNwYzBtU3NKUTcyTGhkNGlrekExN2N0eEppbUt0bThKZnhGWVZIam1wZU1Mc0VoS2loYThFaEw5M2hQdUlDTWY1Zm43S0hBQnpla2V5N1pNTlBHSFV2WWd6U2RHSXYySknSAeABQVVfeXFMTTZoc0R5TkdlSjVZc3VjRjU2dS1xNjdjVkZ5bzdUX1ZTNW12RU5sYURscUdwVlFNZnBaVUJUcWZJcnBZTHpKYWdrbWxoS1JjeXI5dTY0ZG53djhtTGlqNGpGRjZJZHU5SHVoYnhJNXI5eEUtYXJCS1VEcE01VG50ODlmTlU2c2dweGpkU3dyeGV3eVlSWjB4TzI1TVo4QXV3bWRNbnFfV1Q3bkJhNEZkLWRIVkZEQTVnNU5mT29NOXZuMDBvS1FWcDUxRklQdU13bmlLTHBvVlduS2lTOVFxQTY?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
           <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
             <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
             <div class="flex justify-between items-start mb-6">
-              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
-              <span class="text-gray-400 text-sm">12/06/2026</span>
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Công nghệ</span>
+              <span class="text-gray-400 text-sm">15/06/2026</span>
             </div>
-            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Thị trường BHNT quý I/2026: Phục hồi ấn tượng</h3>
-            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Tổng doanh thu phí bảo hiểm nhân thọ toàn thị trường ghi nhận sự tăng trưởng dương trở lại với mức 12.3% so với cùng kỳ...</p>
-            <div class="pt-5 border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
-              <span class="text-sm font-semibold" style="color:#60b8e8;">Bản tin thị trường</span>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Từ bảo vệ tài chính đến phát triển bền vững: Vai trò ngày càng lớn của bảo hiểm nhân thọ tại Việt Nam - Tin nhanh chứng khoán</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Tin nhanh chứng khoán</span>
               <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </div>
             </div>
+          </div>
+        </a>
+
+        <!-- Market Card 2 -->
+        <a href="https://news.google.com/rss/articles/CBMiugJBVV95cUxOZ1NLSnBJdlRlZmdoNm5hOUplUkVnV1JmMDBIVGF1bGl2Z3RMSG1Camx4TXhVSzZZYnI1NGVvZkFSQ1BCVGZkY1Q5dE9oOWZMVUJIRXVNMlFvbFgxSXhVcTFfOHl4eGNGWGhld2xNQW5fNWtGb0NWb1o5bV8zbUdqWU83VU1vXzZGektTSDIxOWFXX0NfZDR0YmJUeVpWTUwydlhzUXFYbzJoMVlKbTNhQldJVUJhVVdyN1hOSEtwUm5rNmdZRUtjTzFrNkRGRzE5Rk5sZGpvVDhrcWpLXzg2WDBoejBnR21CSVc1OF9BVklpMHBfdXZOUTNlYU5ROWFfdDNKdS1Rdmg0YS1OMnRHdFpuU3NjcERaYjZfdEVrcFQyZThEVDVDQjhIYWhsRzNJdkJzQlUwZ0tCQQ?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Công nghệ</span>
+              <span class="text-gray-400 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Tổng đại lý Bảo hiểm Nhân thọ Dai - ichi Việt Nam - Văn Phòng Buôn Ma Thuột 1 - Công ty TNHH Minh Tâm Long Phát kỷ niệm 13 năm thành lập: Hành trình gắn kết - Vững bước tương lai - Dak Lak 24h</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Dak Lak 24h</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 3 -->
+        <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOV3VoYmV5c0RyU1VSaURXMGJRODhEVThuQjRxMW5KSXYwcUppZ2JVSFRKRjZ1NFZmSk5uV0FkT3ZCR3ZkV28xX080cmJ6NDcyUmJJb2l1OE1nWklkQ1ZDYlFwS0ZSVUJRZGdoSDg2VlFVXzZwRlU5V1drbVdHVjlUX0RYTHVkbV85NjVBTXRLSFBnUjl6NWhlc3JDSHZ0cFEwcGpGWQ?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">09/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Xuất hiện công ty bảo hiểm nhân thọ hoàn toàn mới tại Việt Nam - CafeF</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: CafeF</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 4 -->
+        <a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxNVl92eWtnNHQxd3lOUWh6WDRDdTktNUZRUEJpSG4waHF2T2g5VlB0dzR5aEJrSG9YTE9id0pEckd6U25aMGVJWFZzYlF4djdWSEpLZEFQSUhDUFdPZk9jeUlKb3VzMTliVHc0TEY2SHhvMzZTSTJCTndxZGxtRWFGQTE5eUdBY2MtNVR5YndEOU9XenY5Q0VXTktPMUpQcDNoTDZwTmgyNk4?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">09/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Doanh nghiệp thứ 21 tham gia thị trường bảo hiểm nhân thọ Việt Nam - VietnamFinance</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: VietnamFinance</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 5 -->
+        <a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxQR1g0VE5Pb0plQk55UWJwMERfd3JHRjNLcktiWk1VamZ3eFNSc05EOGJUYXhhaXVNZnR4NjJSYWczWEM3QzE0WVE2Ml9hcW0xdldSVGFqbXlIRzVsSnE5VlhxbndQblBsd2FUaTYzaDZCY3lueXZzb0xtU2pBa0hfRS1pVGNzZGJfZXlRMXdR?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">10/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Bảo hiểm nhân thọ thay đổi cấu trúc cạnh tranh - Thời Báo Ngân Hàng</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Thời Báo Ngân Hàng</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 6 -->
+        <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxONWU3U3lSbTF4bXdQeEtYTHRNbm5icEZ5R1hoMXk5cUpXZy1neTBUQmFIMnJBMEpaUEsyWlVfakdrM0tBeV9aSi1QZV9mbEx6WVRwXzJ0QktOSjc0cENjU0dfV1pidGI3T3Q1WmVkNEpZOVY0MUhUNmRwUWVjVFNFeXZuSXY4SUJDd0FRZEo0LXNndWJYb1VqMW9FVVFkWEdJdmdDcGxiV012NlnSAasBQVVfeXFMTjVlN1N5Um0xeG13UHhLWEx0TW5uYnBGeUdYaDF5OXFKV2ctZ3kwVEJhSDJyQTBKWlBLMlpVX2pHazNLQXlfWkotUGVfZmxMellUcF8ydEJLTko3NHBDY1NHX1daYnRiN090NVplZDRKWTlWNDFIVDZkcFFlY1RTRXl2bkl2OElCQ3dBUWRKNC1zZ3ViWG9VajFvRVVRZFhHSXZnQ3BsYldNdjZZ?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Ba điểm cần thay đổi trong truyền thông bảo hiểm thời đại số - Tin nhanh chứng khoán</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Tin nhanh chứng khoán</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 7 -->
+        <a href="https://news.google.com/rss/articles/CBMizAFBVV95cUxQX0RHMGo1dzdPdERLSUxwUmM3cUR0dnBWRkpiWi1fN2pyOHZSWkZ6NnB4cXExTkNVdkhlSXVyemJ3YzA4NjlHMU9CUEYya0lTbTRndlhDdWdNVWdVY0FuUTYtbGdTRFJyd3RhZlZuQVAwelZwdjhYY2h2V2FCZ3pPRnlYODhYTFZfYW1xVDZkTlVkbDlGS2FjVUQ0XzVheHBJR09ldmk3OXRTN0NlLU1zbXBvSjFiRVR1WmpoUmNJSjlNOHl6Qlp0MUZSRnA?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">10/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Igloo hợp tác với Chubb Life mở rộng sang mảng bảo hiểm nhân thọ tại Việt Nam và Indonesia - Laodong.vn</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Laodong.vn</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 8 -->
+        <a href="https://news.google.com/rss/articles/CBMipAJBVV95cUxNS3E2czlRWUc3M2dCc2tPRXdRN2JmeURPT0Vta1ljMXFhN0Y2Q2dLSGZfQXdaYXJDcXhGU3hVVlUtWFpiMS1OVFgwSkJKT0EzLWpWUno1WUNya1p6YUxiWlQxdlY4NWdON3pZQ0FjM05YOVdxS29qS3Y0d1FhOGN0Mk9HeUwwSUVFNnM0dFc4QlgtVVVsMFk1bUkxdFFxLTRta25WYllrSEZtU2dZMENhbEZEVDJYejQ3WE5TbXVJN3E1NFpxVzRoZ3E1ZjF2czVaakVnOUNJdWM1QjVtTlJFMEtXSU9BY0RWUEEyUUp3LXh4QkxMeGVNUThnTjFuaXpFNExFZ2EtakR4dV9XT2M3UWlNN3ZTZUFDOUQtdEw2MlRVWmVv?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Công nghệ</span>
+              <span class="text-gray-400 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Prudential Việt Nam được vinh danh tại Top 50 Doanh nghiệp Phát triển Bền vững 2026, khẳng định vai trò của bảo hiểm trong tương lai phát triển bền vững - BÁO PHỤ NỮ VIỆT NAM ĐIỆN TỬ</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: BÁO PHỤ NỮ VIỆT NAM ĐIỆN TỬ</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 9 -->
+        <a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxOaGVYNHFaT0ZTVmFwVTJBNlRmYjVWOUhuM25uczN6Q3R4czlwa3RkWWlOOUhHbF9TNWdEOHE3NGVwZVNhZlZTcUo4NlhyZldYSUhUYzRZazh5SkRFWUR3WGNSZGk0NEhFb0ZqTDVHRlB5eE5BUFQwcHVSbUk0RHg1RmwyLTNFX3JfRlJQbm1YY01LSGV2OE0yaWhTeWJxcjI3LTA0VkV3?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">11/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Chubb Life mở rộng phân phối bảo hiểm nhân thọ qua nền tảng số Igloo - Báo VietNamNet</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Báo VietNamNet</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Market Card 10 -->
+        <a href="https://news.google.com/rss/articles/CBMixwFBVV95cUxPcHVNeU5wdjFtc2ZzMW01YlFrYm9ZOVdxbGppTXhGSmVRT3g2RmJhN1ZTYWltM1lPRUg4N29ua1VPS0tuZHZBdm1qQVYxblhOMVZpUHFTbV9ycnF4b3UwU1pIUlkxUTF6Y1B1ckx3aXRBNEN6UG5QcEV3dTFCdjZiQlZSd2ExNnptNzRfaXliTU5kNURVUXNLb29WMGN1ZzVwWVFJNGVaZkU1Rl9tYnJFYzlkeXRqbDg1d1pSZHh0RThfd3dpRjNZ?oc=5" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">28/05/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Thị trường bảo hiểm nhân thọ "sáng dần", song nhiều doanh nghiệp lợi nhuận vẫn "rùa bò" - Thời báo Tài chính Việt Nam</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Nguồn: Thời báo Tài chính Việt Nam</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ===== ECONOMY NEWS PANEL ===== -->
+    <div id="panel-economy" class="news-panel" style="display:none;">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Economy Card 1 -->
+        <a href="https://vnexpress.net/moi-luong-vang-tang-hon-7-trieu-dong-trong-ngay-5084863.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Tài chính</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Mỗi lượng vàng tăng hơn 7 triệu đồng trong ngày</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 2 -->
+        <a href="https://vnexpress.net/gia-vang-the-gioi-tang-vot-5084790.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Tài chính</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Giá vàng thế giới tăng vọt</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 3 -->
+        <a href="https://vnexpress.net/chau-au-tang-lai-suat-lan-dau-tien-trong-3-nam-5084712.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Kinh tế vĩ mô</span>
+              <span class="text-gray-500 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Châu Âu tăng lãi suất lần đầu tiên trong 3 năm</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 4 -->
+        <a href="https://vnexpress.net/chu-tich-vsdc-chung-khoan-viet-nam-co-the-dap-ung-tieu-chi-nang-hang-cua-msci-som-hon-ke-hoach-5084709.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Chứng khoán</span>
+              <span class="text-gray-500 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Chủ tịch VSDC: Chứng khoán Việt Nam có thể đáp ứng tiêu chí nâng hạng của MSCI sớm hơn kế hoạch</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 5 -->
+        <a href="https://vnexpress.net/tien-vao-chung-khoan-thap-nhat-14-thang-5084613.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Chứng khoán</span>
+              <span class="text-gray-500 text-sm">13/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Tiền vào chứng khoán thấp nhất 14 tháng</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 6 -->
+        <a href="https://vnexpress.net/ba-doanh-nghiep-rot-hon-15-000-ty-vao-khu-thuong-mai-tu-do-da-nang-5084697.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Đầu tư</span>
+              <span class="text-gray-500 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Ba doanh nghiệp rót hơn 15.000 tỷ vào Khu thương mại tự do Đà Nẵng</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 7 -->
+        <a href="https://vnexpress.net/cuu-vuong-nganh-thep-dan-hoi-sinh-5084572.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Doanh nghiệp</span>
+              <span class="text-gray-500 text-sm">13/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">'Cựu vương' ngành thép dần hồi sinh</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 8 -->
+        <a href="https://vnexpress.net/gia-xang-e10-giam-ve-sat-22-000-dong-5084543.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Kinh tế vĩ mô</span>
+              <span class="text-gray-500 text-sm">11/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Giá xăng E10 giảm về sát 22.000 đồng</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnExpress</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 9 -->
+        <a href="https://vneconomy.vn/xu-the-dong-tien-thung-nguong-ho-tro-tam-ly-dong-luc-nao-co-the-nang-do-thi-truong.htm" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Chứng khoán</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Xu thế dòng tiền: Thủng ngưỡng hỗ trợ tâm lý, động lực nào có thể nâng đỡ thị trường?</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnEconomy</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 10 -->
+        <a href="https://vneconomy.vn/phep-thu-lon-trong-tuan-nay-khi-vnm-etf-co-cau-trung-voi-ngay-dao-han-phai-sinh.htm" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Chứng khoán</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Phép thử lớn trong tuần này khi VNM ETF cơ cấu trùng với ngày đáo hạn phái sinh</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnEconomy</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 11 -->
+        <a href="https://vneconomy.vn/gia-vang-tang-manh-gia-dau-lao-doc-sau-tin-my-iran-dat-thoa-thuan.htm" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Tài chính</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Giá vàng tăng mạnh, giá dầu lao dốc sau tin Mỹ - Iran đạt thỏa thuận</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnEconomy</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 12 -->
+        <a href="https://vneconomy.vn/trien-vong-lai-suat-cua-10-ngan-hang-trung-uong-lon.htm" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Ngân hàng</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Triển vọng lãi suất của 10 ngân hàng trung ương lớn</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnEconomy</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 13 -->
+        <a href="https://vneconomy.vn/uob-kinh-te-viet-nam-duy-tri-da-tang-truong-luu-y-rui-ro-lam-phat-va-gia-nang-luong.htm" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Kinh tế vĩ mô</span>
+              <span class="text-gray-500 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">UOB: Kinh tế Việt Nam duy trì đà tăng trưởng, lưu ý rủi ro lạm phát và giá năng lượng</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnEconomy</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 14 -->
+        <a href="https://vneconomy.vn/bo-chinh-tri-ban-hanh-nghi-quyet-rieng-ve-khu-vuc-co-von-dau-tu-nuoc-ngoai.htm" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Đầu tư</span>
+              <span class="text-gray-500 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Bộ Chính trị ban hành Nghị quyết riêng về khu vực có vốn đầu tư nước ngoài</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: VnEconomy</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 15 -->
+        <a href="https://cafef.vn/lan-dau-tien-viet-nam-co-2-tap-doan-tai-san-1-trieu-ty-dong-1-nha-nuoc-1-tu-nhan-tao-ra-gan-100-nghin-ty-loi-nhuan-moi-nam-gop-10-thu-ngan-sach-188260615064134638.chn" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Doanh nghiệp</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Lần đầu tiên Việt Nam có 2 tập đoàn tài sản triệu tỷ đồng: 1 nhà nước, 1 tư nhân</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: CafeF</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 16 -->
+        <a href="https://cafef.vn/von-fdi-do-vao-viet-nam-cao-nhat-5-nam-xuat-hien-thoi-nam-cham-moi-188260614131141475.chn" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Kinh tế vĩ mô</span>
+              <span class="text-gray-500 text-sm">14/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Vốn FDI đổ vào Việt Nam cao nhất 5 năm, xuất hiện 'thỏi nam châm' mới</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: CafeF</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 17 -->
+        <a href="https://cafef.vn/petrovietnam-lai-hon-52000-ty-dong-no-vay-van-tang-manh-188260615083613948.chn" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Doanh nghiệp</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Petrovietnam lãi hơn 52.000 tỷ đồng, nợ vay vẫn tăng mạnh</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: CafeF</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 18 -->
+        <a href="https://cafef.vn/ctck-he-lo-danh-sach-10-doanh-nghiep-tiem-nang-trong-thang-6-2026-188260614225323494.chn" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Chứng khoán</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">CTCK hé lộ danh sách 10 doanh nghiệp tiềm năng trong tháng 6/2026</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: CafeF</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 19 -->
+        <a href="https://cafef.vn/lo-dien-nhung-ong-lon-giam-nhan-su-nhieu-nhat-nam-2025-nhom-ngan-hang-ap-dao-golden-gate-viettel-post-hoa-phat-giam-hang-nghin-nguoi-188260614231311756.chn" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Doanh nghiệp</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Lộ diện những 'ông lớn' giảm nhân sự nhiều nhất năm 2025: Nhóm ngân hàng áp đảo</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: CafeF</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Economy Card 20 -->
+        <a href="https://tapchikinhtetaichinh.vn/du-dia-tien-te-thu-hep-tin-dung-can-di-dung-dia-chi-158964.html" target="_blank" class="block group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#007AC2,#0096D6,#4ade80);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#0096D6,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,150,214,0.1);border-color:rgba(0,150,214,0.2);color:#007AC2;">Ngân hàng</span>
+              <span class="text-gray-500 text-sm">15/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#0f172a] mb-4 group-hover:text-[#007AC2] transition-colors leading-snug">Dư địa tiền tệ thu hẹp, tín dụng cần đi đúng địa chỉ</h3>
+            <div class="pt-5 mt-auto border-t flex items-center justify-between" style="border-color:rgba(0,0,0,0.08);">
+              <span class="text-sm font-semibold" style="color:#64748b;">Nguồn: Tạp chí Kinh tế Tài chính</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[#007AC2] group-hover:text-white" style="background:rgba(0,122,194,0.05);color:#007AC2;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
           </div>
         </div>
 
@@ -669,10 +1420,20 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 </style>
 
 <script>
+
 function switchNewsTab(tab) {
   document.querySelectorAll('.news-panel').forEach(p => p.style.display = 'none');
   var bvntBtn = document.getElementById('tab-bvnt');
   var marketBtn = document.getElementById('tab-market');
+  var economyBtn = document.getElementById('tab-economy');
+  
+  // Reset all buttons
+  [bvntBtn, marketBtn, economyBtn].forEach(btn => {
+    btn.style.background = 'transparent';
+    btn.style.color = '#9ca3af';
+    btn.style.boxShadow = 'none';
+  });
+
   if (tab === 'bvnt') {
     document.getElementById('panel-bvnt').style.display = 'block';
     document.getElementById('panel-bvnt').style.animation = 'none';
@@ -680,21 +1441,23 @@ function switchNewsTab(tab) {
     bvntBtn.style.background = 'linear-gradient(135deg,#003a6c,#007AC2)';
     bvntBtn.style.color = '#fff';
     bvntBtn.style.boxShadow = '0 4px 15px rgba(0,122,194,0.3)';
-    marketBtn.style.background = 'transparent';
-    marketBtn.style.color = '#9ca3af';
-    marketBtn.style.boxShadow = 'none';
-  } else {
+  } else if (tab === 'market') {
     document.getElementById('panel-market').style.display = 'block';
     document.getElementById('panel-market').style.animation = 'none';
     setTimeout(function(){ document.getElementById('panel-market').style.animation = 'fadeSlideIn 0.4s ease-out'; }, 10);
     marketBtn.style.background = 'linear-gradient(135deg,#D4B271,#e8c97a)';
     marketBtn.style.color = '#003a6c';
     marketBtn.style.boxShadow = '0 4px 15px rgba(212,178,113,0.3)';
-    bvntBtn.style.background = 'transparent';
-    bvntBtn.style.color = '#9ca3af';
-    bvntBtn.style.boxShadow = 'none';
+  } else if (tab === 'economy') {
+    document.getElementById('panel-economy').style.display = 'block';
+    document.getElementById('panel-economy').style.animation = 'none';
+    setTimeout(function(){ document.getElementById('panel-economy').style.animation = 'fadeSlideIn 0.4s ease-out'; }, 10);
+    economyBtn.style.background = 'linear-gradient(135deg,#007AC2,#0096D6)';
+    economyBtn.style.color = '#fff';
+    economyBtn.style.boxShadow = '0 4px 15px rgba(0,150,214,0.3)';
   }
 }
+
 </script>
 
 
