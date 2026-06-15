@@ -659,6 +659,236 @@ body { background-color: var(--bg-light); color: var(--text-main); -webkit-font-
 </section>
 
 
+<!-- ====================================== -->
+<!-- TÂM ĐIỂM TIN TỨC - HOLOGRAM STYLE -->
+<!-- ====================================== -->
+<section id="tin-tuc" class="py-24 relative overflow-hidden" style="background: linear-gradient(135deg, #f8fafc 0%, #eef4fb 50%, #f8fafc 100%);">
+
+  <!-- Holographic Background Glows -->
+  <div style="position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,122,194,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-100px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(212,178,113,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,122,194,0.03) 0%,transparent 60%);pointer-events:none;"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full px-5 py-2 mb-6 shadow-sm">
+        <span style="display:inline-block;width:8px;height:8px;background:#D4B271;border-radius:50%;animation:pulse-gold 2s infinite;"></span>
+        <span class="text-sm font-semibold" style="color:#007AC2;">CẬP NHẬT LIÊN TỤC</span>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-5" style="color:#003a6c;letter-spacing:-0.5px;">
+        Tâm Điểm <span style="background:linear-gradient(135deg,#D4B271,#e8c97a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Tin Tức</span>
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">
+        Nắm bắt mọi chuyển động từ thị trường Bảo hiểm Nhân thọ và các hoạt động nổi bật của Bảo Việt Nhân Thọ.
+      </p>
+    </div>
+
+    <!-- Tab Switcher -->
+    <div class="flex justify-center mb-14">
+      <div class="inline-flex bg-white rounded-2xl p-1.5 shadow-lg border border-gray-100/80" style="backdrop-filter:blur(12px);">
+        <button id="tab-bvnt" onclick="switchNewsTab('bvnt')" class="news-tab-btn px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300" style="background:linear-gradient(135deg,#003a6c,#007AC2);color:#fff;box-shadow:0 4px 15px rgba(0,122,194,0.3);">
+          🏢 Tin Bảo Việt Nhân Thọ
+        </button>
+        <button id="tab-market" onclick="switchNewsTab('market')" class="news-tab-btn px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 text-gray-400 hover:text-gray-600">
+          📊 Tin Thị Trường BHNT
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== BVNT NEWS PANEL ===== -->
+    <div id="panel-bvnt" class="news-panel">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Card 1 -->
+        <a href="https://baoviet.com.vn" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Chuyển đổi số</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">14/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Bảo Việt Nhân Thọ ra mắt ứng dụng e-Claim phiên bản mới</h3>
+            <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">Trải nghiệm bồi thường siêu tốc bằng công nghệ OCR nhận diện và AI xử lý hồ sơ chỉ với 3 thao tác đơn giản, rút ngắn thời gian xuống còn 30 phút.</p>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="https://baoviet.com.vn" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">Tuyển dụng</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">10/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Hơn 500 tư vấn viên mới gia nhập đội ngũ tinh nhuệ tại TP.HCM</h3>
+            <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">Lễ ra quân và chào đón tân binh tháng 6 đánh dấu bước tiến mạnh mẽ trong chiến lược mở rộng quy mô phục vụ khách hàng.</p>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="https://baoviet.com.vn" target="_blank" class="group relative bg-white/70 rounded-3xl border border-white/50 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,122,194,0.12)] hover:-translate-y-1" style="backdrop-filter:blur(20px);">
+          <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background:linear-gradient(135deg,rgba(0,122,194,0.05),rgba(212,178,113,0.05));pointer-events:none;"></div>
+          <div class="h-52 overflow-hidden relative">
+            <div class="absolute inset-0 z-10" style="background:linear-gradient(to bottom,transparent 60%,rgba(0,58,108,0.6) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=600" alt="" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 left-4 z-20">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" style="background:linear-gradient(135deg,#D4B271,#e8c97a);color:#003a6c;">CSR</span>
+            </div>
+            <div class="absolute bottom-4 right-4 z-20">
+              <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm">02/06/2026</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug" style="color:#003a6c;">Trao tặng 1 tỷ đồng quỹ học bổng cho trẻ em hiếu học</h3>
+            <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">Nối tiếp chuỗi hoạt động vì cộng đồng, Bảo Việt Nhân Thọ đã trao hàng trăm suất học bổng cho học sinh nghèo vượt khó trên cả nước.</p>
+            <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:#D4B271;">
+              <span>Đọc tiếp</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ===== MARKET NEWS PANEL ===== -->
+    <div id="panel-market" class="news-panel" style="display:none;">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Market Card 1 -->
+        <div class="group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Thị trường</span>
+              <span class="text-gray-400 text-sm">12/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Thị trường BHNT quý I/2026: Phục hồi ấn tượng</h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Tổng doanh thu phí bảo hiểm nhân thọ toàn thị trường ghi nhận sự tăng trưởng dương trở lại với mức 12.3% so với cùng kỳ...</p>
+            <div class="pt-5 border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Bản tin thị trường</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Market Card 2 -->
+        <div class="group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(212,178,113,0.15);border-color:rgba(212,178,113,0.3);color:#D4B271;">Công nghệ</span>
+              <span class="text-gray-400 text-sm">08/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Xu hướng số hóa toàn diện trong quy trình bồi thường</h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Các doanh nghiệp bảo hiểm đua nhau áp dụng AI và tự động hóa nhằm rút ngắn thời gian chi trả quyền lợi xuống chỉ còn 30 phút...</p>
+            <div class="pt-5 border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Bản tin thị trường</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Market Card 3 -->
+        <div class="group relative rounded-3xl p-[2px] overflow-hidden transition-all duration-500 hover:-translate-y-1" style="background:linear-gradient(135deg,#003a6c,#007AC2,#D4B271);">
+          <div class="relative h-full rounded-[22px] p-7 flex flex-col" style="background:linear-gradient(135deg,#001a35 0%,#002a52 100%);">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-10" style="background:radial-gradient(circle,#D4B271,transparent);pointer-events:none;"></div>
+            <div class="flex justify-between items-start mb-6">
+              <span class="text-xs font-bold px-3 py-1.5 rounded-full border" style="background:rgba(0,122,194,0.15);border-color:rgba(0,122,194,0.3);color:#60b8e8;">Sản phẩm</span>
+              <span class="text-gray-400 text-sm">05/06/2026</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors leading-snug">Sản phẩm liên kết đầu tư tiếp tục dẫn dắt đà tăng trưởng</h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Bất chấp biến động thị trường chứng khoán, dòng sản phẩm liên kết đơn vị vẫn thu hút lượng lớn khách hàng trẻ với mức tăng 18%...</p>
+            <div class="pt-5 border-t flex items-center justify-between" style="border-color:rgba(255,255,255,0.08);">
+              <span class="text-sm font-semibold" style="color:#60b8e8;">Bản tin thị trường</span>
+              <div class="w-9 h-9 rounded-full flex items-center justify-center transition-all group-hover:scale-110" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+@keyframes pulse-gold {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.news-panel {
+  animation: fadeSlideIn 0.4s ease-out;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+function switchNewsTab(tab) {
+  document.querySelectorAll('.news-panel').forEach(p => p.style.display = 'none');
+  var bvntBtn = document.getElementById('tab-bvnt');
+  var marketBtn = document.getElementById('tab-market');
+  if (tab === 'bvnt') {
+    document.getElementById('panel-bvnt').style.display = 'block';
+    document.getElementById('panel-bvnt').style.animation = 'none';
+    setTimeout(function(){ document.getElementById('panel-bvnt').style.animation = 'fadeSlideIn 0.4s ease-out'; }, 10);
+    bvntBtn.style.background = 'linear-gradient(135deg,#003a6c,#007AC2)';
+    bvntBtn.style.color = '#fff';
+    bvntBtn.style.boxShadow = '0 4px 15px rgba(0,122,194,0.3)';
+    marketBtn.style.background = 'transparent';
+    marketBtn.style.color = '#9ca3af';
+    marketBtn.style.boxShadow = 'none';
+  } else {
+    document.getElementById('panel-market').style.display = 'block';
+    document.getElementById('panel-market').style.animation = 'none';
+    setTimeout(function(){ document.getElementById('panel-market').style.animation = 'fadeSlideIn 0.4s ease-out'; }, 10);
+    marketBtn.style.background = 'linear-gradient(135deg,#D4B271,#e8c97a)';
+    marketBtn.style.color = '#003a6c';
+    marketBtn.style.boxShadow = '0 4px 15px rgba(212,178,113,0.3)';
+    bvntBtn.style.background = 'transparent';
+    bvntBtn.style.color = '#9ca3af';
+    bvntBtn.style.boxShadow = 'none';
+  }
+}
+</script>
+
 
 <!-- Footer -->
 
