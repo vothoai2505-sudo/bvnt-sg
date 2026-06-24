@@ -346,9 +346,15 @@
                                 <option value="nhom">Nhóm</option>
                             </select>
                         </div>
-                        <div id="lk-spec-wrap" class="hidden">
+                        <div id="lk-spec-wrap" class="hidden relative group z-50">
                             <label class="block text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Chọn Đơn Vị</label>
-                            <div id="lk-spec" class="corp-input h-[42px] overflow-hidden hover:h-auto hover:max-h-[250px] hover:overflow-y-auto hover:absolute hover:z-50 w-full md:w-[calc(20vw)] bg-white border-slate-300 p-2 text-sm shadow-xl transition-all rounded-lg"></div>
+                            <div class="corp-input h-[42px] flex items-center justify-between cursor-pointer group-hover:border-bvCyan bg-white">
+                                <span class="truncate text-slate-500 font-medium">Danh sách (Rê chuột)</span>
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="absolute left-0 top-[70px] mt-1 w-[280px] md:w-[350px] max-h-[350px] overflow-y-auto bg-white border border-slate-200 p-3 shadow-2xl rounded-xl hidden group-hover:block transition-all z-[100]">
+                                <div id="lk-spec"></div>
+                            </div>
                         </div>
                         <div class="md:col-span-1">
                             <label class="block text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Tìm Kiếm</label>
