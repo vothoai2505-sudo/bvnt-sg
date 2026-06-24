@@ -1003,7 +1003,18 @@
 
             const rows = KH_DATA.ads.map(ad => {
                 const adCode = ad.ad.split(' - ')[0].trim();
-                const adActual = currentYearRecs.filter(r => (r.d || '').startsWith(adCode)).reduce((s, r) => s + r.v, 0);
+                
+                // Fix AD matching: We need to match the name inside the AD string, or the ADS column (r.a)
+                let cleanAdName = ad.ad.split(' - ').pop().trim().toLowerCase();
+                if(cleanAdName.startsWith('ad - ')) cleanAdName = cleanAdName.substring(5).trim();
+                
+                const adActual = currentYearRecs.filter(r => {
+                    const r_a = (r.a || '').toLowerCase();
+                    const r_d = (r.d || '').toLowerCase();
+                    const r_n = (r.n || '').toLowerCase();
+                    return r_a.includes(cleanAdName) || r_d.includes(cleanAdName) || r_n.includes(cleanAdName);
+                }).reduce((s, r) => s + r.v, 0);
+
                 const adPct = ad.kh_year ? (adActual / ad.kh_year) * 100 : 0;
                 return { phong: ad.phong, ad: ad.ad, target: ad.kh_year, actual: adActual, pct: adPct };
             }).sort((a,b) => b.pct - a.pct);
