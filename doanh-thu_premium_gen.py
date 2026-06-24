@@ -1,4 +1,6 @@
-<!doctype html>
+import codecs
+
+html = r"""<!doctype html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8" />
@@ -1035,3 +1037,9 @@
     </script>
 </body>
 </html>
+"""
+
+import codecs
+with codecs.open(r"C:\Users\Lenovo\.openclaw\workspace\baoviet-saigon\doanh-thu.html", "w", "utf-8") as f:
+    f.write(html)
+print("Premium Corporate HTML written successfully")
