@@ -1,1520 +1,962 @@
 <!doctype html>
-<html lang="vi">
-  <head>
+<html lang="vi" class="dark">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bảo Việt Nhân thọ Sài Gòn | Trung Tâm Phân Tích</title>
+    <title>Bảo Việt Nhân thọ Sài Gòn | AI Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --blue: #007ac2;
-        --blue2: #0096d6;
-        --gold: #d4b271;
-        --bg: #E8F0FE;
-        --card: #ffffff;
-        --text: #222222;
-        --muted: #64748b;
-        --border: #B3D4FF;
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Inter", system-ui, sans-serif;
-      }
-      body {
-        background: var(--bg);
-        color: var(--text);
-        -webkit-font-smoothing: antialiased;
-        min-height: 100vh;
-      }
-
-      /* Glass Navbar */
-      .glass-nav {
-        background: rgba(255, 255, 255, 0.72);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-      }
-
-      /* Premium Cards */
-      .s-card {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-radius: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.04);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .s-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 24px 48px -12px rgba(0, 122, 194, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-      }
-
-      /* Progress Bar */
-      .kpi-progress-bg {
-        background: rgba(0, 0, 0, 0.06);
-        height: 6px;
-        border-radius: 4px;
-        overflow: hidden;
-        margin-top: 8px;
-        width: 100%;
-      }
-      .kpi-progress-bar {
-        background: linear-gradient(90deg, #10b981, #059669);
-        height: 100%;
-        border-radius: 4px;
-        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .kpi-progress-bar.over {
-        background: linear-gradient(90deg, #d4b271, #f59e0b);
-      }
-
-      /* Gradient text */
-      .grad {
-        background: linear-gradient(135deg, var(--blue), var(--blue2));
-        -webkit-background-clip: text;
-        color: transparent;
-      }
-
-      /* Inputs */
-      .s-input {
-        background: #f1f5f9;
-        border: 1.5px solid transparent;
-        border-radius: 14px;
-        padding: 12px 16px;
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--text);
-        outline: none;
-        width: 100%;
-        transition: all 0.25s;
-      }
-      .s-input:focus {
-        background: #fff;
-        border-color: var(--blue);
-        box-shadow: 0 0 0 4px rgba(0, 122, 194, 0.08);
-      }
-      .s-input:hover:not(:focus) {
-        background: #edf2f7;
-      }
-
-      /* Tabs */
-      .tab-wrap {
-        display: inline-flex;
-        background: rgba(0, 0, 0, 0.04);
-        padding: 5px;
-        border-radius: 16px;
-        gap: 4px;
-      }
-      .s-tab {
-        padding: 10px 28px;
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--muted);
-        border-radius: 12px;
-        cursor: pointer;
-        border: none;
-        background: transparent;
-        transition: all 0.25s;
-        letter-spacing: -0.01em;
-      }
-      .s-tab.on {
-        background: #fff;
-        color: var(--blue);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      }
-
-      /* KPI */
-      .kv {
-        font-size: 36px;
-        font-weight: 900;
-        letter-spacing: -0.04em;
-        line-height: 1;
-      }
-      .kv-sm {
-        font-size: 28px;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        line-height: 1;
-      }
-      .kv-label {
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--muted);
-      }
-
-      /* Trend badges */
-      .trend {
-        display: inline-flex;
-        align-items: center;
-        gap: 3px;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 8px;
-      }
-      .trend.up {
-        color: #059669;
-        background: #d1fae5;
-      }
-      .trend.down {
-        color: #dc2626;
-        background: #fee2e2;
-      }
-      .trend.neutral {
-        color: #64748b;
-        background: #f1f5f9;
-      }
-
-      /* Status */
-      .st {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 5px 12px;
-        border-radius: 99px;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.01em;
-      }
-      .st::before {
-        content: "";
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-      .st-green {
-        background: #ecfdf5;
-        color: #059669;
-      }
-      .st-green::before {
-        background: #059669;
-      }
-      .st-yellow {
-        background: #fffbeb;
-        color: #b45309;
-      }
-      .st-yellow::before {
-        background: #d97706;
-      }
-      .st-orange {
-        background: #fff7ed;
-        color: #c2410c;
-      }
-      .st-orange::before {
-        background: #ea580c;
-      }
-      .st-blue {
-        background: #eff6ff;
-        color: #1d4ed8;
-      }
-      .st-blue::before {
-        background: #3b82f6;
-      }
-
-      /* Table */
-      table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-      }
-      th {
-        text-align: left;
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--muted);
-        padding: 16px 18px;
-        border-bottom: 1px solid var(--border);
-        background: #fafbfc;
-      }
-      th:first-child {
-        border-top-left-radius: 16px;
-      }
-      th:last-child {
-        border-top-right-radius: 16px;
-      }
-      td {
-        padding: 16px 18px;
-        font-size: 13px;
-        font-weight: 500;
-        border-bottom: 1px solid #f5f5f7;
-      }
-      tr:last-child td {
-        border-bottom: none;
-      }
-      tr:hover td {
-        background: #f8fafc;
-      }
-      tbody tr:nth-child(even) td {
-        background: #fdfdfe;
-      }
-      tbody tr:nth-child(even):hover td {
-        background: #f5f7fa;
-      }
-
-      /* Hero */
-      .hero-glass {
-        background: rgba(255, 255, 255, 0.88);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        border-radius: 24px;
-      }
-
-      /* Pulse */
-      .pulse-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #10b981;
-        animation: pulse 2s infinite;
-      }
-      @keyframes pulse {
-        0%,
-        100% {
-          box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
-        }
-        50% {
-          box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-        }
-      }
-
-      /* Auth */
-      #auth-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(250, 251, 252, 0.92);
-        backdrop-filter: blur(12px);
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.5s;
-      }
-      #app-content {
-        display: none;
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-
-      /* Smooth appear */
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(16px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .fade-up {
-        animation: fadeUp 0.5s ease-out both;
-      }
-      .fade-up-d1 {
-        animation-delay: 0.1s;
-      }
-      .fade-up-d2 {
-        animation-delay: 0.2s;
-      }
-      .fade-up-d3 {
-        animation-delay: 0.3s;
-      }
-      .fade-up-d4 {
-        animation-delay: 0.4s;
-      }
-
-      /* Progress ring */
-      .ring-bg {
-        fill: none;
-        stroke: #e8ecf0;
-        stroke-width: 4;
-      }
-      .ring-fg {
-        fill: none;
-        stroke-width: 4;
-        stroke-linecap: round;
-        transition: stroke-dashoffset 0.8s ease;
-      }
-
-      @media (max-width: 768px) {
-        .kv {
-          font-size: 28px;
-        }
-        .kv-sm {
-          font-size: 22px;
-        }
-      }
-    
-      .top-header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-bottom: 2px solid #d4af37; }
-      .top-header h1 { background: linear-gradient(135deg, #ffe082 0%, #d4af37 20%, #ffd700 40%, #f7e98e 60%, #d4af37 80%, #ffe082 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 3s linear infinite; filter: drop-shadow(0 1px 2px rgba(212,175,55,0.4)); }
-      @keyframes shimmer { to { background-position: 200% center; } }
-      .s-card { background: #ffffff; border-radius: 12px; border: 1px solid #B3D4FF; box-shadow: 0 1px 2px rgba(0,0,0,0.03); backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-      .s-card:hover { transform: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #B3D4FF; }
-      .kpi-card { background: #F0F7FF !important; border-radius: 12px; border: 1px solid #B3D4FF; padding: 24px; display: flex; flex-direction: column; }
-      .s-input { background: #F0F4F8; border: 1px solid #CBD5E1; border-radius: 999px; }
-      select.s-input { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px; }
-      select.s-input[multiple] { background-image: none; border-radius: 8px; }
-      .s-input:focus { border-color: #007AC2; box-shadow: 0 0 0 2px rgba(0, 122, 194, 0.1); background: #ffffff; }
-      .tab-wrap { background: #FFFFFF; padding: 4px; border-radius: 999px; border: 1px solid #CBD5E1; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-      .s-tab { border-radius: 999px; font-weight: 600; padding: 8px 24px; }
-      .s-tab.on { background: #F0F7FF; color: #005A9E; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #B3D4FF; }
-      .glass-nav { display: none; }
-      .hero-glass { background: #fff; border: 1px solid #e2e8f0; }
-      .kv { font-size: 28px; color: #111827; }
-      .kpi-progress-bar { background: #007AC2; }
-      .kpi-progress-bg { background: rgba(0,0,0,0.08); height: 4px; border-radius: 2px; }
-      /* Force flat text */
-      .grad { background: none; -webkit-background-clip: unset; color: inherit; }
-</style>
-  </head>
-  <body>
-    <!-- AUTH -->
-    <div id="auth-overlay">
-      <div
-        class="s-card p-10 w-[92%] max-w-[420px] text-center"
-        style="border-radius: 32px"
-      >
-        <div class="mx-auto mb-6">
-          <img
-            src="logo.png"
-            alt="BV"
-            class="h-20 mx-auto object-contain drop-shadow rounded-2xl"
-            style="background: #0f172a; padding: 12px"
-          />
-        </div>
-        <h1 class="text-2xl font-extrabold mb-1 tracking-tight">
-          Bảo Việt Nhân thọ <span style="color: #d4b271">Sài Gòn</span>
-        </h1>
-        <p
-          class="text-[10px] font-bold text-[#007AC2] mb-8 tracking-[0.3em] uppercase"
-        >
-          Trung Tâm Phân Tích Dữ Liệu
-        </p>
-        <input
-          type="password"
-          id="pw"
-          placeholder="Nhập mã truy cập..."
-          class="s-input text-center text-lg tracking-widest mb-4 py-4"
-          onkeypress="event.key === 'Enter' && doLogin()"
-        />
-        <p id="auth-err" class="text-red-500 text-xs mb-4 hidden font-bold">
-          Mã truy cập không hợp lệ.
-        </p>
-        <button
-          onclick="doLogin()"
-          class="w-full py-4 rounded-2xl font-bold text-sm text-slate-900 cursor-pointer border-none transition-all hover:shadow-lg"
-          style="background: linear-gradient(135deg, #007ac2, #0096d6)"
-        >
-          Truy Cập Hệ Thống →
-        </button>
-      </div>
-    </div>
-
-    <!-- APP -->
-    <div id="app-content">
-      <!-- Nav -->
-      
-      <div class="top-header py-6">
-        <div class="max-w-[1440px] w-full mx-auto px-6 flex items-center justify-center relative">
-          <h1 class="m-0 font-extrabold uppercase text-3xl md:text-4xl tracking-wide">Bảo Việt Nhân Thọ Sài Gòn</h1>
-          <button onclick="location.reload()" class="text-xs font-semibold text-white/70 hover:text-[#D4AF37] transition-colors bg-transparent border-none cursor-pointer absolute right-6">Đăng xuất</button>
-        </div>
-      </div>
-
-
-      <div class="max-w-[1440px] mx-auto px-6 py-10">
-        <!-- Header + Tabs -->
-        <div class="mb-6 fade-up">
-          <div>
-            <h1
-              class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-2 flex items-center gap-4"
-            >
-              Tổng Quan <span class="grad">Hoạt Động</span>
-              <span
-                style="text-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15)"
-                class="text-4xl"
-                >🎯</span
-              >
-            </h1>
-            <p class="text-slate-500 font-medium text-[15px]">
-              Báo cáo đa chiều & Phân tích tăng trưởng doanh thu bảo hiểm
-            </p>
-          </div>
-          <div class="tab-wrap">
-            <button class="s-tab on" id="tabLK" onclick="switchTab('lk')">
-              📈 Doanh Thu Lũy Kế
-            </button>
-            <button class="s-tab" id="tabHT" onclick="switchTab('ht')">
-              📊 Tháng Hiện Tại
-            </button>
-          </div>
-        </div>
-
-        <!-- ==================== LŨY KẾ ==================== -->
-        <div id="viewLK">
-          <!-- Filters -->
-          <div class="s-card p-7 mb-8 fade-up fade-up-d1">
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-5">
-              <div>
-                <label class="kv-label mb-2 block">Kỳ báo cáo</label>
-                <select id="flt-year" class="s-input" onchange="runLK()">
-                  <option value="2026">Năm 2026</option>
-                  <option value="2025">Năm 2025</option>
-                  <option value="2024">Năm 2024</option>
-                </select>
-              </div>
-              <div>
-                <label class="kv-label mb-2 block">Khung thời gian</label>
-                <select id="flt-period" class="s-input" onchange="runLK()">
-                  <option value="all">Cả năm (Lũy kế)</option>
-                  <optgroup label="Theo Quý">
-                    <option value="q1">Quý 1</option>
-                    <option value="q2">Quý 2</option>
-                    <option value="q3">Quý 3</option>
-                    <option value="q4">Quý 4</option>
-                  </optgroup>
-                  <optgroup label="Theo Tháng">
-                    <option value="1">Tháng 1</option>
-                    <option value="2">Tháng 2</option>
-                    <option value="3">Tháng 3</option>
-                    <option value="4">Tháng 4</option>
-                    <option value="5">Tháng 5</option>
-                    <option value="6">Tháng 6</option>
-                    <option value="7">Tháng 7</option>
-                    <option value="8">Tháng 8</option>
-                    <option value="9">Tháng 9</option>
-                    <option value="10">Tháng 10</option>
-                    <option value="11">Tháng 11</option>
-                    <option value="12">Tháng 12</option>
-                  </optgroup>
-                </select>
-              </div>
-              <div>
-                <label class="kv-label mb-2 block">Góc nhìn</label>
-                <select id="flt-level" class="s-input" onchange="runLK(true)">
-                  <option value="company">Toàn Công Ty</option>
-                  <option value="phong">Phòng KD</option>
-                  <option value="ban">Ban</option>
-                  <option value="nhom">Nhóm</option>
-                  <option value="dl">Đại Lý (TVV)</option>
-                </select>
-              </div>
-              <div class="hidden" id="flt-spec-wrap">
-                <label class="kv-label mb-2 block" id="flt-spec-label">Chọn (Đánh dấu check để chọn nhiều)</label>
-                <div id="flt-spec" class="s-input overflow-y-auto max-h-[150px] bg-white border border-slate-200" style="padding: 12px; border-radius: 8px;">
-                  <!-- Checkboxes generated by JS -->
-                </div>
-              </div>
-              <div class="md:col-span-1">
-                <label class="kv-label mb-2 block">Tìm kiếm</label>
-                <div class="relative">
-                  <svg
-                    class="w-4 h-4 absolute left-4 top-4 text-slate-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                  <input
-                    type="text"
-                    id="flt-search"
-                    class="s-input pl-11"
-                    placeholder="Tên phòng, ban, TVV..."
-                    oninput="runLK()"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3D Banner & KPI Cards -->
-          <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-            <!-- 3D Illustration Card -->
-            <div class="kpi-card lg:col-span-1 p-0 overflow-hidden relative flex items-center justify-center bg-slate-900 rounded-xl" style="min-height: 200px;">
-                <!-- Businessmen holding flag image -->
-                <img src="baoviet_team.jpg" alt="Quyết tâm" class="absolute inset-0 w-full h-full object-cover opacity-90">
-                <div class="relative z-10 text-center p-5 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 shadow-xl w-3/4">
-                    <h3 class="text-lg font-black text-white uppercase tracking-widest mb-1 text-shadow-sm">Quyết Tâm</h3>
-                    <p class="text-xs text-slate-200 font-medium">Đồng lòng vì sự nghiệp Bảo Việt Nhân Thọ</p>
-                </div>
-            </div>
-
-            <!-- KPI Cards wrapper -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:col-span-3">
-            <div
-              class="kpi-card fade-up fade-up-d1"
-              style="
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 249, 255, 0.8));
-              "
-            >
-              <div
-                class="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-blue-100 blur-2xl"
-              ></div>
-              <div class="relative z-10">
-                <div class="kv-label">Doanh Thu AFYP</div>
-                <div
-                  class="kv mt-2 mb-1"
-                  style="color: var(--blue)"
-                  id="kpi-afyp"
-                >
-                  0.0
-                </div>
-                <div class="flex items-center justify-between">
-                  <span
-                    class="text-xs text-slate-500 font-semibold"
-                    >Triệu VNĐ</span
-                  >
-                  <div id="yoy-afyp" class="trend neutral">--</div>
-                </div>
-              </div>
-            </div>
-            <div class="kpi-card fade-up fade-up-d2">
-              <div class="kv-label">Tổng Hợp Đồng</div>
-              <div class="kv mt-3 mb-2" id="kpi-hd">0</div>
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-slate-500 font-semibold"
-                  >HĐ phát hành</span
-                >
-                <div id="yoy-hd" class="trend neutral">--</div>
-              </div>
-            </div>
-            <div class="kpi-card fade-up fade-up-d3">
-              <div class="kv-label">Độ Lớn / HĐ</div>
-              <div class="kv mt-3 mb-2" id="kpi-dolon">0.0</div>
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-slate-500 font-semibold"
-                  >Triệu VNĐ / HĐ</span
-                >
-                <div id="yoy-dolon" class="trend neutral">--</div>
-              </div>
-            </div>
-            <div
-              class="kpi-card fade-up fade-up-d4"
-              
-            >
-              <div class="kv-label" style="color: var(--muted)">Lượt Hoạt Động</div>
-              <div class="kv mt-3 mb-2 text-slate-900" id="kpi-lhd">0</div>
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-emerald-400" id="kpi-lhdc"
-                  >0 Lượt Chuẩn</span
-                >
-                <div id="yoy-lhd" class="trend neutral">--</div>
-              </div>
-            </div>
-            </div> <!-- End KPI wrapper -->
-          </div>
-
-          <!-- Charts -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div class="s-card p-7 lg:col-span-2 fade-up">
-              <div class="flex justify-between items-center mb-6">
-                <div>
-                  <h3 class="text-base font-bold text-slate-900">
-                    Biến Động AFYP Qua Các Tháng
-                  </h3>
-                  <p class="text-xs text-slate-400 mt-1">
-                    So sánh đường xu hướng cùng kỳ (YoY)
-                  </p>
-                </div>
-              </div>
-              <div class="h-[300px]"><canvas id="chart-main"></canvas></div>
-            </div>
-            <div class="s-card p-7 fade-up">
-              <h3 class="text-base font-bold text-slate-900 mb-6">
-                Năng Suất vs Lượt HĐ
-              </h3>
-              <div class="h-[300px]"><canvas id="chart-radar"></canvas></div>
-            </div>
-          </div>
-
-          <!-- Data Grid -->
-          <div class="s-card overflow-hidden mb-10 fade-up">
-            <div
-              class="p-7 border-b border-slate-100 flex justify-between items-center"
-            >
-              <div>
-                <h3 class="text-base font-bold text-slate-900" id="grid-title">
-                  Bảng Xếp Hạng
-                </h3>
-                <p class="text-xs text-slate-400 mt-1" id="grid-sub">
-                  Phân tích đa chiều
-                </p>
-              </div>
-            </div>
-            <div class="overflow-x-auto">
-              <table>
-                <thead id="grid-head"></thead>
-                <tbody id="grid-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ==================== THÁNG HIỆN TẠI (BC02) ==================== -->
-        <div id="viewHT" class="hidden">
-          <!-- Hero with Family Image -->
-          <div
-            class="s-card overflow-hidden mb-8 fade-up"
-            style="
-              border: none;
-              background: linear-gradient(135deg, #f0f9ff, #e0f2fe, #f0f9ff);
-            "
-          >
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <div class="relative">
-                <img
-                  src="3d_family.png"
-                  alt="Gia đình Bảo Việt"
-                  class="w-full h-full object-cover"
-                  style="min-height: 280px; max-height: 380px"
-                />
-                <div
-                  class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/80 hidden lg:block"
-                ></div>
-              </div>
-              <div class="p-8 md:p-10 flex flex-col justify-center">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="pulse-dot"></div>
-                  <h2
-                    class="text-2xl font-black tracking-tight text-slate-900"
-                    id="ht-title"
-                  >
-                    Dữ Liệu Trực Tiếp
-                  </h2>
-                </div>
-                <p class="text-sm text-slate-500 font-medium mb-6">
-                  Dữ liệu ước tính BC02 — Cập nhật lần cuối:
-                  <span class="font-bold text-slate-700" id="ht-time">--</span>
-                </p>
-                <div class="grid grid-cols-2 gap-6">
-                  <div class="hero-glass p-5">
-                    <div
-                      class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2"
-                    >
-                      Dự Kiến AFYP
-                    </div>
-                    <div
-                      class="text-3xl font-black"
-                      style="color: var(--blue)"
-                      id="ht-big-afyp"
-                    >
-                      0.0
-                    </div>
-                    <div
-                      class="text-xs text-slate-400 font-semibold mt-1"
-                      id="ht-pct-text"
-                    >
-                      Mục tiêu: -- | Đạt --%
-                    </div>
-                  </div>
-                  <div class="hero-glass p-5">
-                    <div
-                      class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2"
-                    >
-                      Tỷ Lệ Duyệt
-                    </div>
-                    <div
-                      class="text-3xl font-black text-emerald-600"
-                      id="ht-big-rate"
-                    >
-                      0%
-                    </div>
-                    <div class="text-xs text-slate-400 font-semibold mt-1">
-                      Có hiệu lực / Tổng
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- HT KPI Cards -->
-          <div class="grid grid-cols-2 md:grid-cols-5 gap-5 mb-8">
-            <div class="kpi-card fade-up fade-up-d1">
-              <div class="kv-label">Tổng Hợp Đồng</div>
-              <div class="kv-sm mt-3 mb-1" id="ht-k-hd">0</div>
-              <div class="text-[10px] text-slate-400 font-bold">
-                Đã nhập hệ thống
-              </div>
-            </div>
-            <div
-              class="kpi-card fade-up fade-up-d2"
-              
-            >
-              <div class="kv-label">Có Hiệu Lực</div>
-              <div class="kv-sm mt-3 mb-1 text-emerald-600" id="ht-k-hl">0</div>
-              <div class="text-[10px] text-slate-400 font-bold">
-                Sẵn sàng tính lương
-              </div>
-            </div>
-            <div
-              class="kpi-card fade-up fade-up-d3"
-              
-            >
-              <div class="kv-label">Chờ / Đang ĐGRR</div>
-              <div class="kv-sm mt-3 mb-1 text-amber-500" id="ht-k-dg">0</div>
-              <div class="text-[10px] text-slate-400 font-bold">
-                Cần theo dõi
-              </div>
-            </div>
-            <div class="kpi-card fade-up fade-up-d4">
-              <div class="kv-label">Lượt HĐ Chuẩn</div>
-              <div class="kv-sm mt-3 mb-1" id="ht-k-lhdc">0</div>
-              <div class="text-[10px] text-slate-400 font-bold">
-                Đạt IP ≥ 12 Tr
-              </div>
-            </div>
-            <div class="kpi-card fade-up">
-              <div class="kv-label">Độ Lớn B/Q</div>
-              <div class="kv-sm mt-3 mb-1" id="ht-k-dl">0.0</div>
-              <div class="text-[10px] text-slate-400 font-bold">
-                Triệu / Hợp đồng
-              </div>
-            </div>
-          </div>
-
-          <!-- HT Charts -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div class="s-card p-7 lg:col-span-2 fade-up">
-              <h3 class="text-base font-bold text-slate-900 mb-1">
-                AFYP Theo Phòng / Ban
-              </h3>
-              <p class="text-xs text-slate-400 mb-5">
-                Phân bổ doanh thu ước tính theo đơn vị
-              </p>
-              <div class="h-[280px]"><canvas id="chart-ht-bar"></canvas></div>
-            </div>
-            <div class="s-card p-7 fade-up">
-              <h3 class="text-base font-bold text-slate-900 mb-1">
-                Tình Trạng Hồ Sơ
-              </h3>
-              <p class="text-xs text-slate-400 mb-5">
-                Phân bổ theo trạng thái duyệt
-              </p>
-              <div class="h-[280px]"><canvas id="chart-ht-donut"></canvas></div>
-            </div>
-          </div>
-
-          <!-- HT Detail Table -->
-          <div class="s-card overflow-hidden mb-10 fade-up">
-            <div
-              class="p-7 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4"
-            >
-              <div class="flex items-center gap-4 flex-wrap w-full md:w-auto">
-                <select
-                  id="ht-flt-level"
-                  class="s-input w-auto min-w-[150px]"
-                  onchange="initHTSpec()"
-                >
-                  <option value="all">Toàn Công Ty</option>
-                  <option value="phong">Phòng KD</option>
-                  <option value="ban">Ban</option>
-                  <option value="nhom">Nhóm</option>
-                </select>
-                <div id="ht-flt-spec-wrap" class="hidden">
-                  <select
-                    id="ht-flt-spec"
-                    class="s-input w-auto min-w-[180px]"
-                    multiple
-                    size="1"
-                    style="height: 45px"
-                    onchange="runHT()"
-                  ></select>
-                  <div class="text-[9px] text-slate-400 mt-1">
-                    Giữ Ctrl/Cmd để chọn nhiều
-                  </div>
-                </div>
-              </div>
-              <div class="relative flex-1 md:flex-none md:min-w-[280px]">
-                <svg
-                  class="w-4 h-4 absolute left-4 top-3.5 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  id="ht-search"
-                  class="s-input pl-11 w-full"
-                  placeholder="Tìm tên BMBH, TVV, Ban..."
-                  oninput="runHT()"
-                />
-              </div>
-            </div>
-            <div class="overflow-x-auto">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="w-12">#</th>
-                    <th>Đại Lý (TVV)</th>
-                    <th>Phòng / Ban</th>
-                    <th>Bên Mua BH</th>
-                    <th>Tình Trạng</th>
-                    <th>Ngày Thu</th>
-                    <th class="text-right">AFYP (Tr)</th>
-                  </tr>
-                </thead>
-                <tbody id="ht-tbody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <footer class="border-t border-slate-100 bg-white/60 py-8 mt-4">
-        <div
-          class="max-w-[1440px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3"
-        >
-          <p class="text-xs text-slate-400 font-medium">
-            © 2026 Bảo Việt Nhân thọ Sài Gòn — Hệ thống nội bộ
-          </p>
-          <p class="text-xs text-slate-300 font-medium">
-            Powered by BV Analytics Engine v2.0
-          </p>
-        </div>
-      </footer>
-    </div>
-
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
-      // ===== Core Data =====
-      let DATA = [],
-        FLT = {},
-        BC02 = [],
-        KH_DATA = [];
-      let charts = {};
-
-      function doLogin() {
-        if (document.getElementById("pw").value === "103ty") {
-          document.getElementById("auth-overlay").style.opacity = 0;
-          setTimeout(() => {
-            document.getElementById("auth-overlay").style.display = "none";
-            document.getElementById("app-content").style.display = "block";
-            setTimeout(
-              () => (document.getElementById("app-content").style.opacity = 1),
-              50,
-            );
-            boot();
-          }, 400);
-        } else {
-          document.getElementById("auth-err").classList.remove("hidden");
-        }
-      }
-
-      function switchTab(t) {
-        document.getElementById("tabLK").className =
-          t === "lk" ? "s-tab on" : "s-tab";
-        document.getElementById("tabHT").className =
-          t === "ht" ? "s-tab on" : "s-tab";
-        document.getElementById("viewLK").style.display =
-          t === "lk" ? "block" : "none";
-        document.getElementById("viewHT").style.display =
-          t === "ht" ? "block" : "none";
-        if (t === "ht") runHT();
-      }
-
-      async function boot() {
-        Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.color = "#94A3B8";
-        try {
-          let [r1, r2] = await Promise.all([
-            fetch("data/all_contracts.json"),
-            fetch("data/bc02_current.json"),
-            
-          ]);
-          let d1 = await r1.json();
-          DATA = d1.records;
-          FLT = d1.filters;
-          let d2 = await r2.json();
-          BC02 = d2;
-          
-          
-          initFilters();
-          runLK();
-        } catch (e) {
-          console.error(e);
-          alert("Lỗi tải dữ liệu");
-        }
-      }
-
-      // Helper for multi-select checkboxes
-      function getMultiValues(containerId) {
-        let container = document.getElementById(containerId);
-        if (!container) return [];
-        if (container.tagName === 'SELECT') { // Fallback for HT tab
-            let opts = container.selectedOptions;
-            let res = [];
-            for (let i = 0; i < opts.length; i++) {
-                if (opts[i].value) res.push(opts[i].value);
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Rajdhani', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#050b14',
+                        card: 'rgba(10, 16, 30, 0.65)',
+                        neonBlue: '#00f5ff',
+                        electricBlue: '#007ac2',
+                        aiPurple: '#8b5cf6',
+                        cyberGold: '#d4af37',
+                        danger: '#ff2a2a',
+                        success: '#00ff88',
+                    }
+                }
             }
-            return res;
         }
-        // For div containing checkboxes
-        let checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
-        let res = [];
-        checkboxes.forEach(cb => res.push(cb.value));
-        return res;
-      }
-
-      // Plan calculation helper
-      function initFilters() {
-        let yel = document.getElementById("flt-year");
-        yel.innerHTML = FLT.years
-          .sort((a, b) => b - a)
-          .map((y) => `<option value="${y}">Năm ${y}</option>`)
-          .join("");
-      }
-
-      function calcKPI(recs) {
-        let afyp = 0;
-        let ips = {};
-        recs.forEach((r) => {
-          afyp += r.v;
-          let k = `${r.d}_${r.m || 99}`;
-          ips[k] = (ips[k] || 0) + (r.i || r.v);
-        });
-        let lhd = Object.keys(ips).length;
-        let lhdc = Object.values(ips).filter((v) => v >= 12).length;
-        let hd = recs.length;
-        return {
-          afyp,
-          hd,
-          lhd,
-          lhdc,
-          dolon: hd ? afyp / hd : 0,
-          ns: lhd ? hd / lhd : 0,
-        };
-      }
-
-      function getYoY(currKPI, prevRecs) {
-        if (!prevRecs || prevRecs.length === 0)
-          return { afyp: 0, hd: 0, dolon: 0, lhd: 0 };
-        let prevKPI = calcKPI(prevRecs);
-        let calc = (c, p) => (p > 0 ? ((c - p) / p) * 100 : 0);
-        return {
-          afyp: calc(currKPI.afyp, prevKPI.afyp),
-          hd: calc(currKPI.hd, prevKPI.hd),
-          dolon: calc(currKPI.dolon, prevKPI.dolon),
-          lhd: calc(currKPI.lhd, prevKPI.lhd),
-        };
-      }
-
-      function renderTrend(elId, val) {
-        let el = document.getElementById(elId);
-        if (val === 0 || Math.abs(val) < 0.1) {
-          el.className = "trend neutral";
-          el.innerHTML = "--";
-        } else if (val > 0) {
-          el.className = "trend up";
-          el.innerHTML = `+${val.toFixed(1)}% ↑`;
-        } else {
-          el.className = "trend down";
-          el.innerHTML = `${val.toFixed(1)}% ↓`;
-        }
-      }
-
-      function runLK(resetSpec = false) {
-        let y = parseInt(document.getElementById("flt-year").value);
-        let p = document.getElementById("flt-period").value;
-        let l = document.getElementById("flt-level").value;
-        let s = document.getElementById("flt-search").value.toLowerCase();
-        let spWrap = document.getElementById("flt-spec-wrap");
-        let spSel = document.getElementById("flt-spec");
-
-        if (resetSpec) {
-          if (l === "company" || l === "dl") {
-            spWrap.classList.add("hidden");
-            spSel.innerHTML = '';
-          } else {
-            spWrap.classList.remove("hidden");
-            let arr =
-              l === "phong" ? FLT.phongs : l === "ban" ? FLT.bans : FLT.nhoms;
-            document.getElementById("flt-spec-label").innerText = `Chọn ${l}`;
-            spSel.innerHTML = arr.map((x) => `<label class="flex items-center gap-2 mb-2 text-sm text-slate-700 cursor-pointer hover:bg-slate-50 p-1 rounded"><input type="checkbox" value="${x}" onchange="runLK()" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 border-gray-300"> ${x}</label>`).join("");
-          }
-        }
-        let spec = getMultiValues("flt-spec");
-
-        let filterData = (yr) => {
-          let r = DATA.filter((x) => x.y === yr);
-          if (p === "q1") r = r.filter((x) => x.m >= 1 && x.m <= 3);
-          else if (p === "q2") r = r.filter((x) => x.m >= 4 && x.m <= 6);
-          else if (p === "q3") r = r.filter((x) => x.m >= 7 && x.m <= 9);
-          else if (p === "q4") r = r.filter((x) => x.m >= 10 && x.m <= 12);
-          else if (p !== "all") r = r.filter((x) => x.m === parseInt(p));
-          if (s)
-            r = r.filter(
-              (x) =>
-                (x.p || "").toLowerCase().includes(s) ||
-                (x.b || "").toLowerCase().includes(s) ||
-                (x.n || "").toLowerCase().includes(s) ||
-                (x.d || "").toLowerCase().includes(s),
-            );
-          if (spec.length > 0) {
-            if (l === "phong") r = r.filter((x) => spec.includes(x.p));
-            else if (l === "ban") r = r.filter((x) => spec.includes(x.b));
-            else if (l === "nhom") r = r.filter((x) => spec.includes(x.n));
-          }
-          return r;
-        };
-
-        let currRecs = filterData(y);
-        let prevRecs = filterData(y - 1);
-        let currKPI = calcKPI(currRecs);
-        let yoy = getYoY(currKPI, prevRecs);
-        // true = Tính lũy kế kế hoạch từ đầu năm đến m
-
-        document.getElementById("kpi-afyp").innerText =
-          currKPI.afyp.toLocaleString("vi-VN", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
-          });
-        document.getElementById("kpi-hd").innerText =
-          currKPI.hd.toLocaleString("vi-VN");
-        document.getElementById("kpi-dolon").innerText =
-          currKPI.dolon.toLocaleString("vi-VN", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1,
-          });
-        document.getElementById("kpi-lhd").innerText =
-          currKPI.lhd.toLocaleString("vi-VN");
-        document.getElementById("kpi-lhdc").innerText =
-          `${currKPI.lhdc.toLocaleString("vi-VN")} Lượt Chuẩn (IP≥12)`;
-
-        
-        renderTrend("yoy-afyp", yoy.afyp);
-        renderTrend("yoy-hd", yoy.hd);
-        renderTrend("yoy-dolon", yoy.dolon);
-        renderTrend("yoy-lhd", yoy.lhd);
-
-        drawMainChart(currRecs, prevRecs, y);
-        drawRadarChart(currRecs);
-
-        // Grid
-        let g = {};
-        if (l === "company") g = { "Toàn Công Ty": currRecs };
-        else
-          currRecs.forEach((r) => {
-            let k =
-              (l === "phong"
-                ? r.p
-                : l === "ban"
-                  ? r.b
-                  : l === "nhom"
-                    ? r.n
-                    : r.d) || "(Khác)";
-            (g[k] = g[k] || []).push(r);
-          });
-
-        let rows = Object.entries(g)
-          .map(([n, items]) => {
-            let x = calcKPI(items);
-            // Calculate target for this specific item (accumulated)
-            return { n, ...x };
-          })
-          .sort((a, b) => b.afyp - a.afyp);
-
-        document.getElementById("grid-sub").innerText =
-          `${rows.length} kết quả tìm thấy`;
-        document.getElementById("grid-head").innerHTML =
-          `<tr><th class="w-12">#</th><th>Tên Cấp Quản Lý</th><th class="text-right">AFYP (Tr)</th><th class="text-right">Số HĐ</th><th class="text-right">B/Q (Tr/HĐ)</th><th class="text-right">Lượt HĐ</th><th class="text-right">Năng Suất</th></tr>`;
-        document.getElementById("grid-body").innerHTML = rows
-          .slice(0, 100)
-          .map(
-            (r, i) => {
-              return `<tr>
-    <td class="text-slate-400 font-bold">${i + 1}</td>
-    <td class="font-bold text-slate-800">${r.n}</td>
-    <td class="text-right font-black ${i < 3 ? "text-[#007AC2]" : ""}">${r.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
-    <td class="text-right font-semibold">${r.hd}</td>
-    <td class="text-right">${r.dolon.toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td>
-    <td class="text-right"><b>${r.lhd}</b> <span class="text-[10px] text-emerald-600 block">${r.lhdc} chuẩn</span></td>
-    <td class="text-right font-semibold">${r.ns.toLocaleString("vi-VN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-</tr>`;
-            }
-          )
-          .join("");
-      }
-
-      function drawMainChart(curr, prev, year) {
-        let getM = (arr) => {
-          let d = {};
-          arr.forEach((r) => {
-            if (r.m) d[r.m] = (d[r.m] || 0) + r.v;
-          });
-          return Array.from({ length: 12 }, (_, i) => d[i + 1] || 0);
-        };
-        let cD = getM(curr),
-          pD = getM(prev);
-        let ctx = document.getElementById("chart-main").getContext("2d");
-        if (charts.main) charts.main.destroy();
-        let grad = ctx.createLinearGradient(0, 0, 0, 400);
-        grad.addColorStop(0, "rgba(0,122,194,0.15)");
-        grad.addColorStop(1, "rgba(0,122,194,0)");
-        charts.main = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: [
-              "T1",
-              "T2",
-              "T3",
-              "T4",
-              "T5",
-              "T6",
-              "T7",
-              "T8",
-              "T9",
-              "T10",
-              "T11",
-              "T12",
-            ],
-            datasets: [
-              {
-                label: `Năm ${year}`,
-                data: cD,
-                borderColor: "#007AC2",
-                backgroundColor: grad,
-                fill: true,
-                tension: 0.4,
-                borderWidth: 3,
-                pointRadius: 5,
-                pointBackgroundColor: "#FFF",
-                pointBorderColor: "#007AC2",
-                pointBorderWidth: 2.5,
-                pointHoverRadius: 7,
-              },
-              {
-                label: `Năm ${year - 1}`,
-                data: pD,
-                borderColor: "#CBD5E1",
-                borderDash: [6, 4],
-                fill: false,
-                tension: 0.4,
-                borderWidth: 2,
-                pointRadius: 0,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: "index", intersect: false },
-            plugins: {
-              legend: {
-                position: "top",
-                align: "end",
-                labels: {
-                  usePointStyle: true,
-                  boxWidth: 8,
-                  font: { weight: "600" },
-                },
-              },
-            },
-            scales: {
-              x: {
-                grid: { display: false },
-                ticks: { font: { weight: "600" } },
-              },
-              y: {
-                grid: { color: "#F1F5F9", drawBorder: false },
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-      }
-
-      function drawRadarChart(recs) {
-        let g = {};
-        recs.forEach((r) => {
-          let k = r.p || "Khác";
-          (g[k] = g[k] || []).push(r);
-        });
-        let d = Object.entries(g)
-          .map(([n, items]) => {
-            let k = calcKPI(items);
-            return { n, a: k.afyp, ns: k.ns };
-          })
-          .sort((a, b) => b.a - a.a)
-          .slice(0, 6);
-        if (charts.radar) charts.radar.destroy();
-        charts.radar = new Chart(document.getElementById("chart-radar"), {
-          type: "bar",
-          data: {
-            labels: d.map((x) =>
-              x.n.length > 18 ? x.n.slice(0, 17) + "…" : x.n,
-            ),
-            datasets: [
-              {
-                type: "bar",
-                label: "AFYP (Tr)",
-                data: d.map((x) => x.a),
-                backgroundColor: "rgba(0,122,194,0.12)",
-                borderColor: "#007AC2",
-                borderWidth: 2,
-                borderRadius: 8,
-                yAxisID: "y",
-              },
-              {
-                type: "line",
-                label: "Năng Suất",
-                data: d.map((x) => x.ns),
-                borderColor: "#D4B271",
-                borderWidth: 2.5,
-                pointBackgroundColor: "#D4B271",
-                pointRadius: 4,
-                tension: 0.3,
-                yAxisID: "y1",
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: "bottom",
-                labels: { usePointStyle: true, font: { weight: "600" } },
-              },
-            },
-            scales: {
-              x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-              y: { type: "linear", position: "left", display: false },
-              y1: { type: "linear", position: "right", display: false },
-            },
-          },
-        });
-      }
-
-      // ===== THÁNG HIỆN TẠI =====
-      function initHTSpec() {
-        let l = document.getElementById("ht-flt-level").value;
-        let spWrap = document.getElementById("ht-flt-spec-wrap");
-        let spSel = document.getElementById("ht-flt-spec");
-
-        if (l === "all") {
-          spWrap.classList.add("hidden");
-          spSel.innerHTML = "";
-        } else {
-          spWrap.classList.remove("hidden");
-          let vals = new Set();
-          BC02.records.forEach((r) => {
-            let v = l === "phong" ? r.p : l === "ban" ? r.b : r.n;
-            if (v) vals.add(v);
-          });
-          spSel.innerHTML = [...vals]
-            .sort()
-            .map((x) => `<option value="${x}">${x}</option>`)
-            .join("");
-        }
-        runHT();
-      }
-
-      function runHT() {
-        if (!BC02.records) return;
-        document.getElementById("ht-title").innerText =
-          BC02.month_label || "Theo Dõi";
-        document.getElementById("ht-time").innerText = BC02.updated || "";
-
-        let q = document.getElementById("ht-search").value.toLowerCase();
-        let l = document.getElementById("ht-flt-level").value;
-        let spec = getMultiValues("ht-flt-spec");
-
-        let r = BC02.records.filter(
-          (x) =>
-            !q ||
-            (x.d || "").toLowerCase().includes(q) ||
-            (x.b || "").toLowerCase().includes(q) ||
-            (x.bmbh || "").toLowerCase().includes(q) ||
-            (x.p || "").toLowerCase().includes(q) ||
-            (x.n || "").toLowerCase().includes(q),
-        );
-
-        if (spec.length > 0) {
-          if (l === "phong") r = r.filter((x) => spec.includes(x.p));
-          else if (l === "ban") r = r.filter((x) => spec.includes(x.b));
-          else if (l === "nhom") r = r.filter((x) => spec.includes(x.n));
-        }
-
-        let k = calcKPI(r);
-        document.getElementById("ht-big-afyp").innerText = k.afyp.toLocaleString("vi-VN", { minimumFractionDigits: 1 });
-        let hl = r.filter((x) =>
-          (x.tt || "").toLowerCase().includes("hiệu lực"),
-        ).length;
-        let dg = r.filter((x) => {
-          let t = (x.tt || "").toLowerCase();
-          return t.includes("chờ") || t.includes("đang");
-        }).length;
-        document.getElementById("ht-big-rate").innerText = r.length
-          ? Math.round((hl / r.length) * 100) + "%"
-          : "0%";
-
-        document.getElementById("ht-k-hd").innerText = k.hd;
-        document.getElementById("ht-k-hl").innerText = hl;
-        document.getElementById("ht-k-dg").innerText = dg;
-        document.getElementById("ht-k-lhdc").innerText = k.lhdc;
-        document.getElementById("ht-k-dl").innerText = k.dolon.toLocaleString(
-          "vi-VN",
-          { minimumFractionDigits: 1 },
-        );
-        // Note: Count label was removed from header, so no need to update it here.
-
-        // Status badge helper
-        function stBadge(tt) {
-          let t = (tt || "").toLowerCase();
-          if (t.includes("hiệu lực"))
-            return `<span class="st st-green">Có hiệu lực</span>`;
-          if (t.includes("chờ"))
-            return `<span class="st st-yellow">Chờ ĐGRR</span>`;
-          if (t.includes("đang"))
-            return `<span class="st st-orange">Đang ĐGRR</span>`;
-          if (t.includes("cnbh"))
-            return `<span class="st st-blue">${tt}</span>`;
-          return `<span class="st" style="background:#F1F5F9;color:#64748B">${tt || "—"}</span>`;
-        }
-
-        document.getElementById("ht-tbody").innerHTML = r
-          .sort((a, b) => b.v - a.v)
-          .map(
-            (x, i) => `<tr>
-    <td class="text-slate-400 font-bold">${i + 1}</td>
-    <td class="font-bold text-slate-800">${x.d || "—"}</td>
-    <td class="font-medium text-slate-600">${x.b || "—"} <span class="block text-[10px] text-slate-400">${x.p || ""}</span></td>
-    <td class="text-xs text-slate-600">${x.bmbh || "—"}</td>
-    <td>${stBadge(x.tt)}</td>
-    <td class="text-xs text-slate-500">${x.nt || "—"}</td>
-    <td class="text-right font-black ${i < 3 ? "text-[#007AC2]" : ""}">${x.v.toLocaleString("vi-VN", { minimumFractionDigits: 1 })}</td>
-</tr>`,
-          )
-          .join("");
-
-        // Draw HT charts
-        drawHTBar(r);
-        drawHTDonut(r);
-      }
-
-      function drawHTBar(recs) {
-        let g = {};
-        recs.forEach((r) => {
-          let k = r.b || "(Khác)";
-          g[k] = (g[k] || 0) + r.v;
-        });
-        let arr = Object.entries(g).sort((a, b) => b[1] - a[1]);
-        if (charts.htBar) charts.htBar.destroy();
-        charts.htBar = new Chart(document.getElementById("chart-ht-bar"), {
-          type: "bar",
-          data: {
-            labels: arr.map((x) =>
-              x[0].length > 20 ? x[0].slice(0, 19) + "…" : x[0],
-            ),
-            datasets: [
-              {
-                label: "AFYP (Tr)",
-                data: arr.map((x) => Math.round(x[1] * 10) / 10),
-                backgroundColor: "rgba(0,122,194,0.15)",
-                borderColor: "#007AC2",
-                borderWidth: 2,
-                borderRadius: 8,
-              },
-            ],
-          },
-          options: {
-            indexAxis: "y",
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              x: {
-                grid: { color: "#F1F5F9", drawBorder: false },
-                ticks: { font: { size: 10 } },
-              },
-              y: {
-                grid: { display: false },
-                ticks: { font: { size: 11, weight: "600" } },
-              },
-            },
-          },
-        });
-      }
-
-      function drawHTDonut(recs) {
-        let hl = recs.filter((x) =>
-          (x.tt || "").toLowerCase().includes("hiệu lực"),
-        ).length;
-        let cho = recs.filter((x) =>
-          (x.tt || "").toLowerCase().includes("chờ"),
-        ).length;
-        let dang = recs.filter((x) =>
-          (x.tt || "").toLowerCase().includes("đang"),
-        ).length;
-        let cnbh = recs.filter((x) =>
-          (x.tt || "").toLowerCase().includes("cnbh"),
-        ).length;
-        let other = recs.length - hl - cho - dang - cnbh;
-        if (charts.htDonut) charts.htDonut.destroy();
-        charts.htDonut = new Chart(document.getElementById("chart-ht-donut"), {
-          type: "doughnut",
-          data: {
-            labels: ["Có hiệu lực", "Chờ ĐGRR", "Đang ĐGRR", "CNBH", "Khác"],
-            datasets: [
-              {
-                data: [hl, cho, dang, cnbh, other],
-                backgroundColor: [
-                  "#10B981",
-                  "#F59E0B",
-                  "#F97316",
-                  "#3B82F6",
-                  "#CBD5E1",
-                ],
-                borderWidth: 0,
-                hoverOffset: 6,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: "68%",
-            plugins: {
-              legend: {
-                position: "bottom",
-                labels: {
-                  usePointStyle: true,
-                  padding: 14,
-                  font: { size: 11, weight: "600" },
-                },
-              },
-            },
-          },
-        });
-      }
     </script>
-  </body>
+    <style>
+        :root {
+            --neon-blue: #00f5ff;
+            --ai-purple: #8b5cf6;
+            --cyber-gold: #d4af37;
+        }
+        
+        body {
+            background-color: #050b14;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 245, 255, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(0,245,255,0.15)"/></svg>') repeat;
+            animation: moveBackground 100s linear infinite;
+        }
+        @keyframes moveBackground {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
+
+        /* Scanline */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 245, 255, 0.05), transparent);
+            opacity: 0.5;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 99;
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(10, 16, 30, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 245, 255, 0.02);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(0, 245, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.1), inset 0 0 20px rgba(0, 245, 255, 0.05);
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Neon Text & Accents */
+        .neon-text-blue {
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5), 0 0 20px rgba(0, 245, 255, 0.3);
+            color: #00f5ff;
+        }
+        .neon-text-purple {
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+            color: #b185ff;
+        }
+        
+        /* Gold Diamond Header */
+        .gold-diamond-text {
+            background: linear-gradient(135deg, #ffe082 0%, #d4af37 20%, #ffd700 40%, #fffacd 50%, #d4af37 60%, #ffe082 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.5));
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        /* Inputs & Selects */
+        .cyber-input {
+            background: rgba(0, 20, 40, 0.5);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            color: #00f5ff;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .cyber-input:focus {
+            border-color: #00f5ff;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+            background: rgba(0, 30, 60, 0.8);
+        }
+        .cyber-input option {
+            background: #0a0e1a;
+            color: #00f5ff;
+        }
+
+        /* Tabs */
+        .cyber-tab {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .cyber-tab:hover {
+            color: #fff;
+            border-color: rgba(0, 245, 255, 0.5);
+        }
+        .cyber-tab.active {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: #00f5ff;
+            color: #00f5ff;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2), inset 0 0 10px rgba(0, 245, 255, 0.2);
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.5);
+        }
+
+        /* Table */
+        .cyber-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .cyber-table th {
+            text-align: left;
+            padding: 16px;
+            color: #00f5ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+            text-transform: uppercase;
+        }
+        .cyber-table td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .cyber-table tr:hover td {
+            background: rgba(0, 245, 255, 0.05);
+            color: #fff;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid;
+        }
+        .badge-green { background: rgba(0, 255, 136, 0.1); color: #00ff88; border-color: #00ff88; box-shadow: 0 0 10px rgba(0, 255, 136, 0.2); }
+        .badge-yellow { background: rgba(255, 204, 0, 0.1); color: #ffcc00; border-color: #ffcc00; box-shadow: 0 0 10px rgba(255, 204, 0, 0.2); }
+        .badge-orange { background: rgba(255, 102, 0, 0.1); color: #ff6600; border-color: #ff6600; box-shadow: 0 0 10px rgba(255, 102, 0, 0.2); }
+        .badge-blue { background: rgba(0, 153, 255, 0.1); color: #0099ff; border-color: #0099ff; box-shadow: 0 0 10px rgba(0, 153, 255, 0.2); }
+
+        /* KPI Value */
+        .kpi-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Auth Screen */
+        #auth-overlay {
+            position: fixed; inset: 0;
+            background: #050b14;
+            z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s;
+        }
+        #app-content { display: none; opacity: 0; transition: opacity 0.5s; }
+
+        /* Animations */
+        .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .d-1 { animation-delay: 0.1s; } .d-2 { animation-delay: 0.2s; } .d-3 { animation-delay: 0.3s; } .d-4 { animation-delay: 0.4s; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #050b14; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 245, 255, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 245, 255, 0.6); }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="scanline"></div>
+
+    <!-- AUTH SCREEN -->
+    <div id="auth-overlay">
+        <div class="glass-card p-10 w-[90%] max-w-md text-center border-t-4" style="border-top-color: #00f5ff;">
+            <div class="mb-6 flex justify-center">
+                <div class="w-24 h-24 rounded-full border-2 border-[#00f5ff] flex items-center justify-center relative shadow-[0_0_30px_rgba(0,245,255,0.3)]">
+                    <div class="absolute inset-2 border border-dashed border-[#8b5cf6] rounded-full animate-[spin_10s_linear_infinite]"></div>
+                    <img src="logo.png" alt="BV" class="h-12 object-contain z-10" />
+                </div>
+            </div>
+            <h1 class="gold-diamond-text text-3xl font-bold mb-2">BẢO VIỆT NHÂN THỌ</h1>
+            <p class="text-[#00f5ff] font-display text-sm tracking-[0.3em] uppercase mb-8">AI Command Center</p>
+            
+            <input type="password" id="pw" placeholder="ENTER ACCESS CODE..." class="cyber-input w-full text-center text-lg tracking-widest mb-4 py-4" onkeypress="event.key === 'Enter' && doLogin()" />
+            <p id="auth-err" class="text-danger text-sm font-bold mb-4 hidden">ACCESS DENIED.</p>
+            
+            <button onclick="doLogin()" class="w-full py-4 rounded-lg font-display font-bold text-dark bg-[#00f5ff] hover:bg-white hover:shadow-[0_0_20px_#00f5ff] transition-all duration-300 tracking-wider">
+                INITIALIZE SYSTEM
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app-content">
+        <!-- Header -->
+        <header class="border-b border-white/10 bg-dark/80 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <img src="logo.png" class="h-10" alt="Logo">
+                    <div>
+                        <h1 class="gold-diamond-text text-2xl md:text-4xl m-0 leading-none">BẢO VIỆT NHÂN THỌ SÀI GÒN</h1>
+                        <p class="text-[#00f5ff] font-display text-[10px] tracking-[0.2em] uppercase mt-1 opacity-80">Financial Intelligence Platform v3.0</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full border border-success/30 bg-success/10 text-success text-xs font-display font-bold tracking-widest shadow-[0_0_10px_rgba(0,255,136,0.2)]">
+                        <span class="w-2 h-2 rounded-full bg-success animate-pulse"></span> SYSTEM ONLINE
+                    </div>
+                    <button onclick="location.reload()" class="text-slate-400 hover:text-[#00f5ff] font-display text-xs tracking-wider transition-colors">LOGOUT</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-[1600px] mx-auto px-6 py-8">
+            <!-- Navigation Tabs -->
+            <div class="flex flex-wrap gap-3 mb-8 fade-up">
+                <button class="cyber-tab active" onclick="switchTab('t-luyke')" id="btn-t-luyke">📈 Doanh Thu Lũy Kế</button>
+                <button class="cyber-tab" onclick="switchTab('t-hientai')" id="btn-t-hientai">📊 Tháng Hiện Tại</button>
+                <button class="cyber-tab" onclick="switchTab('t-muctieu')" id="btn-t-muctieu">🎯 Mục Tiêu & KPI</button>
+                <button class="cyber-tab" onclick="switchTab('t-xephang')" id="btn-t-xephang">🏆 Xếp Hạng</button>
+                <button class="cyber-tab" onclick="switchTab('t-ai')" id="btn-t-ai">🤖 AI Insights</button>
+            </div>
+
+            <!-- TAB 1: DOANH THU LŨY KẾ -->
+            <div id="t-luyke" class="tab-pane">
+                <!-- Filters -->
+                <div class="glass-card p-6 mb-8 fade-up d-1">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-xs font-display text-slate-400 mb-2 uppercase tracking-wider">Kỳ Báo Cáo</label>
+                            <select id="lk-year" class="cyber-input w-full" onchange="runLK()"></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-display text-slate-400 mb-2 uppercase tracking-wider">Thời Gian</label>
+                            <select id="lk-period" class="cyber-input w-full" onchange="runLK()">
+                                <option value="all">Lũy Kế Cả Năm</option>
+                                <option value="q1">Quý 1</option><option value="q2">Quý 2</option>
+                                <option value="q3">Quý 3</option><option value="q4">Quý 4</option>
+                                <option value="1">Tháng 1</option><option value="2">Tháng 2</option>
+                                <option value="3">Tháng 3</option><option value="4">Tháng 4</option>
+                                <option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-display text-slate-400 mb-2 uppercase tracking-wider">Cấp Quản Lý</label>
+                            <select id="lk-level" class="cyber-input w-full" onchange="runLK(true)">
+                                <option value="company">Toàn Công Ty</option>
+                                <option value="phong">Phòng Kinh Doanh</option>
+                                <option value="ban">Ban</option>
+                                <option value="nhom">Nhóm</option>
+                            </select>
+                        </div>
+                        <div id="lk-spec-wrap" class="hidden">
+                            <label class="block text-xs font-display text-slate-400 mb-2 uppercase tracking-wider">Đơn Vị</label>
+                            <div id="lk-spec" class="cyber-input h-[42px] overflow-hidden hover:h-auto hover:max-h-[200px] hover:overflow-y-auto hover:absolute hover:z-50 w-full md:w-[calc(20vw)] bg-dark/95 border border-[#00f5ff]/30 p-2 text-sm leading-relaxed transition-all"></div>
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-display text-slate-400 mb-2 uppercase tracking-wider">Tìm Kiếm</label>
+                            <input type="text" id="lk-search" class="cyber-input w-full" placeholder="Nhập tên..." oninput="runLK()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="glass-card p-6 fade-up d-1 border-t-2 border-t-[#00f5ff]">
+                        <div class="text-xs font-display text-slate-400 uppercase tracking-widest mb-2">Tổng Doanh Thu AFYP</div>
+                        <div class="kpi-value neon-text-blue mb-1"><span id="lk-afyp" class="counter">0</span></div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500">Triệu VNĐ</span>
+                            <span id="lk-yoy-afyp" class="text-success font-bold text-xs bg-success/10 px-2 py-1 rounded">+0%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 fade-up d-2">
+                        <div class="text-xs font-display text-slate-400 uppercase tracking-widest mb-2">Tổng Hợp Đồng</div>
+                        <div class="kpi-value text-white mb-1"><span id="lk-hd" class="counter">0</span></div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500">Hợp đồng</span>
+                            <span id="lk-yoy-hd" class="text-success font-bold text-xs bg-success/10 px-2 py-1 rounded">+0%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 fade-up d-3">
+                        <div class="text-xs font-display text-slate-400 uppercase tracking-widest mb-2">Độ Lớn Bình Quân</div>
+                        <div class="kpi-value text-white mb-1"><span id="lk-dolon" class="counter">0</span></div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500">Tr / Hợp đồng</span>
+                            <span id="lk-yoy-dolon" class="text-slate-400 font-bold text-xs bg-white/5 px-2 py-1 rounded">0%</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 fade-up d-4">
+                        <div class="text-xs font-display text-slate-400 uppercase tracking-widest mb-2">Lượt Hoạt Động</div>
+                        <div class="kpi-value neon-text-purple mb-1"><span id="lk-lhd" class="counter">0</span></div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-aiPurple font-bold" id="lk-lhdc">0 Chuẩn</span>
+                            <span id="lk-yoy-lhd" class="text-danger font-bold text-xs bg-danger/10 px-2 py-1 rounded">-0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="glass-card p-6 lg:col-span-2 fade-up">
+                        <h3 class="font-display text-[#00f5ff] text-lg font-bold mb-1 tracking-wider">BIẾN ĐỘNG AFYP THEO THÁNG</h3>
+                        <p class="text-xs text-slate-400 mb-6 font-display uppercase tracking-widest">So sánh cùng kỳ (YoY)</p>
+                        <div class="h-[300px]"><canvas id="chart-lk-line"></canvas></div>
+                    </div>
+                    <div class="glass-card p-6 fade-up">
+                        <h3 class="font-display text-[#d4af37] text-lg font-bold mb-1 tracking-wider">NĂNG SUẤT ĐƠN VỊ</h3>
+                        <p class="text-xs text-slate-400 mb-6 font-display uppercase tracking-widest">Top 6 Đơn Vị</p>
+                        <div class="h-[300px]"><canvas id="chart-lk-bar"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="glass-card overflow-hidden fade-up">
+                    <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
+                        <h3 class="font-display text-white text-lg font-bold tracking-wider">BẢNG XẾP HẠNG ĐA CHIỀU</h3>
+                        <span class="text-xs text-slate-400 font-display uppercase" id="lk-grid-count">0 Kết quả</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="cyber-table w-full whitespace-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="w-12 text-center">#</th>
+                                    <th>Đơn Vị / TVV</th>
+                                    <th class="text-right">AFYP (Tr)</th>
+                                    <th class="text-right">Số HĐ</th>
+                                    <th class="text-right">B/Q (Tr/HĐ)</th>
+                                    <th class="text-right">Lượt HĐ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lk-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: THÁNG HIỆN TẠI -->
+            <div id="t-hientai" class="tab-pane hidden">
+                <!-- Hero Dashboard -->
+                <div class="glass-card p-8 mb-8 fade-up flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-[#00f5ff]/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-[#8b5cf6]/10 rounded-full blur-3xl"></div>
+                    
+                    <div class="flex-1 z-10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-3 h-3 rounded-full bg-danger animate-pulse shadow-[0_0_10px_#ff2a2a]"></div>
+                            <h2 class="text-3xl font-display font-bold text-white tracking-wider uppercase" id="ht-title">LIVE DATA</h2>
+                        </div>
+                        <p class="text-sm text-slate-400 font-display tracking-widest mb-8">LAST SYNC: <span class="text-[#00f5ff]" id="ht-time">--</span></p>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-black/40 border border-white/10 rounded-xl p-5 relative overflow-hidden group hover:border-[#00f5ff]/50 transition-colors">
+                                <div class="absolute inset-0 bg-gradient-to-br from-[#00f5ff]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="text-[10px] font-display text-slate-400 tracking-[0.2em] uppercase mb-2">Dự Kiến AFYP</div>
+                                <div class="text-4xl font-display font-bold neon-text-blue" id="ht-big-afyp">0.0</div>
+                                <div class="text-xs text-slate-500 mt-2">Triệu VNĐ</div>
+                            </div>
+                            <div class="bg-black/40 border border-white/10 rounded-xl p-5 relative overflow-hidden group hover:border-success/50 transition-colors">
+                                <div class="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="text-[10px] font-display text-slate-400 tracking-[0.2em] uppercase mb-2">Tỷ Lệ Duyệt</div>
+                                <div class="text-4xl font-display font-bold text-success text-shadow-[0_0_15px_rgba(0,255,136,0.3)]" id="ht-big-rate">0%</div>
+                                <div class="text-xs text-slate-500 mt-2">Hợp đồng có hiệu lực</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- KPI Mini Cards -->
+                    <div class="flex-1 grid grid-cols-2 gap-4 z-10 w-full">
+                        <div class="bg-white/5 border border-white/5 rounded-lg p-4 text-center">
+                            <div class="text-[10px] font-display text-slate-400 uppercase tracking-widest mb-1">Tổng HĐ</div>
+                            <div class="text-2xl font-bold text-white" id="ht-k-hd">0</div>
+                        </div>
+                        <div class="bg-white/5 border border-success/30 rounded-lg p-4 text-center">
+                            <div class="text-[10px] font-display text-success uppercase tracking-widest mb-1">Có Hiệu Lực</div>
+                            <div class="text-2xl font-bold text-success" id="ht-k-hl">0</div>
+                        </div>
+                        <div class="bg-white/5 border border-warning/30 rounded-lg p-4 text-center">
+                            <div class="text-[10px] font-display text-warning uppercase tracking-widest mb-1" style="color: #ffcc00;">Chờ / Đang ĐGRR</div>
+                            <div class="text-2xl font-bold" style="color: #ffcc00;" id="ht-k-dg">0</div>
+                        </div>
+                        <div class="bg-white/5 border border-white/5 rounded-lg p-4 text-center">
+                            <div class="text-[10px] font-display text-slate-400 uppercase tracking-widest mb-1">Lượt Chuẩn</div>
+                            <div class="text-2xl font-bold text-aiPurple" id="ht-k-lhdc">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts HT -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="glass-card p-6 lg:col-span-2 fade-up">
+                        <h3 class="font-display text-[#00f5ff] text-base font-bold mb-4 tracking-wider">PHÂN BỔ DOANH THU THEO ĐƠN VỊ</h3>
+                        <div class="h-[250px]"><canvas id="chart-ht-bar"></canvas></div>
+                    </div>
+                    <div class="glass-card p-6 fade-up">
+                        <h3 class="font-display text-[#8b5cf6] text-base font-bold mb-4 tracking-wider">TÌNH TRẠNG HỒ SƠ</h3>
+                        <div class="h-[250px]"><canvas id="chart-ht-donut"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Table HT -->
+                <div class="glass-card overflow-hidden fade-up">
+                    <div class="p-4 border-b border-white/10 flex flex-wrap gap-4 items-center bg-white/5">
+                        <select id="ht-level" class="cyber-input text-sm py-2" onchange="runHT()">
+                            <option value="all">Toàn Công Ty</option>
+                            <option value="phong">Phòng</option>
+                            <option value="ban">Ban</option>
+                        </select>
+                        <input type="text" id="ht-search" class="cyber-input flex-1 min-w-[200px] py-2" placeholder="Tìm tên BMBH, TVV..." oninput="runHT()">
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="cyber-table w-full whitespace-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="w-12 text-center">#</th>
+                                    <th>Đại Lý (TVV)</th>
+                                    <th>Bên Mua BH</th>
+                                    <th>Phòng / Ban</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Ngày Thu</th>
+                                    <th class="text-right">AFYP (Tr)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ht-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3, 4, 5: Coming Soon placeholders for UI demo -->
+            <div id="t-muctieu" class="tab-pane hidden">
+                <div class="glass-card p-20 text-center flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 border-4 border-[#00f5ff] rounded-full border-t-transparent animate-spin mb-6"></div>
+                    <h2 class="text-3xl font-display font-bold text-white tracking-widest uppercase mb-2">TARGET MODULE INITIALIZING</h2>
+                    <p class="text-[#00f5ff] font-mono">Loading forecasting models and historical baselines...</p>
+                </div>
+            </div>
+            <div id="t-xephang" class="tab-pane hidden">
+                <div class="glass-card p-20 text-center flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 border-4 border-[#d4af37] rounded-full border-b-transparent animate-spin mb-6"></div>
+                    <h2 class="text-3xl font-display font-bold text-white tracking-widest uppercase mb-2">RANKING ENGINE BOOTING</h2>
+                    <p class="text-[#d4af37] font-mono">Compiling leaderboard algorithms...</p>
+                </div>
+            </div>
+            <div id="t-ai" class="tab-pane hidden">
+                <div class="glass-card p-20 text-center flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 border-4 border-[#8b5cf6] rounded-full border-l-transparent animate-spin mb-6"></div>
+                    <h2 class="text-3xl font-display font-bold text-white tracking-widest uppercase mb-2">AI INSIGHTS GENERATING</h2>
+                    <p class="text-[#8b5cf6] font-mono">Neural network analyzing business patterns...</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="mt-12 py-6 border-t border-white/10 text-center opacity-60 flex justify-between px-4">
+                <div class="text-xs font-display tracking-[0.2em] text-[#00f5ff]">BAO VIET NHAN THO SAI GON © 2026</div>
+                <div class="text-xs font-display tracking-[0.2em] text-[#8b5cf6]">SECURE CONNECTION ESTABLISHED</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Core Logic
+        let DATA = [], FLT = {}, BC02 = {};
+        let charts = {};
+
+        function doLogin() {
+            if (document.getElementById("pw").value === "103ty") {
+                document.getElementById("auth-overlay").style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById("auth-overlay").style.display = "none";
+                    document.getElementById("app-content").style.display = "block";
+                    setTimeout(() => document.getElementById("app-content").style.opacity = 1, 50);
+                    boot();
+                }, 500);
+            } else {
+                document.getElementById("auth-err").classList.remove("hidden");
+            }
+        }
+
+        function switchTab(id) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.cyber-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('btn-' + id).classList.add('active');
+            
+            if(id === 't-luyke') runLK();
+            if(id === 't-hientai') runHT();
+        }
+
+        async function boot() {
+            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.font.family = "'Rajdhani', sans-serif";
+            
+            try {
+                const [r1, r2] = await Promise.all([
+                    fetch('data/all_contracts.json'),
+                    fetch('data/bc02_current.json')
+                ]);
+                const d1 = await r1.json();
+                DATA = d1.records;
+                FLT = d1.filters;
+                BC02 = await r2.json();
+
+                // Setup Filters
+                document.getElementById('lk-year').innerHTML = FLT.years.sort((a,b)=>b-a).map(y => `<option value="${y}">Năm ${y}</option>`).join('');
+                
+                runLK();
+            } catch (e) {
+                console.error(e);
+                alert("SYSTEM ERROR: FAILED TO LOAD DATA MODULES.");
+            }
+        }
+
+        // --- LŨY KẾ LOGIC ---
+        function calcKPI(recs) {
+            let afyp = 0;
+            let ips = {};
+            recs.forEach(r => {
+                afyp += r.v;
+                let k = `${r.d}_${r.m||99}`;
+                ips[k] = (ips[k] || 0) + (r.i || r.v);
+            });
+            let lhd = Object.keys(ips).length;
+            let lhdc = Object.values(ips).filter(v => v >= 12).length;
+            let hd = recs.length;
+            return { afyp, hd, lhd, lhdc, dolon: hd ? afyp/hd : 0, ns: lhd ? hd/lhd : 0 };
+        }
+
+        function animateValue(id, start, end, duration, formatStr) {
+            let obj = document.getElementById(id);
+            if(!obj) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // Ease out
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = start + easeOut * (end - start);
+                
+                if (formatStr === 'float') {
+                    obj.innerHTML = current.toLocaleString('vi-VN', {minimumFractionDigits:1, maximumFractionDigits:1});
+                } else {
+                    obj.innerHTML = Math.floor(current).toLocaleString('vi-VN');
+                }
+                if (progress < 1) window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function runLK(resetSpec = false) {
+            const y = parseInt(document.getElementById('lk-year').value);
+            const p = document.getElementById('lk-period').value;
+            const l = document.getElementById('lk-level').value;
+            const s = document.getElementById('lk-search').value.toLowerCase();
+            
+            const specWrap = document.getElementById('lk-spec-wrap');
+            const specDiv = document.getElementById('lk-spec');
+
+            if (resetSpec) {
+                if (l === 'company') {
+                    specWrap.classList.add('hidden');
+                    specDiv.innerHTML = '';
+                } else {
+                    specWrap.classList.remove('hidden');
+                    const arr = l==='phong' ? FLT.phongs : l==='ban' ? FLT.bans : FLT.nhoms;
+                    specDiv.innerHTML = arr.map(x => `
+                        <label class="flex items-center gap-2 mb-1 cursor-pointer hover:text-[#00f5ff]">
+                            <input type="checkbox" value="${x}" class="accent-[#00f5ff]" onchange="runLK()"> <span>${x}</span>
+                        </label>
+                    `).join('');
+                }
+            }
+
+            const cbs = specDiv.querySelectorAll('input:checked');
+            const specVals = Array.from(cbs).map(cb => cb.value);
+
+            const filterFn = (yr) => {
+                let r = DATA.filter(x => x.y === yr);
+                if(p === 'q1') r = r.filter(x => x.m>=1 && x.m<=3);
+                else if(p === 'q2') r = r.filter(x => x.m>=4 && x.m<=6);
+                else if(p === 'q3') r = r.filter(x => x.m>=7 && x.m<=9);
+                else if(p === 'q4') r = r.filter(x => x.m>=10 && x.m<=12);
+                else if(p !== 'all') r = r.filter(x => x.m === parseInt(p));
+                
+                if(s) r = r.filter(x => (x.p||'').toLowerCase().includes(s) || (x.b||'').toLowerCase().includes(s) || (x.n||'').toLowerCase().includes(s) || (x.d||'').toLowerCase().includes(s));
+                
+                if(specVals.length > 0) {
+                    if(l==='phong') r = r.filter(x => specVals.includes(x.p));
+                    else if(l==='ban') r = r.filter(x => specVals.includes(x.b));
+                    else if(l==='nhom') r = r.filter(x => specVals.includes(x.n));
+                }
+                return r;
+            };
+
+            const cRecs = filterFn(y);
+            const pRecs = filterFn(y-1);
+            
+            const cKPI = calcKPI(cRecs);
+            const pKPI = calcKPI(pRecs);
+
+            // Animate Numbers
+            animateValue("lk-afyp", 0, cKPI.afyp, 1000, 'float');
+            animateValue("lk-hd", 0, cKPI.hd, 1000, 'int');
+            animateValue("lk-dolon", 0, cKPI.dolon, 1000, 'float');
+            animateValue("lk-lhd", 0, cKPI.lhd, 1000, 'int');
+            document.getElementById('lk-lhdc').innerText = `${cKPI.lhdc} Chuẩn`;
+
+            // YoY badges
+            const setYoy = (id, cV, pV) => {
+                const el = document.getElementById(id);
+                if(pV===0) { el.innerText="--"; el.className="text-slate-400 font-bold text-xs bg-white/5 px-2 py-1 rounded"; return; }
+                const pct = ((cV-pV)/pV)*100;
+                if(pct>=0) {
+                    el.innerText = `+${pct.toFixed(1)}%`;
+                    el.className = "text-success font-bold text-xs bg-success/10 border border-success/20 px-2 py-1 rounded shadow-[0_0_10px_rgba(0,255,136,0.2)]";
+                } else {
+                    el.innerText = `${pct.toFixed(1)}%`;
+                    el.className = "text-danger font-bold text-xs bg-danger/10 border border-danger/20 px-2 py-1 rounded shadow-[0_0_10px_rgba(255,42,42,0.2)]";
+                }
+            };
+            setYoy('lk-yoy-afyp', cKPI.afyp, pKPI.afyp);
+            setYoy('lk-yoy-hd', cKPI.hd, pKPI.hd);
+            setYoy('lk-yoy-dolon', cKPI.dolon, pKPI.dolon);
+            setYoy('lk-yoy-lhd', cKPI.lhd, pKPI.lhd);
+
+            drawLKLine(cRecs, pRecs, y);
+            drawLKBar(cRecs);
+
+            // Table
+            let groups = {};
+            if(l==='company') groups={'Toàn Công Ty': cRecs};
+            else {
+                cRecs.forEach(r => {
+                    let key = (l==='phong'?r.p : l==='ban'?r.b : l==='nhom'?r.n : r.d) || 'Khác';
+                    (groups[key]=groups[key]||[]).push(r);
+                });
+            }
+
+            const rows = Object.entries(groups).map(([name, items]) => {
+                return { name, ...calcKPI(items) };
+            }).sort((a,b) => b.afyp - a.afyp);
+
+            document.getElementById('lk-grid-count').innerText = `${rows.length} Kết quả`;
+            document.getElementById('lk-tbody').innerHTML = rows.slice(0,50).map((r,i) => `
+                <tr>
+                    <td class="text-center font-display text-slate-500">${i+1}</td>
+                    <td class="font-bold text-white">${r.name}</td>
+                    <td class="text-right font-display text-[#00f5ff] font-bold">${r.afyp.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
+                    <td class="text-right">${r.hd}</td>
+                    <td class="text-right text-slate-400">${r.dolon.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
+                    <td class="text-right">
+                        <span class="text-white">${r.lhd}</span>
+                        <span class="text-[10px] text-aiPurple ml-1 block">(${r.lhdc} chuẩn)</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function drawLKLine(cRecs, pRecs, y) {
+            const getM = (arr) => {
+                let m = Array(12).fill(0);
+                arr.forEach(r => { if(r.m>=1 && r.m<=12) m[r.m-1] += r.v; });
+                return m;
+            };
+            const cD = getM(cRecs), pD = getM(pRecs);
+            
+            const ctx = document.getElementById('chart-lk-line').getContext('2d');
+            if(charts.lkLine) charts.lkLine.destroy();
+            
+            let grad = ctx.createLinearGradient(0,0,0,300);
+            grad.addColorStop(0, 'rgba(0, 245, 255, 0.4)');
+            grad.addColorStop(1, 'rgba(0, 245, 255, 0)');
+
+            charts.lkLine = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
+                    datasets: [
+                        {
+                            label: `Năm ${y}`,
+                            data: cD,
+                            borderColor: '#00f5ff',
+                            backgroundColor: grad,
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#050b14',
+                            pointBorderColor: '#00f5ff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            pointHoverBackgroundColor: '#00f5ff'
+                        },
+                        {
+                            label: `Năm ${y-1}`,
+                            data: pD,
+                            borderColor: 'rgba(255,255,255,0.2)',
+                            borderDash: [5,5],
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { labels: { color: '#94a3b8', font: {family: 'Orbitron'} } } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: {family: 'Orbitron'} } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: {family: 'Orbitron'} } }
+                    }
+                }
+            });
+        }
+
+        function drawLKBar(recs) {
+            let groups = {};
+            recs.forEach(r => {
+                let k = r.p || 'Khác';
+                (groups[k]=groups[k]||[]).push(r);
+            });
+            let data = Object.entries(groups).map(([n, items]) => {
+                return { n, afyp: calcKPI(items).afyp };
+            }).sort((a,b)=>b.afyp - a.afyp).slice(0,6);
+
+            const ctx = document.getElementById('chart-lk-bar').getContext('2d');
+            if(charts.lkBar) charts.lkBar.destroy();
+
+            let grad = ctx.createLinearGradient(0,0,0,300);
+            grad.addColorStop(0, '#d4af37');
+            grad.addColorStop(1, 'rgba(212,175,55,0.2)');
+
+            charts.lkBar = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(x => x.n.replace('Phòng ','').replace(' - Sài Gòn','')),
+                    datasets: [{
+                        label: 'AFYP (Tr)',
+                        data: data.map(x => x.afyp),
+                        backgroundColor: grad,
+                        borderRadius: 4,
+                        borderWidth: 1,
+                        borderColor: '#ffe082'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10} } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        // --- THÁNG HIỆN TẠI LOGIC ---
+        function runHT() {
+            if(!BC02.records) return;
+            document.getElementById('ht-title').innerText = BC02.month_label;
+            document.getElementById('ht-time').innerText = BC02.updated;
+
+            const l = document.getElementById('ht-level').value;
+            const q = document.getElementById('ht-search').value.toLowerCase();
+
+            let r = BC02.records;
+            if(q) {
+                r = r.filter(x => (x.d||'').toLowerCase().includes(q) || (x.bmbh||'').toLowerCase().includes(q) || (x.p||'').toLowerCase().includes(q));
+            }
+
+            const k = calcKPI(r);
+            const hl = r.filter(x => (x.tt||'').toLowerCase().includes('hiệu lực')).length;
+            const dg = r.filter(x => { let t=(x.tt||'').toLowerCase(); return t.includes('chờ')||t.includes('đang'); }).length;
+            
+            animateValue("ht-big-afyp", 0, k.afyp, 1000, 'float');
+            document.getElementById('ht-big-rate').innerText = r.length ? Math.round((hl/r.length)*100)+'%' : '0%';
+            
+            animateValue("ht-k-hd", 0, k.hd, 800, 'int');
+            animateValue("ht-k-hl", 0, hl, 800, 'int');
+            animateValue("ht-k-dg", 0, dg, 800, 'int');
+            animateValue("ht-k-lhdc", 0, k.lhdc, 800, 'int');
+
+            const stBadge = (tt) => {
+                let t = (tt||'').toLowerCase();
+                if(t.includes('hiệu lực')) return `<span class="badge badge-green">Có hiệu lực</span>`;
+                if(t.includes('chờ')) return `<span class="badge badge-yellow">Chờ ĐGRR</span>`;
+                if(t.includes('đang')) return `<span class="badge badge-orange">Đang ĐGRR</span>`;
+                if(t.includes('cnbh')) return `<span class="badge badge-blue">${tt}</span>`;
+                return `<span class="badge" style="border-color:#64748b;color:#94a3b8">${tt}</span>`;
+            };
+
+            document.getElementById('ht-tbody').innerHTML = r.sort((a,b)=>b.v - a.v).slice(0,50).map((x,i) => `
+                <tr>
+                    <td class="text-center font-display text-slate-500">${i+1}</td>
+                    <td class="font-bold text-white">${x.d||'-'} <br><span class="text-[10px] text-[#00f5ff] font-normal uppercase">${x.sp||''}</span></td>
+                    <td class="text-slate-300">${x.bmbh||'-'}</td>
+                    <td class="text-xs text-slate-400">${x.b||'-'}<br>${x.p||''}</td>
+                    <td>${stBadge(x.tt)}</td>
+                    <td class="text-xs font-display text-slate-400">${x.nt||'-'}</td>
+                    <td class="text-right font-display text-white font-bold">${x.v.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
+                </tr>
+            `).join('');
+
+            drawHTBar(r);
+            drawHTDonut(r);
+        }
+
+        function drawHTBar(recs) {
+            let g = {};
+            recs.forEach(r => { let k=r.b||'Khác'; g[k]=(g[k]||0)+r.v; });
+            let arr = Object.entries(g).sort((a,b)=>b[1]-a[1]).slice(0,8);
+            
+            const ctx = document.getElementById('chart-ht-bar').getContext('2d');
+            if(charts.htBar) charts.htBar.destroy();
+            
+            charts.htBar = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: arr.map(x => x[0].length>15 ? x[0].slice(0,15)+'...' : x[0]),
+                    datasets: [{
+                        data: arr.map(x => x[1]),
+                        backgroundColor: 'rgba(0, 245, 255, 0.4)',
+                        borderColor: '#00f5ff',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                        y: { grid: { display: false }, ticks: { color: '#e2e8f0', font:{family:'Rajdhani', weight:'bold'} } }
+                    }
+                }
+            });
+        }
+
+        function drawHTDonut(recs) {
+            let hl=0, cho=0, dang=0, cnbh=0, khac=0;
+            recs.forEach(x => {
+                let t = (x.tt||'').toLowerCase();
+                if(t.includes('hiệu lực')) hl++;
+                else if(t.includes('chờ')) cho++;
+                else if(t.includes('đang')) dang++;
+                else if(t.includes('cnbh')) cnbh++;
+                else khac++;
+            });
+
+            const ctx = document.getElementById('chart-ht-donut').getContext('2d');
+            if(charts.htDonut) charts.htDonut.destroy();
+            
+            charts.htDonut = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Có hiệu lực', 'Chờ ĐGRR', 'Đang ĐGRR', 'CNBH', 'Khác'],
+                    datasets: [{
+                        data: [hl, cho, dang, cnbh, khac],
+                        backgroundColor: ['#00ff88', '#ffcc00', '#ff6600', '#0099ff', '#64748b'],
+                        borderWidth: 2,
+                        borderColor: '#0a101e',
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { position: 'right', labels: { color: '#94a3b8', usePointStyle: true, font:{family:'Rajdhani'} } }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
 </html>
