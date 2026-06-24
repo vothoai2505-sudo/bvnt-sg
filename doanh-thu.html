@@ -585,67 +585,103 @@
 
             <!-- TABS 3, 4, 5 placeholders -->
             <div id="t-muctieu" class="tab-pane hidden">
-                <!-- KPI Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="glass-card p-6 fade-up d-1 relative overflow-hidden">
-                        <div class="absolute right-0 top-0 w-24 h-24 bg-bvBlue/10 rounded-full blur-2xl"></div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Kế Hoạch Năm 2026</div>
-                        <div class="kpi-value mb-1"><span id="mt-kh-nam">0</span></div>
-                        <div class="text-xs text-slate-400 font-semibold mt-2">Triệu VNĐ</div>
-                    </div>
-                    <div class="glass-card p-6 fade-up d-2 relative overflow-hidden">
-                        <div class="absolute right-0 top-0 w-24 h-24 bg-bvCyan/10 rounded-full blur-2xl"></div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Thực Hiện AFYP</div>
-                        <div class="kpi-value mb-1" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><span id="mt-th-nam">0</span></div>
-                        <div class="text-xs text-slate-400 font-semibold mt-2">Triệu VNĐ</div>
-                    </div>
-                    <div class="glass-card p-6 fade-up d-3 relative overflow-hidden">
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">% Hoàn Thành Năm</div>
-                        <div class="text-3xl font-black text-slate-800 mb-1 tracking-tight"><span id="mt-pt-nam">0</span>%</div>
-                        <div class="w-full bg-slate-100 rounded-full h-1.5 mt-3"><div class="bg-bvBlue h-1.5 rounded-full transition-all duration-1000" id="mt-bar-nam" style="width: 0%"></div></div>
-                    </div>
-                    <div class="glass-card p-6 fade-up d-4 relative overflow-hidden">
-                        <div class="absolute right-0 top-0 w-24 h-24 bg-bvGold/10 rounded-full blur-2xl"></div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Tiến Độ Tháng HT</div>
-                        <div class="text-3xl font-black text-slate-800 mb-1 tracking-tight"><span id="mt-pt-thang">0</span>%</div>
-                        <div class="w-full bg-slate-100 rounded-full h-1.5 mt-3"><div class="bg-bvGold h-1.5 rounded-full transition-all duration-1000" id="mt-bar-thang" style="width: 0%"></div></div>
-                    </div>
-                </div>
-
-                <!-- Charts -->
-                <div class="glass-card p-6 mb-8 fade-up ai-scan-effect">
-                    <div class="flex justify-between items-center mb-6">
+                <!-- Filters for Target Tab -->
+                <div class="glass-card !overflow-visible p-6 mb-8 fade-up d-1 relative z-[999]">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                         <div>
-                            <h3 class="text-lg font-bold text-slate-800 tracking-tight">Kế Hoạch vs Thực Hiện (Tháng)</h3>
-                            <p class="text-xs text-slate-500 mt-1">Triệu VNĐ</p>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Chọn Năm</label>
+                            <select id="mt-year" class="corp-input w-full cursor-pointer" onchange="runMT()"></select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Thời Gian Theo Dõi</label>
+                            <select id="mt-period" class="corp-input w-full cursor-pointer" onchange="runMT()">
+                                <option value="all">Lũy Kế Cả Năm</option>
+                                <optgroup label="Theo Quý">
+                                    <option value="q1">Quý 1</option><option value="q2">Quý 2</option>
+                                    <option value="q3">Quý 3</option><option value="q4">Quý 4</option>
+                                </optgroup>
+                                <optgroup label="Theo Tháng">
+                                    <option value="1">Tháng 1</option><option value="2">Tháng 2</option>
+                                    <option value="3">Tháng 3</option><option value="4">Tháng 4</option>
+                                    <option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Góc Nhìn Phân Tích</label>
+                            <select id="mt-level" class="corp-input w-full cursor-pointer" onchange="runMT()">
+                                <option value="phong">Phân Tích Theo Phòng Kinh Doanh</option>
+                                <option value="ad">Phân Tích Chi Tiết Từng AD</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Tìm Kiếm Nhanh</label>
+                            <div class="relative">
+                                <svg class="w-4 h-4 absolute left-3 top-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <input type="text" id="mt-search" class="corp-input w-full pl-10" placeholder="Tìm AD, Phòng..." oninput="runMT()">
+                            </div>
                         </div>
                     </div>
-                    <div class="h-[350px]"><canvas id="chart-mt-combo"></canvas></div>
                 </div>
 
-                <!-- Table -->
-                <div class="glass-card overflow-hidden fade-up">
-                    <div class="p-6 border-b border-slate-100 bg-white/50">
-                        <h3 class="text-lg font-bold text-slate-800 tracking-tight">Chi Tiết Từng Ban/Phòng</h3>
+                <!-- Executive Summary Cards -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Progress Card -->
+                    <div class="glass-card p-6 fade-up d-1 border-l-4 border-l-bvBlue">
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Tiến Độ Kế Hoạch Đã Chọn</h3>
+                        <div class="flex items-center gap-6">
+                            <div class="relative w-24 h-24 flex-shrink-0">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                    <path class="text-slate-100" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path id="mt-circle" class="text-bvBlue transition-all duration-1000 ease-out" stroke-dasharray="0, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-xl font-black text-slate-800" id="mt-circle-text">0%</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="mb-3">
+                                    <div class="text-[10px] uppercase text-slate-500 font-bold mb-1">Chỉ Tiêu Đề Ra</div>
+                                    <div class="text-xl font-bold text-slate-800" id="mt-target-val">0</div>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] uppercase text-slate-500 font-bold mb-1">Thực Tế Đạt Được</div>
+                                    <div class="text-xl font-black text-bvCyan" id="mt-actual-val">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Card -->
+                    <div class="glass-card p-6 lg:col-span-2 fade-up d-2">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-base font-bold text-slate-800 tracking-tight">Biểu Đồ Kế Hoạch vs Thực Hiện</h3>
+                        </div>
+                        <div class="h-[200px]"><canvas id="chart-mt-combo"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Matrix Data Table -->
+                <div class="glass-card overflow-hidden fade-up d-3">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white/50">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 tracking-tight" id="mt-table-title">Chi Tiết Tiến Độ Kế Hoạch</h3>
+                            <p class="text-xs text-slate-500 mt-1">Matrix dữ liệu bóc tách sâu theo thời gian</p>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="corp-table">
-                            <thead>
-                                <tr>
-                                    <th class="w-12 text-center">#</th>
-                                    <th>Phòng</th>
-                                    <th>Đại Diện (AD)</th>
-                                    <th class="text-right">Kế Hoạch (Tr)</th>
-                                    <th class="text-right">Thực Hiện (Tr)</th>
-                                    <th class="text-right">% Hoàn Thành</th>
-                                </tr>
+                        <table class="corp-table whitespace-nowrap">
+                            <thead id="mt-thead">
+                                <!-- Dynamic Headers injected via JS -->
                             </thead>
-                            <tbody id="mt-tbody"></tbody>
+                            <tbody id="mt-tbody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            
+
             <div id="t-xephang" class="tab-pane hidden">
                 <div class="glass-card p-24 text-center">
                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bvGold/10 text-bvGold mb-6">
@@ -995,168 +1031,223 @@
         // --- MỤC TIÊU LOGIC ---
         function runMT() {
             if(!KH_DATA || !KH_DATA.year) return;
-
-            const targetYear = KH_DATA.total_kh;
-            const currentYearRecs = DATA.filter(r => r.y === KH_DATA.year);
-            const actualYear = currentYearRecs.reduce((s, r) => s + r.v, 0);
-
-            const pctYear = targetYear ? (actualYear / targetYear) * 100 : 0;
             
-            let maxM = 1;
-            currentYearRecs.forEach(r => { if(r.m > maxM) maxM = r.m; });
-            const currentMonth = new Date().getMonth() + 1;
-            const useMonth = Math.max(maxM, currentMonth); // Prefer max month from data or current
+            // Filters
+            const y = parseInt(document.getElementById('mt-year').value) || KH_DATA.year;
+            const p = document.getElementById('mt-period').value;
+            const lvl = document.getElementById('mt-level').value;
+            const q = document.getElementById('mt-search').value.toLowerCase();
             
-            const targetMonth = KH_DATA.total_monthly[useMonth - 1] || 0;
-            const actualMonth = currentYearRecs.filter(r => r.m === useMonth).reduce((s, r) => s + r.v, 0);
-            const pctMonth = targetMonth ? (actualMonth / targetMonth) * 100 : 0;
-
-            animateValue("mt-kh-nam", 0, targetYear, 1000, 'int');
-            animateValue("mt-th-nam", 0, actualYear, 1000, 'float');
+            // Get timeframe months
+            let months = [1,2,3,4,5,6,7,8,9,10,11,12];
+            let periodName = "Năm " + y;
+            if(p === 'q1') { months = [1,2,3]; periodName = "Quý 1"; }
+            else if(p === 'q2') { months = [4,5,6]; periodName = "Quý 2"; }
+            else if(p === 'q3') { months = [7,8,9]; periodName = "Quý 3"; }
+            else if(p === 'q4') { months = [10,11,12]; periodName = "Quý 4"; }
+            else if(p !== 'all') { months = [parseInt(p)]; periodName = "Tháng " + p; }
             
-            document.getElementById("mt-pt-nam").innerText = pctYear.toFixed(1);
-            document.getElementById("mt-bar-nam").style.width = Math.min(100, pctYear) + "%";
-
-            document.getElementById("mt-pt-thang").innerText = pctMonth.toFixed(1);
-            document.getElementById("mt-bar-thang").style.width = Math.min(100, pctMonth) + "%";
-
-            const actualMonthly = Array(12).fill(0);
-            currentYearRecs.forEach(r => {
-                if(r.m >= 1 && r.m <= 12) actualMonthly[r.m - 1] += r.v;
+            // Actual Data for selected year and months
+            let allYrRecs = DATA.filter(r => r.y === y);
+            
+            // Build Matrix Logic
+            let dataMatrix = []; // array of { name: '...', target_total: 0, actual_total: 0, sub_targets:[], sub_actuals:[] }
+            
+            // Filter KH_DATA ads based on search and level
+            let ads = KH_DATA.ads;
+            if(q) {
+                ads = ads.filter(a => (a.phong||'').toLowerCase().includes(q) || (a.ad||'').toLowerCase().includes(q));
+            }
+            
+            if(lvl === 'phong') {
+                // Group by phong
+                let pGroups = {};
+                ads.forEach(ad => {
+                    let k = ad.phong || 'Khác';
+                    if(!pGroups[k]) pGroups[k] = { target_total: 0, actual_total: 0, t_arr: Array(12).fill(0), a_arr: Array(12).fill(0) };
+                    
+                    // Sum targets
+                    months.forEach(m => {
+                        let tVal = ad.monthly[m-1] || 0;
+                        pGroups[k].t_arr[m-1] += tVal;
+                        pGroups[k].target_total += tVal;
+                    });
+                    
+                    // Sum actuals (matching AD string)
+                    let cleanAd = ad.ad.split(' - ').pop().trim().toLowerCase();
+                    if(cleanAd.startsWith('ad - ')) cleanAd = cleanAd.substring(5).trim();
+                    let actRecs = allYrRecs.filter(r => {
+                        let ra=(r.a||'').toLowerCase(), rd=(r.d||'').toLowerCase(), rn=(r.n||'').toLowerCase();
+                        return ra.includes(cleanAd) || rd.includes(cleanAd) || rn.includes(cleanAd);
+                    });
+                    
+                    actRecs.forEach(r => {
+                        if(months.includes(r.m)) {
+                            pGroups[k].a_arr[r.m-1] += r.v;
+                            pGroups[k].actual_total += r.v;
+                        }
+                    });
+                });
+                
+                for(let key in pGroups) {
+                    dataMatrix.push({ name: key, ...pGroups[key] });
+                }
+                document.getElementById('mt-table-title').innerText = `Chi Tiết Tiến Độ Kế Hoạch Theo Phòng - ${periodName}`;
+            } else {
+                // Group by AD
+                ads.forEach(ad => {
+                    let item = { name: ad.ad, target_total: 0, actual_total: 0, t_arr: Array(12).fill(0), a_arr: Array(12).fill(0) };
+                    months.forEach(m => {
+                        let tVal = ad.monthly[m-1] || 0;
+                        item.t_arr[m-1] += tVal;
+                        item.target_total += tVal;
+                    });
+                    
+                    let cleanAd = ad.ad.split(' - ').pop().trim().toLowerCase();
+                    if(cleanAd.startsWith('ad - ')) cleanAd = cleanAd.substring(5).trim();
+                    let actRecs = allYrRecs.filter(r => {
+                        let ra=(r.a||'').toLowerCase(), rd=(r.d||'').toLowerCase(), rn=(r.n||'').toLowerCase();
+                        return ra.includes(cleanAd) || rd.includes(cleanAd) || rn.includes(cleanAd);
+                    });
+                    
+                    actRecs.forEach(r => {
+                        if(months.includes(r.m)) {
+                            item.a_arr[r.m-1] += r.v;
+                            item.actual_total += r.v;
+                        }
+                    });
+                    dataMatrix.push(item);
+                });
+                document.getElementById('mt-table-title').innerText = `Chi Tiết Tiến Độ Kế Hoạch Từng AD - ${periodName}`;
+            }
+            
+            // Sort by % Hoàn thành
+            dataMatrix.sort((a,b) => {
+                let pcta = a.target_total ? a.actual_total/a.target_total : 0;
+                let pctb = b.target_total ? b.actual_total/b.target_total : 0;
+                return pctb - pcta;
             });
-            drawMTChart(KH_DATA.total_monthly, actualMonthly);
+            
+            // Aggregate totals for Big Cards
+            let grandTarget = dataMatrix.reduce((s, x) => s + x.target_total, 0);
+            let grandActual = dataMatrix.reduce((s, x) => s + x.actual_total, 0);
+            let grandPct = grandTarget ? (grandActual/grandTarget)*100 : 0;
+            
+            animateValue("mt-target-val", 0, grandTarget, 1000, 'float');
+            animateValue("mt-actual-val", 0, grandActual, 1000, 'float');
+            
+            let circle = document.getElementById("mt-circle");
+            if(circle) circle.setAttribute('stroke-dasharray', `${Math.min(grandPct, 100)}, 100`);
+            document.getElementById("mt-circle-text").innerText = grandPct.toFixed(1) + "%";
 
-            const rows = KH_DATA.ads.map(ad => {
-                const adCode = ad.ad.split(' - ')[0].trim();
+            // Draw Combo Chart
+            // We want to show X-Axis based on the selected period.
+            // If Year -> Show 12 months, or 4 quarters. Let's show the months in the array.
+            let cLabels = [];
+            let cTarget = [];
+            let cActual = [];
+            
+            if(months.length > 1) {
+                // Show breakdown by month in the period
+                months.forEach(m => {
+                    cLabels.push('Tháng ' + m);
+                    let t=0, a=0;
+                    dataMatrix.forEach(d => { t += d.t_arr[m-1]; a += d.a_arr[m-1]; });
+                    cTarget.push(t);
+                    cActual.push(a);
+                });
+            } else {
+                // Only 1 month selected, show breakdown by Units (Top 5)
+                dataMatrix.slice(0,5).forEach(d => {
+                    cLabels.push(d.name.length>15 ? d.name.substring(0,15)+'...' : d.name);
+                    cTarget.push(d.target_total);
+                    cActual.push(d.actual_total);
+                });
+            }
+            drawMTChart(cLabels, cTarget, cActual);
+            
+            // Render Table
+            let theadHTML = `<tr>
+                <th class="w-12 text-center">#</th>
+                <th>${lvl==='phong'?'Phòng Kinh Doanh':'Tên Đại Diện (AD)'}</th>
+                <th class="text-right">Kế Hoạch (Tr)</th>
+                <th class="text-right">Thực Hiện (Tr)</th>
+                <th class="text-right">Tiến Độ (%)</th>
+            </tr>`;
+            document.getElementById('mt-thead').innerHTML = theadHTML;
+            
+            document.getElementById('mt-tbody').innerHTML = dataMatrix.map((r, i) => {
+                let pct = r.target_total ? ((r.actual_total/r.target_total)*100).toFixed(1) : '0.0';
+                let rowColorClass = '';
+                if(parseFloat(pct) >= 100) rowColorClass = 'bg-success/10';
+                else if(parseFloat(pct) >= 80) rowColorClass = 'bg-bvBlue/5';
                 
-                // Fix AD matching: We need to match the name inside the AD string, or the ADS column (r.a)
-                let cleanAdName = ad.ad.split(' - ').pop().trim().toLowerCase();
-                if(cleanAdName.startsWith('ad - ')) cleanAdName = cleanAdName.substring(5).trim();
-                
-                const adActual = currentYearRecs.filter(r => {
-                    const r_a = (r.a || '').toLowerCase();
-                    const r_d = (r.d || '').toLowerCase();
-                    const r_n = (r.n || '').toLowerCase();
-                    return r_a.includes(cleanAdName) || r_d.includes(cleanAdName) || r_n.includes(cleanAdName);
-                }).reduce((s, r) => s + r.v, 0);
-
-                const adPct = ad.kh_year ? (adActual / ad.kh_year) * 100 : 0;
-                return { phong: ad.phong, ad: ad.ad, target: ad.kh_year, actual: adActual, pct: adPct };
-            }).sort((a,b) => b.pct - a.pct);
-
-            document.getElementById('mt-tbody').innerHTML = rows.map((r, i) => `
-                <tr>
+                // Add a progress bar under the row
+                return `<tr class="${rowColorClass}">
                     <td class="text-center font-bold text-slate-400">${i+1}</td>
-                    <td class="font-bold text-slate-700">${r.phong}</td>
-                    <td class="font-bold text-slate-800">${r.ad}</td>
-                    <td class="text-right text-slate-500 font-medium">${r.target.toLocaleString('vi-VN')}</td>
-                    <td class="text-right text-bvBlue font-bold">${r.actual.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
-                    <td class="text-right font-bold ${r.pct >= 100 ? 'text-success' : 'text-slate-700'}">${r.pct.toFixed(1)}%</td>
-                </tr>
-            `).join('');
+                    <td class="font-bold text-slate-800">${r.name}</td>
+                    <td class="text-right font-medium text-slate-500">${r.target_total.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
+                    <td class="text-right font-black text-bvBlue">${r.actual_total.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1})}</td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            <div class="w-20 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                                <div class="h-full bg-bvCyan" style="width: ${Math.min(pct, 100)}%"></div>
+                            </div>
+                            <span class="font-bold ${parseFloat(pct)>=100 ? 'text-success' : 'text-slate-700'}">${pct}%</span>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
         }
-
-        function drawMTChart(targetMonthly, actualMonthly) {
+        
+        function drawMTChart(labels, targetData, actualData) {
             const ctx = document.getElementById('chart-mt-combo').getContext('2d');
             if(charts.mtCombo) charts.mtCombo.destroy();
+            
+            let gradBar = ctx.createLinearGradient(0,0,0,300);
+            gradBar.addColorStop(0, '#e2e8f0');
+            gradBar.addColorStop(1, '#f8fafc');
 
             charts.mtCombo = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
+                    labels: labels,
                     datasets: [
                         {
                             type: 'line',
-                            label: 'Thực Hiện (AFYP)',
-                            data: actualMonthly,
-                            borderColor: '#005a9e',
-                            backgroundColor: '#005a9e',
+                            label: 'Thực Tế (AFYP)',
+                            data: actualData,
+                            borderColor: '#0096d6',
                             borderWidth: 3,
-                            tension: 0.3,
-                            pointBackgroundColor: '#ffffff',
-                            pointBorderColor: '#005a9e',
-                            pointBorderWidth: 2,
+                            pointBackgroundColor: '#0096d6',
                             pointRadius: 4,
-                            pointHoverRadius: 6,
-                            fill: false
+                            tension: 0.3,
+                            yAxisID: 'y'
                         },
                         {
                             type: 'bar',
                             label: 'Kế Hoạch',
-                            data: targetMonthly,
-                            backgroundColor: 'rgba(212, 175, 55, 0.4)',
-                            borderColor: '#d4af37',
+                            data: targetData,
+                            backgroundColor: gradBar,
+                            borderColor: '#cbd5e1',
                             borderWidth: 1,
-                            borderRadius: 4
+                            borderRadius: 4,
+                            yAxisID: 'y'
                         }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { labels: { font: {weight: '600'} } } },
+                    plugins: { legend: { position: 'bottom', labels: {usePointStyle: true, font: {weight:'600'}} } },
                     scales: {
                         x: { grid: { display: false }, ticks: { font: {weight: '600'} } },
-                        y: { grid: { color: '#f1f5f9', drawBorder: false } }
+                        y: { grid: { color: '#f1f5f9' } }
                     }
                 }
             });
         }
-
-        // --- THÁNG HIỆN TẠI LOGIC ---
-        function runHT() {
-            if(!BC02.records) return;
-            document.getElementById('ht-title').innerText = BC02.month_label;
-            document.getElementById('ht-time').innerText = BC02.updated;
-
-            const l = document.getElementById('ht-level').value;
-            const q = document.getElementById('ht-search').value.toLowerCase();
-
-            let r = BC02.records;
-            if(q) {
-                r = r.filter(x => (x.d||'').toLowerCase().includes(q) || (x.bmbh||'').toLowerCase().includes(q) || (x.p||'').toLowerCase().includes(q) || (x.b||'').toLowerCase().includes(q));
-            }
-
-            const k = calcKPI(r);
-            const hl = r.filter(x => (x.tt||'').toLowerCase().includes('hiệu lực')).length;
-            const dg = r.filter(x => { let t=(x.tt||'').toLowerCase(); return t.includes('chờ')||t.includes('đang'); }).length;
-            
-            animateValue("ht-big-afyp", 0, k.afyp, 1000, 'float');
-            document.getElementById('ht-big-rate').innerText = r.length ? Math.round((hl/r.length)*100)+'%' : '0%';
-            
-            animateValue("ht-k-hd", 0, k.hd, 800, 'int');
-            animateValue("ht-k-hl", 0, hl, 800, 'int');
-            animateValue("ht-k-dg", 0, dg, 800, 'int');
-            animateValue("ht-k-lhdc", 0, k.lhdc, 800, 'int');
-            animateValue("ht-k-dl", 0, k.dolon, 800, 'float');
-
-            const stBadge = (tt) => {
-                let t = (tt||'').toLowerCase();
-                if(t.includes('hiệu lực')) return `<span class="badge badge-green">Có hiệu lực</span>`;
-                if(t.includes('chờ')) return `<span class="badge badge-yellow">Chờ ĐGRR</span>`;
-                if(t.includes('đang')) return `<span class="badge badge-orange">Đang ĐGRR</span>`;
-                if(t.includes('cnbh')) return `<span class="badge badge-blue">${tt}</span>`;
-                return `<span class="badge" style="background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0">${tt}</span>`;
-            };
-
-            document.getElementById('ht-tbody').innerHTML = r.sort((a,b)=>b.v - a.v).slice(0,100).map((x,i) => `
-                <tr>
-                    <td class="text-center font-bold text-slate-400">${i+1}</td>
-                    <td>
-                        <div class="font-bold text-slate-800">${x.d||'-'}</div>
-                        <div class="text-[10px] text-bvCyan font-bold uppercase mt-0.5">${x.sp||''}</div>
-                    </td>
-                    <td class="text-slate-600 font-medium">${x.bmbh||'-'}</td>
-                    <td class="text-xs text-slate-500 font-medium">${x.b||'-'}<br><span class="text-[10px] text-slate-400">${x.p||''}</span></td>
-                    <td>${stBadge(x.tt)}</td>
-                    <td class="text-xs text-slate-500 font-medium">${x.nt||'-'}</td>
-                    <td class="text-right text-bvBlue font-black">${x.v.toLocaleString('vi-VN',{minimumFractionDigits:1})}</td>
-                </tr>
-            `).join('');
-
-            drawHTBar(r);
-            drawHTDonut(r);
-        }
+        
+        // Ensure KH_DATA gets fetched in boot
 
         function drawHTBar(recs) {
             let g = {};
